@@ -5,8 +5,14 @@ import 'firebase/storage'
 import 'firebase/functions'
 
 const firebaseConfig = {
-
-}
+  apiKey: "AIzaSyCeenjCUQmFV44seFwtLGXGXucxViOmBQo",
+  authDomain: "development2-68058.firebaseapp.com",
+  projectId: "development2-68058",
+  storageBucket: "development2-68058.appspot.com",
+  messagingSenderId: "43338044955",
+  appId: "1:43338044955:web:10c87107a926f45cc74abe",
+  measurementId: "G-VMWGB3KH1X"
+};
 
 firebase.initializeApp(firebaseConfig)
 

@@ -1,80 +1,70 @@
-import React, { useState } from "react";
-import fb from "./fb";
-import db from "./db";
-import { StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
-import { Text, View } from "./components/Themed";
-import LoginPicker from "./screens/pickers/LoginPicker";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text } from "../../components/Themed";
+import CatPicker from "../pickers/CatPicker";
+import db from "../../db";
+import { StatusBar } from "react-native";
 
-export default function RegisterLogin({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function ActionsScreen() {
+  let [category, setCategory] = useState(null);
+  let [desc, setDesc] = useState("");
+  let [url, setUrl] = useState("");
+  let [myText, setMyText] = useState("");
 
-  const login = async () => {
-    await fb.auth().signInWithEmailAndPassword(email, password);
+  const create = async () => {
+    setMyText("TRUE");
+    
+    await db.Ads.create({
+      desc: desc,
+      categoryid: category.id,
+      image: url,
+      date: new Date().toDateString(),
+    });
+    alert("Ad successfully created");
+    setDesc(""), setCategory(null), setUrl("");
+    setMyText("FALSE");
+    
   };
 
-  const valid = () => email !== "" && password !== "";
+  const valid = () => desc !== "" && category !== null && url != "";
 
   return (
     <View style={styles.imagebg}>
+      <StatusBar hidden={true} />
       <View style={styles.navBar}>
-        <TouchableOpacity
-          style={{ width: 50, height: 50 }}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Image
-            source={require("./assets/images/menu.png")}
-            style={{ width: 60, height: 60 }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headingText}>LOGIN</Text>
+        <Text style={styles.headingText}>Create Ad</Text>
       </View>
-
       <View style={styles.container}>
-        <LoginPicker setEmail={setEmail} setPassword={setPassword} />
+        <CatPicker set={setCategory} />
 
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="Email"
+            placeholder="Enter Description"
             placeholderTextColor="#12232E"
-            onChangeText={(text) => setEmail(text)}
-            value={email}
+            onChangeText={(text) => setDesc(text)}
+            value={desc}
           />
         </View>
 
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder="Password"
+            placeholder="Enter Image Url"
             placeholderTextColor="#12232E"
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={true}
-            value={password}
+            onChangeText={(text) => setUrl(text)}
+            value={url}
           />
         </View>
 
         <TouchableOpacity
           disabled={!valid()}
-          onPress={login}
-          style={styles.loginBtn}
+          onPress={create}
+          style={styles.createBtn}
         >
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text style={styles.createText}>Create</Text>
         </TouchableOpacity>
-
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Don't have an account?{" "}
-            <Text
-              style={styles.footerLink}
-              onPress={() => {
-                navigation.navigate("Register");
-              }}
-            >
-              Sign up
-            </Text>
-          </Text>
-        </View>
+        {myText == "TRUE" ? <Text>Creating Ad, Please Wait...</Text> : null}
       </View>
     </View>
   );
@@ -84,9 +74,8 @@ const styles = StyleSheet.create({
   navBar: {
     backgroundColor: "#4DA8DA",
     height: 60,
-    paddingRight: 10,
+    alignItems: "center",
     width: "100%",
-    flexDirection: "row",
   },
 
   container: {
@@ -130,13 +119,14 @@ const styles = StyleSheet.create({
     color: "#12232E",
   },
 
-  loginText: {
+  createText: {
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
+    textAlign:"center"
   },
 
-  loginBtn: {
+  createBtn: {
     width: "80%",
     borderRadius: 15,
     height: 50,
@@ -163,14 +153,14 @@ const styles = StyleSheet.create({
   headingView: {
     // flex: 1,
     alignItems: "center",
-    marginTop: "25%",
+    // marginTop: "25%",
   },
 
   headingText: {
-    top: "1%",
+    top: "9%",
     fontSize: 30,
     textAlign: "center",
-    marginLeft: "32%",
+    // marginLeft: "32%",
     fontWeight: "bold",
   },
 });

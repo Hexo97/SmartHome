@@ -6,7 +6,10 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import NavigationCustomer from './navigation/customer';
 import NavigationAdmin from './navigation/admin';
+import NavigationSupport from "./navigation/support";
+import NavigationMarketing from './navigation/marketing';
 
+import Home from "./Home";
 import { LogBox } from 'react-native'
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 

@@ -1,6 +1,5 @@
-import firebase from './fb'
-import fetch from 'node-fetch'
-const db = firebase.firestore()
+import firebase from "./fb";
+const db = firebase.firestore();
 
 // const a = async () => {
 //     const response = await fetch('https://10.0.2.2:8080',
@@ -17,120 +16,196 @@ const db = firebase.firestore()
 
 // all database functionality here
 class DB {
+  constructor(collection) {
+    this.collection = collection;
+  }
 
-    constructor(collection) {
-        this.collection = collection
-    }
+  reformat(doc) {
+    console.log("reformat", doc.id);
+    return { id: doc.id, ...doc.data() };
+  }
 
-    reformat(doc) {
-        console.log('reformat', doc.id)
-        return { id: doc.id, ...doc.data() }
-    }
+  findAll = async () => {
+    const data = await db.collection(this.collection).get();
+    return data.docs.map(this.reformat);
+  };
 
-    findAll = async () => {
-        const data = await db.collection(this.collection).get()
-        return data.docs.map(this.reformat)
-    }
+  listenAll = (set) =>
+    db
+      .collection(this.collection)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenAll = set =>
-        db.collection(this.collection).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listen10Readings = (set) =>
+    db
+      .collection(this.collection)
+      .limit(10)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    findOne = async id => {
-        const doc = await db.collection(this.collection).doc(id).get()
-        return doc.exists ? this.reformat(doc) : undefined
-    }
+  findOne = async (id) => {
+    const doc = await db.collection(this.collection).doc(id).get();
+    return doc.exists ? this.reformat(doc) : undefined;
+  };
 
-    listenOne = (set, id) =>
-        id === ""
-            ?
-            set(null)
-            :
-            db.collection(this.collection).doc(id).onSnapshot(snap => set(this.reformat(snap)))
+  listenOne = (set, id) =>
+    id === ""
+      ? set(null)
+      : db
+          .collection(this.collection)
+          .doc(id)
+          .onSnapshot((snap) => set(this.reformat(snap)));
 
-    // item has no id
-    create = async item => {
-        const { id, ...rest } = item
-        return await db.collection(this.collection).add(rest)
-    }
+  // item has no id
+  create = async (item) => {
+    const { id, ...rest } = item;
+    return await db.collection(this.collection).add(rest);
+  };
 
-    // item has id
-    update = async item => {
-        const { id, ...rest } = item
-        await db.collection(this.collection).doc(id).set(rest)
-    }
+  // item has id
+  update = async (item) => {
+    const { id, ...rest } = item;
+    await db.collection(this.collection).doc(id).set(rest);
+  };
 
-    remove = async id => {
-        await db.collection(this.collection).doc(id).delete()
-    }
+  remove = async (id) => {
+    await db.collection(this.collection).doc(id).delete();
+  };
 }
 
+class Ads extends DB {
+
+  constructor() {
+      super('ads')
+  }
+
+  // max 10
+  listenInIds = (set, ids) =>
+      db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+}
 
 class Sensors extends DB {
+  constructor() {
+    super("sensors");
+    this.Readings = new Readings(this.collection);
+  }
 
-    constructor() {
-        super('sensors')
-        this.Readings = new Readings(this.collection)
-    }
+  listenByCategory = (set, categoryid) =>
+    db
+      .collection(this.collection)
+      .where("categoryid", "==", categoryid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByCategory = (set, categoryid) =>
-        db.collection(this.collection).where("categoryid", "==", categoryid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenByUser = (set, userid) =>
+    db
+      .collection(this.collection)
+      .where("userid", "==", userid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByUser = (set, userid) =>
-        db.collection(this.collection).where("userid", "==", userid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenByUserAndCategory = (set, userid, categoryid) =>
+    db
+      .collection(this.collection)
+      .where("userid", "==", userid)
+      .where("categoryid", "==", categoryid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByUserAndCategory = (set, userid, categoryid) =>
-        db.collection(this.collection).where("userid", "==", userid).where("categoryid", "==", categoryid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  toggleMotionDetected = (sensor) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ motiondetected: !sensor.motiondetected }, { merge: true });
 
-    toggleMotionDetected = sensor =>
-        db.collection(this.collection).doc(sensor.id).set({ motiondetected: !sensor.motiondetected }, { merge: true })
+  setMotionDetected = (sensor, motiondetected) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ motiondetected }, { merge: true });
 
-    setMotionDetected = (sensor, motiondetected) =>
-        db.collection(this.collection).doc(sensor.id).set({ motiondetected }, { merge: true })
-
-    toggleAlert = sensor =>
-        db.collection(this.collection).doc(sensor.id).set({ alert: !sensor.alert }, { merge: true })
+  toggleAlert = (sensor) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ alert: !sensor.alert }, { merge: true });
 }
 
 class Readings extends DB {
+  constructor(containing) {
+    super("readings");
+    this.containing = containing;
+  }
 
-    constructor(containing) {
-        super('readings')
-        this.containing = containing
-    }
+  createReading = (sensorId, reading) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .add(reading);
 
-    createReading = (sensorId, reading) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).add(reading)
+  listen2OrderByWhen = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .orderBy("when", "desc")
+      .limit(2)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listen2OrderByWhen = (set, sensorId) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).orderBy("when", "desc").limit(2).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenToFirst10 = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .limit(10)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenLatestOne = (set, sensorId) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).orderBy("when", "desc").limit(1).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
-
+  listenLatestOne = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .orderBy("when", "desc")
+      .limit(1)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
 }
 
 class Users extends DB {
-
-    constructor() {
-        super('users')
-    }
-
+  constructor() {
+    super("users");
+  }
 }
 
 class Categories extends DB {
+  constructor() {
+    super("categories");
+  }
 
-    constructor() {
-        super('categories')
-    }
+  
 
-    // max 10
-    listenInIds = (set, ids) =>
-        db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  // max 10
+  listenInIds = (set, ids) =>
+    db
+      .collection(this.collection)
+      .where(db.FieldPath.documentId(), "in", ids)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+}
 
+class Request extends DB {
+  constructor() {
+    super("requests");
+  }
+}
+
+
+class Faq extends DB {
+  constructor() {
+    super("faqs");
+  }
 }
 
 export default {
-    Categories: new Categories(),
-    Sensors: new Sensors(),
-    Users: new Users()
-}
+  Categories: new Categories(),
+  Sensors: new Sensors(),
+  Ads: new Ads(),
+  Users: new Users(),
+  Request: new Request(),
+  Faq: new Faq(),
+};

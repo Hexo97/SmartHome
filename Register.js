@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import fb from "./fb";
 import db from "./db";
-import { StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
 import { Text, View } from "./components/Themed";
-import LoginPicker from "./screens/pickers/LoginPicker";
 
-export default function RegisterLogin({ navigation }) {
+export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const login = async () => {
-    await fb.auth().signInWithEmailAndPassword(email, password);
+  const register = async () => {
+    console.log("register");
+    try {
+      await fb.auth().createUserWithEmailAndPassword(email, password);
+      console.log(fb.auth().currentUser.uid);
+      await db.Users.update({
+        id: fb.auth().currentUser.uid,
+        role: "Customer",
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   const valid = () => email !== "" && password !== "";
@@ -18,20 +27,18 @@ export default function RegisterLogin({ navigation }) {
   return (
     <View style={styles.imagebg}>
       <View style={styles.navBar}>
-        <TouchableOpacity
-          style={{ width: 50, height: 50 }}
-          onPress={() => navigation.openDrawer()}
-        >
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
             source={require("./assets/images/menu.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
-        <Text style={styles.headingText}>LOGIN</Text>
+
+        <Text style={styles.headingText}>REGISTER</Text>
       </View>
 
       <View style={styles.container}>
-        <LoginPicker setEmail={setEmail} setPassword={setPassword} />
+        {/* <LoginPicker setEmail={setEmail} setPassword={setPassword} /> */}
 
         <View style={styles.inputView}>
           <TextInput
@@ -56,22 +63,20 @@ export default function RegisterLogin({ navigation }) {
 
         <TouchableOpacity
           disabled={!valid()}
-          onPress={login}
+          onPress={register}
           style={styles.loginBtn}
         >
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
 
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Text
               style={styles.footerLink}
-              onPress={() => {
-                navigation.navigate("Register");
-              }}
+              onPress={() => navigation.navigate("Login")}
             >
-              Sign up
+              Sign in
             </Text>
           </Text>
         </View>
@@ -79,6 +84,7 @@ export default function RegisterLogin({ navigation }) {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   navBar: {
@@ -90,7 +96,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    height: 400,
+    height: 350,
     width: "90%",
     backgroundColor: "#fff",
     paddingTop: 50,
@@ -145,6 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     backgroundColor: "#007CC7",
   },
+
   footerView: {
     flex: 1,
     alignItems: "center",
@@ -161,7 +168,6 @@ const styles = StyleSheet.create({
   },
 
   headingView: {
-    // flex: 1,
     alignItems: "center",
     marginTop: "25%",
   },

@@ -8,7 +8,7 @@ export default {
         screens: {
           TabOne: {
             screens: {
-              SensorsScreen: 'one',
+              DashboardScreen: 'one',
             },
           },
           TabTwo: {
@@ -21,10 +21,10 @@ export default {
               SettingsScreen: 'three',
             },
           },
-          TabFour: {
-            screens: {
-              Faq: 'four',
-            },
+        },
+        TabFour: {
+          screens: {
+            Faq: 'four',
           },
         },
       },

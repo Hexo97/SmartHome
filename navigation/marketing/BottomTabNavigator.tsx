@@ -6,11 +6,11 @@ import * as React from 'react';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
-import SensorsScreen from '../../screens/Admin/DashboardScreen';
+import SensorsScreen from '../../screens/Marketing/DashboardScreen';
 // @ts-expect-error
-import ActionsScreen from '../../DeveloperHanan/ActionsScreen';
+import ActionsScreen from '../../screens/Marketing/ActionsScreen';
 // @ts-expect-error
-import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
+import SettingsScreen from '../../screens/Marketing/SettingsScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -31,6 +31,7 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Actions"
         component={TabTwoNavigator}
+        
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -77,7 +78,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="ActionsScreen"
         component={ActionsScreen}
-        options={{ headerTitle: 'Actions' }}
+        options={{ headerTitle: 'Actions', headerShown:false }}
       />
     </TabTwoStack.Navigator>
   );

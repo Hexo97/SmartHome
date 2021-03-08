@@ -55,6 +55,22 @@ exports.createSampleData = functions.https.onCall(
       )
     )
 
+    const ads = await findAll('ads')
+    await Promise.all(
+      ads.map(
+        async ad =>
+          await removeOne('ads', ad.id)
+      )
+    )
+
+    const faqs = await findAll('faqs')
+    await Promise.all(
+      faqs.map(
+        async faq =>
+          await removeOne('faqs', faq.id)
+      )
+    )
+
     const users = await findAll('users')
     await Promise.all(
       users.map(
@@ -84,29 +100,59 @@ exports.createSampleData = functions.https.onCall(
     const { uid: authId4 } = await admin.auth().createUser({ email: "fred@fred.com", password: "fredfred" })
     functions.logger.info("authId4", { authId4 })
 
-    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer" })
+    const { uid: authId5 } = await admin.auth().createUser({ email: "julie@julie.com", password: "juliejulie" })
+    functions.logger.info("authId5", { authId5 })
+
+    const { uid: authId6 } = await admin.auth().createUser({ email: "max@max.com", password: "maxmax" })
+    functions.logger.info("authId6", { authId6 })
+
+    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer" ,age: 21, phone: 55346789})
     functions.logger.info("result1", { result1 })
 
-    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer" })
+    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer",age: 20, phone: 77584690 })
     functions.logger.info("result2", { result2 })
 
-    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin" })
+    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin",age: 40, phone: 55097856 })
     functions.logger.info("result3", { result3 })
 
-    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support" })
+    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support" ,age: 35, phone: 44356789 })
     functions.logger.info("result4", { result4 })
+    
+    const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing" ,age: 21, phone: 55674532 })
+    functions.logger.info("result5", { result5 })
+    
+    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
+    functions.logger.info("result6", { result6 })
 
-    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion" })
+    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt26P0l14fu4z1s2kbn18zKiv5WrMUwBDyig&usqp=CAU" })
     functions.logger.info("categoryId1", { categoryId1 })
 
-    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" })
+    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1muEnGAVO4oHm2VxXQbsKl5IzAbzOo4acg&usqp=CAU" })
     functions.logger.info("categoryId2", { categoryId2 })
+
+    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpX4FXkePmm2IoZ7AwrsA9PXR_6-b5sb2PYA&usqp=CAU" })
+    functions.logger.info("categoryId3", { categoryId3 })
+
+    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyGxYQREXgAEY-isMpl79tpMB13a3HxC_d7g&usqp=CAU" })
+    functions.logger.info("categoryId4", { categoryId4 })
 
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
     functions.logger.info("sensorId1", { sensorId1 })
 
     const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
     functions.logger.info("sensorId2", { sensorId2 })
+
+    const { id: faq1 } = await db.collection('faqs').add({ question: "What is the price of sensors package?", answer: "It is 10,000 QR yearly based" })
+    functions.logger.info("faq1", { faq1 })
+
+    const { id: faq2 } = await db.collection('faqs').add({ question: "Do you have promotions?", answer: "yes we provide promotion to sensors eith more thne 2 users" })
+    functions.logger.info("faq2", { faq2 })
+
+    const { id: adId1 } = await db.collection('ads').add({ desc: "This is motion sensor ad" , categoryid: categoryId1, image: "https://cdn.maikoapp.com/3d4b/4qhf5/180h.png", date:"6th march 2021" })
+    functions.logger.info("adId1", { adId1 })
+
+    const { id: adId2 } = await db.collection('ads').add({ desc: "This is temperature sensor ad", categoryid: categoryId2, image: "https://cdn.maikoapp.com/3d4b/4r2dg/180h.jpg", date:"6th march 2021" })
+    functions.logger.info("adId2", { adId2 })
   }
 )
 
@@ -128,6 +174,10 @@ exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings
     const category = { id: categoryDoc.id, ...categoryDoc.data() }
     functions.logger.info("category", { category })
 
+    const adDoc = await db.collection('ads').doc(sensor.adId).get()
+    const ad = { id: adDoc.id, ...adDoc.data() }
+    functions.logger.info("ad", { ad })
+    
     if (category.name === "Motion") {
       const readingData = await db.collection('sensors').doc(sensor.id).collection('readings').orderBy("when", "desc").limit(2).get()
       const readings = readingData.docs.map(doc => ({ id: doc.id, ...doc.data() }))

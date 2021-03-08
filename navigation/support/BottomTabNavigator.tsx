@@ -6,12 +6,14 @@ import * as React from 'react';
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
-import SensorsScreen from '../../screens/Admin/DashboardScreen';
+import SensorsScreen from '../../screens/Support/DashboardScreen';
 // @ts-expect-error
-import ActionsScreen from '../../DeveloperHanan/ActionsScreen';
+import ActionsScreen from '../../screens/Support/ActionsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from './types';
+// @ts-expect-error
+import Faq from '../../DeveloperHanan/Faq';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -31,6 +33,13 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Actions"
         component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+         <BottomTab.Screen
+        name="Faq"
+        component={TabFourNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -94,5 +103,19 @@ function TabThreeNavigator() {
         options={{ headerTitle: 'Settings' }}
       />
     </TabThreeStack.Navigator>
+  );
+}
+
+const TabFourtack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourtack.Navigator>
+      <TabFourtack.Screen
+        name="Faq"
+        component={Faq}
+        options={{ headerTitle: 'Faqs' }}
+      />
+    </TabFourtack.Navigator>
   );
 }
