@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import fb from './fb'
 import db from './db'
-import { StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, TextInput ,Text} from 'react-native';
 import Colors from './constants/Colors';
-import { Text, View } from './components/Themed';
+import { View } from './components/Themed';
 import LoginPicker from './screens/pickers/LoginPicker'
 
 export default function RegisterLogin() {
-
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const login = async () => {
     await fb.auth().signInWithEmailAndPassword(email, password)
+    await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Login", activityDate: new Date() , email })
   }
 
   const register = async () => {
-    console.log('register')
+    // console.log('register')
     try {
       await fb.auth().createUserWithEmailAndPassword(email, password)
-      console.log(fb.auth().currentUser.uid)
+      // console.log(fb.auth().currentUser.uid)
       await db.Users.update({ id: fb.auth().currentUser.uid, role: "Customer" })
+      await db.RealTimeMonitoring.create({userid: fb.auth().currentUser.uid, activity: "Register", activityDate: new Date() , email})
     } catch (error) {
       alert(error.message)
     }
@@ -49,7 +50,12 @@ export default function RegisterLogin() {
       <TouchableOpacity disabled={!valid()} onPress={register} style={styles.title}>
         <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>Register</Text>
       </TouchableOpacity>
+
+
     </View>
+
+
+
   );
 }
 

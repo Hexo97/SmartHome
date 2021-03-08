@@ -49,7 +49,7 @@ export default function App() {
     }
   }, [])
 
-  console.log('user', user)
+  // console.log('user', user)
 
   const selectNavigation = () => {
     if (!user) {
@@ -59,11 +59,13 @@ export default function App() {
     } else if (user?.role === "Admin") {
       return <NavigationAdmin colorScheme={colorScheme} />
     } else {
-      console.log('user role', user?.role)
+      // console.log('user role', user?.role)
       fb.auth().signOut()
       return null
     }
   }
+
+
 
   return (
     isLoadingComplete

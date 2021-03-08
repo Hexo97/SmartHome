@@ -2,20 +2,7 @@ import firebase from './fb'
 import fetch from 'node-fetch'
 const db = firebase.firestore()
 
-// const a = async () => {
-//     const response = await fetch('https://10.0.2.2:8080',
-//         {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
-//     )
-//     console.log(response.ok)
-// }
-// a()
 
-// all database functionality here
 class DB {
 
     constructor(collection) {
@@ -23,7 +10,7 @@ class DB {
     }
 
     reformat(doc) {
-        console.log('reformat', doc.id)
+        // console.log('reformat', doc.id)
         return { id: doc.id, ...doc.data() }
     }
 
@@ -115,6 +102,8 @@ class Users extends DB {
         super('users')
     }
 
+    listenByRole = (set, role) =>
+        db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
 class Categories extends DB {
@@ -129,8 +118,38 @@ class Categories extends DB {
 
 }
 
+class RealTimeMonitoring extends DB {
+    constructor() {
+        super('realtimemonitoring')
+    }
+
+    reformat(doc) {
+        return { ...super.reformat(doc), activityDate: doc.data().activityDate.toDate() }
+    }
+
+    listentToTracksByOperation = (set, operation) =>
+        db.collection(this.collection).where('activity', '==', activity).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+    listenToTracksByUsers = (set, users) =>
+        db.collection(this.collection).where('userId', 'in', users.map(user => user.id)).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+}
+
+class PopularSensor extends DB {
+    constructor() {
+        super('popularsensor')
+    }
+
+    listenBySensor = (set, sensorid) =>
+        db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+
+}
+
 export default {
     Categories: new Categories(),
     Sensors: new Sensors(),
-    Users: new Users()
+    Users: new Users(),
+
+    //AISHA
+    RealTimeMonitoring: new RealTimeMonitoring(),
+    PopularSensor: new PopularSensor()
 }

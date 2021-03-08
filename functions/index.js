@@ -84,23 +84,41 @@ exports.createSampleData = functions.https.onCall(
     const { uid: authId4 } = await admin.auth().createUser({ email: "fred@fred.com", password: "fredfred" })
     functions.logger.info("authId4", { authId4 })
 
-    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer" })
+    const { uid: authId5 } = await admin.auth().createUser({ email: "julie@julie.com", password: "juliejulie" })
+    functions.logger.info("authId5", { authId5 })
+
+    const { uid: authId6 } = await admin.auth().createUser({ email: "max@max.com", password: "maxmax" })
+    functions.logger.info("authId6", { authId6 })
+
+    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer" ,age: 21, phone: 55346789})
     functions.logger.info("result1", { result1 })
 
-    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer" })
+    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer",age: 20, phone: 77584690 })
     functions.logger.info("result2", { result2 })
 
-    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin" })
+    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin",age: 40, phone: 55097856 })
     functions.logger.info("result3", { result3 })
 
-    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support" })
+    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support" ,age: 35, phone: 44356789 })
     functions.logger.info("result4", { result4 })
+    
+    const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing" ,age: 21, phone: 55674532 })
+    functions.logger.info("result5", { result5 })
+    
+    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
+    functions.logger.info("result6", { result6 })
 
-    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion" })
+    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion" , image:"https://www.safewise.com/app/uploads/2019/10/featured-beginners-guide-to-motion-sensors.jpg" , price :256.70})
     functions.logger.info("categoryId1", { categoryId1 })
 
-    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" })
+    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , image:"https://cdn1-shop.mikroe.com/img/product/ds1820-sensor/ds1820-sensor-thickbox_default-12x.jpg", price :476.08 })
     functions.logger.info("categoryId2", { categoryId2 })
+
+    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , image:"https://neu-smart.com/wp-content/uploads/2019/07/SENTRY-Motion-Sound-Sensor_Front1.jpg" , price :176})
+    functions.logger.info("categoryId3", { categoryId3 })
+
+    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , image:"https://5.imimg.com/data5/NU/DJ/MY-73431267/sick-inductive-sensor-ime12-500x500.jpg", price : 200.78 })
+    functions.logger.info("categoryId4", { categoryId4 })
 
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
     functions.logger.info("sensorId1", { sensorId1 })
