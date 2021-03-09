@@ -11,7 +11,7 @@ import fb from '../fb'
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CustomerHomeScreen() {
+export default function CustomerHomeScreen({navigation}) {
   const { user } = useContext(UserContext)
 
   const [dt, setDt] = useState(new Date().toLocaleString());
@@ -163,19 +163,19 @@ export default function CustomerHomeScreen() {
                 <Button
                       title="Check Dashboard"
                       type="outline"
-                      // onPress={goToSensorsPage}
+                      onPress={() => navigation.navigate('Dashboard')}
                     />
                     <View style={styles.space} />
-                <Button
+                {/* <Button
                       title="View Notifications"
                       type="outline"
-                      // onPress={goToSettingsPage}
-                    />
+                      onPress={() => navigation.navigate('Settings')}
+                    /> */}
                     <View style={styles.space} />
                 <Button
-                      title="Track Users"
+                      title="Monitor Logins"
                       type="outline"
-                      // onPress={goToSettingsPage}
+                      onPress={() => navigation.navigate('RealTimeMonitoring')}
                     />
                 </ScrollView>
         </SafeAreaProvider>

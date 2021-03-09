@@ -1,6 +1,7 @@
 export type BottomTabParamList = {
   Home : undefined;
   Dashboard: undefined;
+  RealTimeMonitoring:undefined;
   Actions: undefined;
   Settings: undefined;
   UserTrack: undefined;
@@ -8,19 +9,13 @@ export type BottomTabParamList = {
 
 export type TabOneParamList = {
   Home: undefined;
+  Dashboard:undefined;
+  RealTimeMonitoring:undefined;
 };
 export type TabTwoParamList = {
-  DashboardScreen: undefined;
+  Actions: undefined;
 };
 
 export type TabThreeParamList = {
-  ActionsScreen: undefined;
-};
-
-export type TabFourParamList = {
   SettingsScreen: undefined;
-};
-
-export type TabFiveParamList = {
-  UserTrack: undefined;
 };

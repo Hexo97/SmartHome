@@ -14,8 +14,9 @@ import AdminDashboardScreen from '../../DeveloperAisha/AdminDashboardScreen';
 import ActionsScreen from '../../DeveloperHanan/ActionsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
+// @ts-expect-error
 import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList ,TabFourParamList, TabFiveParamList} from './types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList} from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -34,16 +35,8 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Dashboard"
-        component={TabTwoNavigator}
-        options={{
-          // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="pie-chart" color="black"size={30} />,
-        }}
-      />
-      <BottomTab.Screen
         name="Actions"
-        component={TabThreeNavigator}
+        component={TabTwoNavigator}
         options={{
           // @ts-expect-error
           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
@@ -55,14 +48,6 @@ export default function BottomTabNavigator() {
         options={{
                     // @ts-expect-error
                     tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={30} />,
-        }}
-      />
-      <BottomTab.Screen
-        name="UserTrack"
-        component={TabFiveNavigator}
-        options={{
-             // @ts-expect-error
-             tabBarIcon: ({ color }) => <Icon name="login" color="black"size={30} />,
         }}
       />
     </BottomTab.Navigator>
@@ -86,7 +71,17 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="Home"
         component={AdminHomeScreen}
+        options={{ headerTitle: 'Home' }}
+      />
+      <TabOneStack.Screen
+        name="Dashboard"
+        component={AdminDashboardScreen}
         options={{ headerTitle: 'Dashboard' }}
+      />
+      <TabOneStack.Screen
+        name="RealTimeMonitoring"
+        component={RealTimeMonitoring}
+        options={{ headerTitle: 'RealTimeMonitoring' }}
       />
     </TabOneStack.Navigator>
   );
@@ -98,9 +93,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="DashboardScreen"
-        component={AdminDashboardScreen}
-        options={{ headerTitle: 'Dashboard' }}
+        name="Actions"
+        component={ActionsScreen}
+        options={{ headerTitle: 'Actions' }}
       />
     </TabTwoStack.Navigator>
   );
@@ -108,42 +103,14 @@ function TabTwoNavigator() {
 
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
-function TabThreeNavigator() {
+function TabFourNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="ActionsScreen"
-        component={ActionsScreen}
-        options={{ headerTitle: 'Actions' }}
-      />
-    </TabThreeStack.Navigator>
-  );
-}
-
-const TabFourStack = createStackNavigator<TabFourParamList>();
-
-function TabFourNavigator() {
-  return (
-    <TabFourStack.Navigator>
-      <TabFourStack.Screen
         name="SettingsScreen"
         component={SettingsScreen}
         options={{ headerTitle: 'Settings' }}
       />
-    </TabFourStack.Navigator>
-  );
-}
-
-const TabFiveStack = createStackNavigator<TabFiveParamList>();
-
-function TabFiveNavigator() {
-  return (
-    <TabFiveStack.Navigator>
-      <TabFiveStack.Screen
-        name="UserTrack"
-        component={RealTimeMonitoring}
-        options={{ headerTitle: 'UserTrack' }}
-      />
-    </TabFiveStack.Navigator>
+    </TabThreeStack.Navigator>
   );
 }

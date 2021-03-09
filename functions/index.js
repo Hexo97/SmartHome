@@ -124,16 +124,16 @@ exports.createSampleData = functions.https.onCall(
     const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
     functions.logger.info("result6", { result6 })
 
-    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt26P0l14fu4z1s2kbn18zKiv5WrMUwBDyig&usqp=CAU", price:"100000" })
+    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt26P0l14fu4z1s2kbn18zKiv5WrMUwBDyig&usqp=CAU", price:150 })
     functions.logger.info("categoryId1", { categoryId1 })
 
-    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1muEnGAVO4oHm2VxXQbsKl5IzAbzOo4acg&usqp=CAU", price:"200000" })
+    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1muEnGAVO4oHm2VxXQbsKl5IzAbzOo4acg&usqp=CAU", price:20 })
     functions.logger.info("categoryId2", { categoryId2 })
 
-    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpX4FXkePmm2IoZ7AwrsA9PXR_6-b5sb2PYA&usqp=CAU", price:"458712" })
+    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpX4FXkePmm2IoZ7AwrsA9PXR_6-b5sb2PYA&usqp=CAU", price:458 })
     functions.logger.info("categoryId3", { categoryId3 })
 
-    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyGxYQREXgAEY-isMpl79tpMB13a3HxC_d7g&usqp=CAU" , price:"15248"})
+    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyGxYQREXgAEY-isMpl79tpMB13a3HxC_d7g&usqp=CAU" , price:890})
 
     functions.logger.info("categoryId4", { categoryId4 })
 

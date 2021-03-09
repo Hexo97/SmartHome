@@ -40,6 +40,15 @@ export default function CategoryAction({ category, edit, remove }) {
             >
               {category.description}
             </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                backgroundColor: "#4DA8DA",
+              }}
+            >
+              {category.price}
+            </Text>
             <Card.Divider />
             <TouchableOpacity
               onPress={() => edit(category)}

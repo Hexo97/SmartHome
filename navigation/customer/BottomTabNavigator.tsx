@@ -17,9 +17,9 @@ import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
 import Shop from '../../DeveloperHanan/Shop';
-import { Icon } from 'react-native-elements'
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList,TabFiveParamList } from './types';
+// @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList} from './types';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -47,42 +47,16 @@ export default function BottomTabNavigator() {
         }}
       />
         <BottomTab.Screen
-        name="Faq"
-        component={TabFourNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      />
-
-        <BottomTab.Screen
         name="Shop"
-        component={TabFiveNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      />
-
-      
-      <BottomTab.Screen
-        name="Search"
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="search" color="black"size={30} />,
+          tabBarIcon: ({ color }) => <Icon name="shop" color="black"size={30} />,
         }}
       />
-      {/* <BottomTab.Screen
-        name="Settings"
-        component={TabFourNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      /> */}
     </BottomTab.Navigator>
   );
 }
-
-// You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: string; color: string }) {
   // @ts-expect-error
@@ -106,6 +80,16 @@ function TabOneNavigator() {
         component={SettingsScreen}
         options={{ headerTitle: 'Settings' }}
       />
+      <TabOneStack.Screen
+        name="Search"
+        component={SearchSensors}
+        options={{ headerTitle: 'Search' }}
+      />
+      <TabOneStack.Screen
+        name="Faq"
+        component={Faq}
+        options={{ headerTitle: 'Faq' }}
+      />
     </TabOneStack.Navigator>
   );
 }
@@ -124,33 +108,19 @@ function TabTwoNavigator() {
   );
 }
 
-const TabFourtack = createStackNavigator<TabFourParamList>();
+// const TabFourtack = createStackNavigator<TabFourParamList>();
 
-function TabFourNavigator() {
-  return (
-    <TabFourtack.Navigator>
-      <TabFourtack.Screen
-        name="Faq"
-        component={Faq}
-        options={{ headerTitle: 'Faqs' }}
-      />
-    </TabFourtack.Navigator>
-  );
-}
-
-const TabFiveStack = createStackNavigator<TabFiveParamList>();
-
-function TabFiveNavigator() {
-  return (
-    <TabFiveStack.Navigator>
-      <TabFiveStack.Screen
-        name="Shop"
-        component={Shop}
-        options={{ headerTitle: 'Shops' }}
-      />
-    </TabFiveStack.Navigator>
-  );
-}
+// function TabFourNavigator() {
+//   return (
+//     <TabFourtack.Navigator>
+//       <TabFourtack.Screen
+//         name="Faq"
+//         component={Faq}
+//         options={{ headerTitle: 'Faqs' }}
+//       />
+//     </TabFourtack.Navigator>
+//   );
+// }
 
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
@@ -158,13 +128,27 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="Search"
-        component={SearchSensors}
-        options={{ headerTitle: 'Search' }}
+        name="Shop"
+        component={Shop}
+        options={{ headerTitle: 'Shop' }}
       />
     </TabThreeStack.Navigator>
   );
 }
+
+// const TabThreeStack = createStackNavigator<TabThreeParamList>();
+
+// function TabThreeNavigator() {
+//   return (
+//     <TabThreeStack.Navigator>
+//       <TabThreeStack.Screen
+//         name="Search"
+//         component={SearchSensors}
+//         options={{ headerTitle: 'Search' }}
+//       />
+//     </TabThreeStack.Navigator>
+//   );
+// }
 
 // const TabFourStack = createStackNavigator<TabFourParamList>();
 

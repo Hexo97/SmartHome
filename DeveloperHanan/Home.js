@@ -38,8 +38,8 @@ export function Home({ navigation }) {
   let [myText, setMyText] = useState("");
   let [myDate, setMyDate] = useState("");
 
-  useEffect(() => {
-    let items = ads.map((v, i) => {
+  useEffect( () => {
+    let items =  ads.map((v, i) => {
       //Loop to make image array to show in slider
       return v.image;
     });
@@ -48,9 +48,9 @@ export function Home({ navigation }) {
     showText(0);
   }, []);
 
-  const showText = (p) => {
-    console.log("nailaaa " + p);
-    ads.map((y, i) => {
+  const showText = async (p) => {
+    // console.log("nailaaa " + p);
+    await ads.map((y, i) => {
       //get the description from that position
       if (p == i) {
         setMyText(y.desc);

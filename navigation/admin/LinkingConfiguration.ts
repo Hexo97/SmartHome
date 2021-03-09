@@ -9,26 +9,18 @@ export default {
           TabOne: {
             screens: {
               Home: 'one',
+              Dashboard:'two',
+              RealTimeMonitoring:'three'
             },
           },
           TabTwo: {
             screens: {
-              AdminDashboardScreen: 'two',
+              ActionsScreen: 'three',
             },
           },
           TabThree: {
             screens: {
-              ActionsScreen: 'three',
-            },
-          },
-          TabFour: {
-            screens: {
               SettingsScreen: 'four',
-            },
-          },
-          TabFive: {
-            screens: {
-              UserTrack: 'five',
             },
           },
         },
