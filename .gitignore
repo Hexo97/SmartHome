@@ -2,6 +2,7 @@ node_modules/**/*
 */node_modules/**/*
 */node_modules/
 .expo/*
+*.log
 npm-debug.*
 *.jks
 *.p8
