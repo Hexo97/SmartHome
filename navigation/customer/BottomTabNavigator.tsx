@@ -12,11 +12,15 @@ import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
 import SensorsScreen from '../../screens/Customer/SensorsScreen';
 // @ts-expect-error
-import SettingsScreen from '../../screens/Customer/SettingsScreen';
+import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
+import Faq from '../../DeveloperHanan/Faq';
+// @ts-expect-error
+import Shop from '../../DeveloperHanan/Shop';
+import { Icon } from 'react-native-elements'
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList,TabFiveParamList } from './types';
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
 
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList} from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -42,6 +46,23 @@ export default function BottomTabNavigator() {
            tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
         }}
       />
+        <BottomTab.Screen
+        name="Faq"
+        component={TabFourNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+
+        <BottomTab.Screen
+        name="Shop"
+        component={TabFiveNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+
+      
       <BottomTab.Screen
         name="Search"
         component={TabThreeNavigator}
@@ -100,6 +121,34 @@ function TabTwoNavigator() {
         options={{ headerTitle: 'Sensors' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const TabFourtack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourtack.Navigator>
+      <TabFourtack.Screen
+        name="Faq"
+        component={Faq}
+        options={{ headerTitle: 'Faqs' }}
+      />
+    </TabFourtack.Navigator>
+  );
+}
+
+const TabFiveStack = createStackNavigator<TabFiveParamList>();
+
+function TabFiveNavigator() {
+  return (
+    <TabFiveStack.Navigator>
+      <TabFiveStack.Screen
+        name="Shop"
+        component={Shop}
+        options={{ headerTitle: 'Shops' }}
+      />
+    </TabFiveStack.Navigator>
   );
 }
 

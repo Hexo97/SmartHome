@@ -8,29 +8,23 @@ export default {
         screens: {
           TabOne: {
             screens: {
-              Home: 'one',
-              Settings:'two'
+              DashboardScreen: 'one',
             },
           },
           TabTwo: {
             screens: {
-              Sensors: 'two',
+              ActionsScreen: 'two',
             },
           },
           TabThree: {
             screens: {
-              Search: 'two',
+              SettingsScreen: 'three',
             },
           },
-          TabFour: {
-            screens: {
-              Faq: 'four',
-            },
-          },
-          TabFive: {
-            screens: {
-              Shop: 'five',
-            },
+        },
+        TabFour: {
+          screens: {
+            Faq: 'four',
           },
         },
       },

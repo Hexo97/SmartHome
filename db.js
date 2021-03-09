@@ -1,6 +1,6 @@
-import firebase from './fb'
-import fetch from 'node-fetch'
-const db = firebase.firestore()
+import firebase from "./fb";
+import fetch from "node-fetch";
+const db = firebase.firestore();
 
 
 class DB {
@@ -51,53 +51,103 @@ class DB {
     }
 }
 
+class Ads extends DB {
+
+  constructor() {
+      super('ads')
+  }
+
+  // max 10
+  listenInIds = (set, ids) =>
+      db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+}
 
 class Sensors extends DB {
+  constructor() {
+    super("sensors");
+    this.Readings = new Readings(this.collection);
+  }
 
-    constructor() {
-        super('sensors')
-        this.Readings = new Readings(this.collection)
-    }
+  listenByCategory = (set, categoryid) =>
+    db
+      .collection(this.collection)
+      .where("categoryid", "==", categoryid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByCategory = (set, categoryid) =>
-        db.collection(this.collection).where("categoryid", "==", categoryid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenByUser = (set, userid) =>
+    db
+      .collection(this.collection)
+      .where("userid", "==", userid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByUser = (set, userid) =>
-        db.collection(this.collection).where("userid", "==", userid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenByUserAndCategory = (set, userid, categoryid) =>
+    db
+      .collection(this.collection)
+      .where("userid", "==", userid)
+      .where("categoryid", "==", categoryid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByUserAndCategory = (set, userid, categoryid) =>
-        db.collection(this.collection).where("userid", "==", userid).where("categoryid", "==", categoryid).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  toggleMotionDetected = (sensor) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ motiondetected: !sensor.motiondetected }, { merge: true });
 
-    toggleMotionDetected = sensor =>
-        db.collection(this.collection).doc(sensor.id).set({ motiondetected: !sensor.motiondetected }, { merge: true })
+  setMotionDetected = (sensor, motiondetected) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ motiondetected }, { merge: true });
 
-    setMotionDetected = (sensor, motiondetected) =>
-        db.collection(this.collection).doc(sensor.id).set({ motiondetected }, { merge: true })
-
-    toggleAlert = sensor =>
-        db.collection(this.collection).doc(sensor.id).set({ alert: !sensor.alert }, { merge: true })
+  toggleAlert = (sensor) =>
+    db
+      .collection(this.collection)
+      .doc(sensor.id)
+      .set({ alert: !sensor.alert }, { merge: true });
 }
 
 class Readings extends DB {
+  constructor(containing) {
+    super("readings");
+    this.containing = containing;
+  }
 
-    constructor(containing) {
-        super('readings')
-        this.containing = containing
-    }
+  createReading = (sensorId, reading) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .add(reading);
 
-    createReading = (sensorId, reading) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).add(reading)
+  listen2OrderByWhen = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .orderBy("when", "desc")
+      .limit(2)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listen2OrderByWhen = (set, sensorId) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).orderBy("when", "desc").limit(2).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenToFirst10 = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .limit(10)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenLatestOne = (set, sensorId) =>
-        db.collection(this.containing).doc(sensorId).collection(this.collection).orderBy("when", "desc").limit(1).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
-
+  listenLatestOne = (set, sensorId) =>
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .orderBy("when", "desc")
+      .limit(1)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
 }
 
 class Users extends DB {
-
     constructor() {
         super('users')
     }
@@ -107,15 +157,31 @@ class Users extends DB {
 }
 
 class Categories extends DB {
+  constructor() {
+    super("categories");
+  }
 
-    constructor() {
-        super('categories')
-    }
+  
 
-    // max 10
-    listenInIds = (set, ids) =>
-        db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  // max 10
+  listenInIds = (set, ids) =>
+    db
+      .collection(this.collection)
+      .where(db.FieldPath.documentId(), "in", ids)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+}
 
+class Request extends DB {
+  constructor() {
+    super("requests");
+  }
+}
+
+
+class Faq extends DB {
+  constructor() {
+    super("faqs");
+  }
 }
 
 class RealTimeMonitoring extends DB {
@@ -145,9 +211,12 @@ class PopularSensor extends DB {
 }
 
 export default {
-    Categories: new Categories(),
-    Sensors: new Sensors(),
-    Users: new Users(),
+  Categories: new Categories(),
+  Sensors: new Sensors(),
+  Ads: new Ads(),
+  Users: new Users(),
+  Request: new Request(),
+  Faq: new Faq(),
 
     //AISHA
     RealTimeMonitoring: new RealTimeMonitoring(),

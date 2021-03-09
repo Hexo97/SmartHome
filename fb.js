@@ -6,6 +6,7 @@ import 'firebase/functions'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
+
     apiKey: "AIzaSyDA9XBf7mmSydm45U8LAC_8ZanHAdj5mkY",
     authDomain: "cp3351-572e1.firebaseapp.com",
     databaseURL: "https://cp3351-572e1-default-rtdb.firebaseio.com",

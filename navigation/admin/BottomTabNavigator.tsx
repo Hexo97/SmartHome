@@ -11,10 +11,9 @@ import AdminHomeScreen from '../../DeveloperAisha/AdminHomeScreen';
 // @ts-expect-error
 import AdminDashboardScreen from '../../DeveloperAisha/AdminDashboardScreen';
 // @ts-expect-error
-import ActionsScreen from '../../screens/Admin/ActionsScreen';
+import ActionsScreen from '../../DeveloperHanan/ActionsScreen';
 // @ts-expect-error
-import SettingsScreen from '../../screens/Admin/SettingsScreen';
-// @ts-expect-error
+import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList ,TabFourParamList, TabFiveParamList} from './types';
 
