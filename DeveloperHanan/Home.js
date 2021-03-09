@@ -1,15 +1,19 @@
 import * as React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { Image} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-
+import { createStackNavigator } from "@react-navigation/stack";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import UserContext from "../UserContext";
 
 import RegisterLogin from "./RegisterLogin";
 import Register from "./Register";
+import Faq from "./Faq";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
-import db from "./db";
+import Gallery from "react-native-image-gallery";
+import db from "../db";
 import { SliderBox } from "react-native-image-slider-box";
 import "react-native-gesture-handler";
 import { View, Text } from "react-native";
@@ -17,12 +21,14 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from "@react-navigation/drawer";
-
 
 import { Card } from "react-native-elements";
 
 export function Home({ navigation }) {
+  const { user } = useContext(UserContext);
+
   const [items, setItems] = useState([]);
   const [ads, setAds] = useState([]);
   useEffect(() => db.Ads.listenAll(setAds), []);
@@ -43,6 +49,7 @@ export function Home({ navigation }) {
   }, []);
 
   const showText = (p) => {
+    console.log("nailaaa " + p);
     ads.map((y, i) => {
       //get the description from that position
       if (p == i) {
@@ -58,7 +65,7 @@ export function Home({ navigation }) {
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("./assets/images/menu.png")}
+            source={require("../assets/images/menu.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
@@ -66,7 +73,7 @@ export function Home({ navigation }) {
       <View style={styles.imgContainer}>
         <Image
           style={styles.image}
-          source={require("./assets/images/welcome.png")}
+          source={require("../assets/images/welcome.png")}
         ></Image>
       </View>
 
@@ -100,12 +107,14 @@ export function Home({ navigation }) {
           </Text>
 
           <SliderBox
-            onPageSelected={(index) => showText(index)}
+          currentImageEmitter={(index) => showText(index)}
+
+            // onPageSelected={(index) => showText(index)}
             images={items}
-            autoplay
+           //  autoplay
             circleLoop
-            autoplaySpeed={1000}
-            style={{ width: "74.4%", height: 200 }}
+            // autoplaySpeed={1000}
+            style={{ width: "74.2%", height: 200 }}
             dotColor="#203647"
           />
         </Card>
@@ -124,23 +133,33 @@ function CustomDrawerContent(props) {
 
 const Drawer = createDrawerNavigator();
 
-function MyDrawer() {
+function MyDrawer({user}) {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Login" component={RegisterLogin} />
-      <Drawer.Screen name="Register" component={Register} />
-      {/* <Drawer.Screen name ="Action" component ={ActionsScreen}/> */}
+      {
+        !user ? 
+        <>
+        <Drawer.Screen name="Home" component={Home} />
+        <Drawer.Screen name="Login" component={RegisterLogin} />
+        <Drawer.Screen name="Register" component={Register} />
+        <Drawer.Screen name ="Faq" component ={Faq}/>
+        </>
+        :
+        <>
+        </>
+      }
+      
     </Drawer.Navigator>
   );
 }
 
 export default function App() {
+  const { user } = useContext(UserContext);
   return (
     <NavigationContainer>
-      <MyDrawer />
+      <MyDrawer user={user} />
     </NavigationContainer>
   );
 }

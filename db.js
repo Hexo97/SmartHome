@@ -1,4 +1,5 @@
 import firebase from "./fb";
+import fetch from "node-fetch";
 const db = firebase.firestore();
 
 // const a = async () => {

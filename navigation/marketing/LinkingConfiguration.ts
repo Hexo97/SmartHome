@@ -13,7 +13,7 @@ export default {
           },
           TabTwo: {
             screens: {
-              ActionsScreen: 'two',
+              AdsAction: 'two',
             },
           },
           TabThree: {

@@ -10,7 +10,7 @@ import SensorsScreen from '../../screens/Support/DashboardScreen';
 // @ts-expect-error
 import ActionsScreen from '../../screens/Support/ActionsScreen';
 // @ts-expect-error
-import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
+import SettingsScreen from '../../screens/Support/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList } from './types';

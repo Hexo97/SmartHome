@@ -8,9 +8,9 @@ import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
 import SensorsScreen from '../../screens/Marketing/DashboardScreen';
 // @ts-expect-error
-import ActionsScreen from '../../screens/Marketing/ActionsScreen';
+import AdsAction from '../../DeveloperHanan/AdsAction';
 // @ts-expect-error
-import SettingsScreen from '../../screens/Marketing/SettingsScreen';
+import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -76,8 +76,8 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="ActionsScreen"
-        component={ActionsScreen}
+        name="AdsAction"
+        component={AdsAction}
         options={{ headerTitle: 'Actions', headerShown:false }}
       />
     </TabTwoStack.Navigator>

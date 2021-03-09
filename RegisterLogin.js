@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import fb from "./fb";
 import db from "./db";
 import { StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
+import Colors from "./constants/Colors";
 import { Text, View } from "./components/Themed";
 import LoginPicker from "./screens/pickers/LoginPicker";
+import { StatusBar } from "expo-status-bar";
 
 export default function RegisterLogin({ navigation }) {
   const [email, setEmail] = useState("");

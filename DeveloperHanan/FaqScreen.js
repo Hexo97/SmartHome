@@ -22,7 +22,7 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
       </CollapseHeader>
       <CollapseBody>
         <Text style={styles.title1}>Answer: {faq.answer}</Text>
-        {user.role === "Support" ? (
+        {user ? user.role === "Support" ? (
           <>
             <TouchableOpacity onPress={() => edit(faq)} style={styles.title}>
               <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
@@ -38,7 +38,9 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
               </Text>
             </TouchableOpacity>
           </>
-        ) : null}
+        )
+        : null
+         : null}
       </CollapseBody>
     </Collapse>
   );

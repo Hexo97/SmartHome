@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Image} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
-
 import RegisterLogin from "./RegisterLogin";
+
 import Register from "./Register";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
@@ -18,7 +18,6 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-
 
 import { Card } from "react-native-elements";
 

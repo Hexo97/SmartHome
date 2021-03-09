@@ -13,8 +13,10 @@ import ActionsScreen from '../../screens/Customer/ActionsScreen';
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
-
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
+// @ts-expect-error
+import Shop from '../../DeveloperHanan/Shop';
+import { Icon } from 'react-native-elements'
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList,TabFiveParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -45,6 +47,16 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
+
+        <BottomTab.Screen
+        name="Shop"
+        component={TabFiveNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      />
+
+      
       <BottomTab.Screen
         name="Settings"
         component={TabThreeNavigator}
@@ -104,6 +116,20 @@ function TabFourNavigator() {
         options={{ headerTitle: 'Faqs' }}
       />
     </TabFourtack.Navigator>
+  );
+}
+
+const TabFiveStack = createStackNavigator<TabFiveParamList>();
+
+function TabFiveNavigator() {
+  return (
+    <TabFiveStack.Navigator>
+      <TabFiveStack.Screen
+        name="Shop"
+        component={Shop}
+        options={{ headerTitle: 'Shops' }}
+      />
+    </TabFiveStack.Navigator>
   );
 }
 

@@ -26,6 +26,11 @@ export default {
               Faq: 'four',
             },
           },
+          TabFive: {
+            screens: {
+              Shop: 'five',
+            },
+          },
         },
       },
       NotFound: '*',

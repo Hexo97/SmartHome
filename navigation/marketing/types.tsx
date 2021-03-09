@@ -9,7 +9,7 @@ export type TabOneParamList = {
 };
 
 export type TabTwoParamList = {
-  ActionsScreen: undefined;
+  AdsAction: undefined;
 };
 
 export type TabThreeParamList = {

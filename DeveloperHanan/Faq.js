@@ -79,13 +79,15 @@ export default function Faq() {
         value={question}
         onChangeText={(value) => setQuestion(value)}
       />
-      {user.role === "Support" ? (
+      {user ? user.role === "Support" ? (
         <Input
           placeholder="Answer"
           value={answer}
           onChangeText={(value) => setAnswer(value)}
         />
-      ) : (
+      ):
+         null
+      : (
         <></>
       )}
 
@@ -96,14 +98,16 @@ export default function Faq() {
         disabled={!(question.length > 10 && id.length === 0)}
       />
 
-      {user.role === "Support" ? (
+      { user ? user.role === "Support" ? (
         <Button
           onPress={save}
           title="Answer"
           disabled={!validEdit}
           type="outline"
         />
-      ) : null}
+      ) :
+        null
+      : null}
 
       <View style={styles.container}>
         {faq.map((faq) =>
@@ -116,7 +120,7 @@ export default function Faq() {
               faq={faq}
               {...faq}
             />
-          ) : user.role === "Support" ? (
+          ) : user ? user.role === "Support" ? (
             <FaqScreen
               key={faq.id}
               userid={faq.userid}
@@ -125,7 +129,8 @@ export default function Faq() {
               faq={faq}
               {...faq}
             />
-          ) : null
+          ) : null 
+          : null
         )}
       </View>
     </View>

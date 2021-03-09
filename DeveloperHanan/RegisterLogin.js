@@ -1,29 +1,16 @@
 import React, { useState } from "react";
-import fb from "./fb";
-import db from "./db";
-import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
-import Colors from "./constants/Colors";
-import { Text, View } from "./components/Themed";
-import LoginPicker from "./screens/pickers/LoginPicker";
-import { StatusBar } from "expo-status-bar";
-import RegisterLogin from "./RegisterLogin";
+import fb from "../fb";
+import { StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
+import { Text, View } from "../components/Themed";
+import LoginPicker from "../screens/pickers/LoginPicker";
 
-export default function Register({ navigation }) {
+
+export default function RegisterLogin({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const register = async () => {
-    console.log("register");
-    try {
-      await fb.auth().createUserWithEmailAndPassword(email, password);
-      console.log(fb.auth().currentUser.uid);
-      await db.Users.update({
-        id: fb.auth().currentUser.uid,
-        role: "Customer",
-      });
-    } catch (error) {
-      alert(error.message);
-    }
+  const login = async () => {
+    await fb.auth().signInWithEmailAndPassword(email, password);
   };
 
   const valid = () => email !== "" && password !== "";
@@ -31,18 +18,20 @@ export default function Register({ navigation }) {
   return (
     <View style={styles.imagebg}>
       <View style={styles.navBar}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        <TouchableOpacity
+          style={{ width: 50, height: 50 }}
+          onPress={() => navigation.openDrawer()}
+        >
           <Image
-            source={require("./assets/images/menu.png")}
+            source={require("../assets/images/menu.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
-
-        <Text style={styles.headingText}>REGISTER</Text>
+        <Text style={styles.headingText}>LOGIN</Text>
       </View>
 
       <View style={styles.container}>
-        {/* <LoginPicker setEmail={setEmail} setPassword={setPassword} /> */}
+        <LoginPicker setEmail={setEmail} setPassword={setPassword} />
 
         <View style={styles.inputView}>
           <TextInput
@@ -67,20 +56,22 @@ export default function Register({ navigation }) {
 
         <TouchableOpacity
           disabled={!valid()}
-          onPress={register}
+          onPress={login}
           style={styles.loginBtn}
         >
-          <Text style={styles.loginText}>Register</Text>
+          <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
 
         <View style={styles.footerView}>
           <Text style={styles.footerText}>
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <Text
               style={styles.footerLink}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => {
+                navigation.navigate("Register");
+              }}
             >
-              Sign in
+              Sign up
             </Text>
           </Text>
         </View>
@@ -88,7 +79,6 @@ export default function Register({ navigation }) {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   navBar: {
@@ -100,7 +90,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    height: 350,
+    height: 400,
     width: "90%",
     backgroundColor: "#fff",
     paddingTop: 50,
@@ -144,6 +134,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
+    
   },
 
   loginBtn: {
@@ -155,7 +146,6 @@ const styles = StyleSheet.create({
     marginTop: 25,
     backgroundColor: "#007CC7",
   },
-
   footerView: {
     flex: 1,
     alignItems: "center",
@@ -172,6 +162,7 @@ const styles = StyleSheet.create({
   },
 
   headingView: {
+    // flex: 1,
     alignItems: "center",
     marginTop: "25%",
   },
@@ -180,7 +171,7 @@ const styles = StyleSheet.create({
     top: "1%",
     fontSize: 30,
     textAlign: "center",
-    marginLeft: "32%",
+    marginLeft: "29%",
     fontWeight: "bold",
   },
 });

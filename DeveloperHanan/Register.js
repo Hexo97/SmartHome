@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import fb from "./fb";
-import db from "./db";
+import fb from "../fb";
+import db from "../db";
 import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
-import Colors from "./constants/Colors";
-import { Text, View } from "./components/Themed";
-import LoginPicker from "./screens/pickers/LoginPicker";
-import { StatusBar } from "expo-status-bar";
-import RegisterLogin from "./RegisterLogin";
+
+import { Text, View } from "../components/Themed";
+
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
@@ -33,7 +31,7 @@ export default function Register({ navigation }) {
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("./assets/images/menu.png")}
+            source={require("../assets/images/menu.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
@@ -180,7 +178,7 @@ const styles = StyleSheet.create({
     top: "1%",
     fontSize: 30,
     textAlign: "center",
-    marginLeft: "32%",
+    marginLeft: "19%",
     fontWeight: "bold",
   },
 });
