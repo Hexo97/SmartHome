@@ -1,17 +1,18 @@
 export type BottomTabParamList = {
+  Home: undefined;
   Sensors: undefined;
-  Actions: undefined;
+  Search: undefined;
   Settings: undefined;
   Faq:undefined;
   Shop:undefined
 };
-
-export type TabOneParamList = {
-  SensorsScreen: undefined;
-};
+export type TabOneParamList ={
+  Home: undefined;
+  Settings: undefined;
+}
 
 export type TabTwoParamList = {
-  ActionsScreen: undefined;
+  Sensors: undefined;
 };
 
 export type TabThreeParamList = {
@@ -25,3 +26,4 @@ export type TabFourParamList = {
 export type TabFiveParamList = {
   Shop: undefined;
 };
+

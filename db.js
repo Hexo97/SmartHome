@@ -2,74 +2,53 @@ import firebase from "./fb";
 import fetch from "node-fetch";
 const db = firebase.firestore();
 
-// const a = async () => {
-//     const response = await fetch('https://10.0.2.2:8080',
-//         {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             }
-//         }
-//     )
-//     console.log(response.ok)
-// }
-// a()
 
-// all database functionality here
 class DB {
-  constructor(collection) {
-    this.collection = collection;
-  }
 
-  reformat(doc) {
-    console.log("reformat", doc.id);
-    return { id: doc.id, ...doc.data() };
-  }
+    constructor(collection) {
+        this.collection = collection
+    }
 
-  findAll = async () => {
-    const data = await db.collection(this.collection).get();
-    return data.docs.map(this.reformat);
-  };
+    reformat(doc) {
+        // console.log('reformat', doc.id)
+        return { id: doc.id, ...doc.data() }
+    }
 
-  listenAll = (set) =>
-    db
-      .collection(this.collection)
-      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+    findAll = async () => {
+        const data = await db.collection(this.collection).get()
+        return data.docs.map(this.reformat)
+    }
 
-  listen10Readings = (set) =>
-    db
-      .collection(this.collection)
-      .limit(10)
-      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+    listenAll = set =>
+        db.collection(this.collection).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 
-  findOne = async (id) => {
-    const doc = await db.collection(this.collection).doc(id).get();
-    return doc.exists ? this.reformat(doc) : undefined;
-  };
+    findOne = async id => {
+        const doc = await db.collection(this.collection).doc(id).get()
+        return doc.exists ? this.reformat(doc) : undefined
+    }
 
-  listenOne = (set, id) =>
-    id === ""
-      ? set(null)
-      : db
-          .collection(this.collection)
-          .doc(id)
-          .onSnapshot((snap) => set(this.reformat(snap)));
+    listenOne = (set, id) =>
+        id === ""
+            ?
+            set(null)
+            :
+            db.collection(this.collection).doc(id).onSnapshot(snap => set(this.reformat(snap)))
 
-  // item has no id
-  create = async (item) => {
-    const { id, ...rest } = item;
-    return await db.collection(this.collection).add(rest);
-  };
+    // item has no id
+    create = async item => {
+        const { id, ...rest } = item
+        return await db.collection(this.collection).add(rest)
+    }
 
-  // item has id
-  update = async (item) => {
-    const { id, ...rest } = item;
-    await db.collection(this.collection).doc(id).set(rest);
-  };
+    // item has id
+    update = async item => {
+        const { id, ...rest } = item
+        await db.collection(this.collection).doc(id).set(rest)
+    }
 
-  remove = async (id) => {
-    await db.collection(this.collection).doc(id).delete();
-  };
+    remove = async id => {
+        await db.collection(this.collection).doc(id).delete()
+    }
 }
 
 class Ads extends DB {
@@ -169,9 +148,12 @@ class Readings extends DB {
 }
 
 class Users extends DB {
-  constructor() {
-    super("users");
-  }
+    constructor() {
+        super('users')
+    }
+
+    listenByRole = (set, role) =>
+        db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
 class Categories extends DB {
@@ -202,6 +184,32 @@ class Faq extends DB {
   }
 }
 
+class RealTimeMonitoring extends DB {
+    constructor() {
+        super('realtimemonitoring')
+    }
+
+    reformat(doc) {
+        return { ...super.reformat(doc), activityDate: doc.data().activityDate.toDate() }
+    }
+
+    listentToTracksByOperation = (set, operation) =>
+        db.collection(this.collection).where('activity', '==', activity).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+    listenToTracksByUsers = (set, users) =>
+        db.collection(this.collection).where('userId', 'in', users.map(user => user.id)).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+}
+
+class PopularSensor extends DB {
+    constructor() {
+        super('popularsensor')
+    }
+
+    listenBySensor = (set, sensorid) =>
+        db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+
+}
+
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
@@ -209,4 +217,8 @@ export default {
   Users: new Users(),
   Request: new Request(),
   Faq: new Faq(),
-};
+
+    //AISHA
+    RealTimeMonitoring: new RealTimeMonitoring(),
+    PopularSensor: new PopularSensor()
+}

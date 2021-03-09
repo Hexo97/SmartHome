@@ -2,13 +2,15 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Icon } from 'react-native-elements'
 
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
+
+// @ts-expect-error
+import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
 import SensorsScreen from '../../screens/Customer/SensorsScreen';
-// @ts-expect-error
-import ActionsScreen from '../../screens/Customer/ActionsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
@@ -17,6 +19,8 @@ import Faq from '../../DeveloperHanan/Faq';
 import Shop from '../../DeveloperHanan/Shop';
 import { Icon } from 'react-native-elements'
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList,TabFiveParamList } from './types';
+import SearchSensors from '../../DeveloperAisha/SearchSensors';
+
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -24,20 +28,22 @@ export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
-      initialRouteName="Sensors"
+      initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="Sensors"
+        name="Home"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={30} />,
         }}
       />
-      <BottomTab.Screen
-        name="Actions"
+            <BottomTab.Screen
+        name="Sensors"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+           // @ts-expect-error
+           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
         }}
       />
         <BottomTab.Screen
@@ -58,12 +64,20 @@ export default function BottomTabNavigator() {
 
       
       <BottomTab.Screen
-        name="Settings"
+        name="Search"
         component={TabThreeNavigator}
+        options={{
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="search" color="black"size={30} />,
+        }}
+      />
+      {/* <BottomTab.Screen
+        name="Settings"
+        component={TabFourNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
-      />
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -83,9 +97,14 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="SensorsScreen"
-        component={SensorsScreen}
-        options={{ headerTitle: 'Sensors' }}
+        name="Home"
+        component={CustomerHomeScreen}
+        options={{ headerTitle: 'Home' }}
+      />
+      <TabOneStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ headerTitle: 'Settings' }}
       />
     </TabOneStack.Navigator>
   );
@@ -97,9 +116,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="ActionsScreen"
-        component={ActionsScreen}
-        options={{ headerTitle: 'Actions' }}
+        name="Sensors"
+        component={SensorsScreen}
+        options={{ headerTitle: 'Sensors' }}
       />
     </TabTwoStack.Navigator>
   );
@@ -139,10 +158,24 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        name="Search"
+        component={SearchSensors}
+        options={{ headerTitle: 'Search' }}
       />
     </TabThreeStack.Navigator>
   );
 }
+
+// const TabFourStack = createStackNavigator<TabFourParamList>();
+
+// function TabFourNavigator() {
+//   return (
+//     <TabFourStack.Navigator>
+//       <TabFourStack.Screen
+//         name="SettingsScreen"
+//         component={SettingsScreen}
+//         options={{ headerTitle: 'Settings' }}
+//       />
+//     </TabFourStack.Navigator>
+//   );
+// }

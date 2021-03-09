@@ -79,6 +79,9 @@ export default function RegisterLogin({ navigation }) {
         </View>
       </View>
     </View>
+
+
+
   );
 }
 

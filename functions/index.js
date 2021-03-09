@@ -134,6 +134,7 @@ exports.createSampleData = functions.https.onCall(
     functions.logger.info("categoryId3", { categoryId3 })
 
     const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyGxYQREXgAEY-isMpl79tpMB13a3HxC_d7g&usqp=CAU" , price:"15248"})
+
     functions.logger.info("categoryId4", { categoryId4 })
 
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })

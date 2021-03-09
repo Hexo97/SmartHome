@@ -8,17 +8,18 @@ export default {
         screens: {
           TabOne: {
             screens: {
-              SensorsScreen: 'one',
+              Home: 'one',
+              Settings:'two'
             },
           },
           TabTwo: {
             screens: {
-              ActionsScreen: 'two',
+              Sensors: 'two',
             },
           },
           TabThree: {
             screens: {
-              SettingsScreen: 'three',
+              Search: 'two',
             },
           },
           TabFour: {

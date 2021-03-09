@@ -68,11 +68,13 @@ export default function App() {
     } else if (user?.role === "Marketing") {
       return <NavigationMarketing colorScheme={colorScheme} />
     } else {
-      console.log("user role", user?.role);
-      fb.auth().signOut();
-      return null;
+      // console.log('user role', user?.role)
+      fb.auth().signOut()
+      return null
     }
   };
+
+
 
   return (
     isLoadingComplete && (
