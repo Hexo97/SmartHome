@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { useState, useEffect,useContext } from "react";
-import { Image} from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -38,12 +38,12 @@ export function Home({ navigation }) {
   let [myText, setMyText] = useState("");
   let [myDate, setMyDate] = useState("");
 
-  useEffect( () => {
-    let items =  ads.map((v, i) => {
+  useEffect(() => {
+    let items = ads.map((v, i) => {
       //Loop to make image array to show in slider
       return v.image;
     });
-
+    // console.log(items)
     setItems(items);
     showText(0);
   }, [ads]);
@@ -77,7 +77,7 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-      <View style={{ width: "95%" }}>
+      <View style={{ width: "90%" }}>
         <Card
           styles={{ height: 80, marginTop: 400, backgroundColor: "#203647" }}
         >
@@ -87,7 +87,7 @@ export function Home({ navigation }) {
               backgroundColor: "#4DA8DA",
               marginTop: 5,
               textAlign: "center",
-              width: "94%",
+              width: "100%",
               paddingTop: 5,
             }}
           >
@@ -100,18 +100,18 @@ export function Home({ navigation }) {
               backgroundColor: "#4DA8DA",
               textAlign: "center",
               paddingBottom: 5,
-              width: "94%"
+              width: "100%"
             }}
           >
             {myDate}
           </Text>
 
           <SliderBox
-          currentImageEmitter={(index) => showText(index)}
+            currentImageEmitter={(index) => showText(index)}
 
             // onPageSelected={(index) => showText(index)}
             images={items}
-           //  autoplay
+            //  autoplay
             circleLoop
             // autoplaySpeed={1000}
             style={{ width: "74.2%", height: 200 }}
@@ -133,24 +133,24 @@ function CustomDrawerContent(props) {
 
 const Drawer = createDrawerNavigator();
 
-function MyDrawer({user}) {
+function MyDrawer({ user }) {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       {
-        !user ? 
-        <>
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Login" component={RegisterLogin} />
-        <Drawer.Screen name="Register" component={Register} />
-        <Drawer.Screen name ="Faq" component ={Faq}/>
-        </>
-        :
-        <>
-        </>
+        !user ?
+          <>
+            <Drawer.Screen name="Home" component={Home} />
+            <Drawer.Screen name="Login" component={RegisterLogin} />
+            <Drawer.Screen name="Register" component={Register} />
+            <Drawer.Screen name="Faq" component={Faq} />
+          </>
+          :
+          <>
+          </>
       }
-      
+
     </Drawer.Navigator>
   );
 }

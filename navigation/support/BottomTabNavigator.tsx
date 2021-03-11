@@ -13,6 +13,8 @@ import ActionsScreen from '../../screens/Support/ActionsScreen';
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
+// @ts-expect-error
+import Reports from '../../DeveloperAahmad/Reports';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -31,7 +33,7 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Actions"
+        name="Reports"
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -84,9 +86,9 @@ function TabTwoNavigator() {
   return (
     <TabTwoStack.Navigator>
       <TabTwoStack.Screen
-        name="ActionsScreen"
-        component={ActionsScreen}
-        options={{ headerTitle: 'Actions' }}
+        name="Reports"
+        component={Reports}
+        options={{ headerTitle: 'Reports' }}
       />
     </TabTwoStack.Navigator>
   );

@@ -16,7 +16,9 @@ import ActionsScreen from '../../DeveloperHanan/ActionsScreen';
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList} from './types';
+// @ts-expect-error
+import ManageSensors from '../../screens/Admin/ManageSensors';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList} from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -40,6 +42,14 @@ export default function BottomTabNavigator() {
         options={{
           // @ts-expect-error
           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="ManageSensors"
+        component={TabThreeNavigator}
+        options={{
+                    // @ts-expect-error
+                    tabBarIcon: ({ color }) => <Icon name="manage" color="black"size={30} />,
         }}
       />
       <BottomTab.Screen
@@ -103,14 +113,28 @@ function TabTwoNavigator() {
 
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
-function TabFourNavigator() {
+function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        name="ManageSensors"
+        component={ManageSensors}
+        options={{ headerTitle: 'ManageSensors' }}
       />
     </TabThreeStack.Navigator>
+  );
+}
+
+const TabFourStack = createStackNavigator<TabFourParamList>();
+
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator>
+      <TabFourStack.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{ headerTitle: 'SettingsScreen' }}
+      />
+    </TabFourStack.Navigator>
   );
 }

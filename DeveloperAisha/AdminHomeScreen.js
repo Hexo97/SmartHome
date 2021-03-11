@@ -166,11 +166,17 @@ export default function CustomerHomeScreen({navigation}) {
                       onPress={() => navigation.navigate('Dashboard')}
                     />
                     <View style={styles.space} />
-                {/* <Button
+                <Button
                       title="View Notifications"
                       type="outline"
-                      onPress={() => navigation.navigate('Settings')}
-                    /> */}
+                      // onPress={() => navigation.navigate('Settings')}
+                    />
+                    <View style={styles.space} />
+                    <Button
+                      title="Logs"
+                      type="outline"
+                      // onPress={() => navigation.navigate('Settings')}
+                    />
                     <View style={styles.space} />
                 <Button
                       title="Monitor Logins"
