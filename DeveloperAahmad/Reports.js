@@ -64,7 +64,7 @@ export default function Reports() {
 
       { user ? user.role === "Support" ? (
         reports.map(r =>
-          <View style={{ backgroundColor: "#007cc7", width: 300 }}>
+          <View style={{ backgroundColor: "#007cc7", width: 300 }} key={r.id}>
             <Card>
               <Text
                 style={{
