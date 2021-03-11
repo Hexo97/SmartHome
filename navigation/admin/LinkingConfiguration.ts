@@ -15,10 +15,15 @@ export default {
           },
           TabTwo: {
             screens: {
-              ActionsScreen: 'three',
+              ActionsScreen: 'two',
             },
           },
           TabThree: {
+            screens: {
+              ManageSensors: 'three',
+            },
+          },
+          TabFour: {
             screens: {
               SettingsScreen: 'four',
             },

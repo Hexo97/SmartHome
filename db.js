@@ -210,6 +210,16 @@ class PopularSensor extends DB {
 
 }
 
+class Simulator extends DB {
+  constructor() {
+      super('simulator')
+  }
+
+  listenBySensor = (set, sensorid) =>
+      db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+
+}
+
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
@@ -217,6 +227,7 @@ export default {
   Users: new Users(),
   Request: new Request(),
   Faq: new Faq(),
+  Simulator : new Simulator(),
 
     //AISHA
     RealTimeMonitoring: new RealTimeMonitoring(),
