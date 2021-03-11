@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity ,Image} from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
 import { Input } from "react-native-elements";
 import FaqScreen from "./FaqScreen";
 import { Button } from "react-native-elements";
+import { Card } from "react-native-elements";
 
-export default function Faq() {
+export default function Faq({ navigation }) {
   const [faq, setFaq] = useState([]);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -73,65 +74,110 @@ export default function Faq() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FAQ Form</Text>
+
+      <View style={styles.navBar}>
+        <TouchableOpacity
+          style={{ width: 50, height: 50 }}
+          onPress={() => navigation.openDrawer()}
+        >
+          <Image
+            source={require("../assets/images/menu.png")}
+            style={{ width: 60, height: 60 }}
+          />
+        </TouchableOpacity>
+        <Text style={styles.headingText}>FAQ's</Text>
+      </View>
+      {/* 
       <Input
         placeholder="Question"
         value={question}
         onChangeText={(value) => setQuestion(value)}
-      />
-      {user ? user.role === "Support" ? (
-        <Input
-          placeholder="Answer"
-          value={answer}
-          onChangeText={(value) => setAnswer(value)}
+      /> */}
+
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Question"
+          placeholderTextColor="#12232E"
+          value={question}
+          onChangeText={(value) => setQuestion(value)}
         />
-      ):
-         null
-      : (
+      </View>
+      {user ? (
+        user.role === "Support" ? (
+          // <Input
+          //   placeholder="Answer"
+          //   value={answer}
+          //   onChangeText={(value) => setAnswer(value)}
+          // />
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Answer"
+              placeholderTextColor="#12232E"
+              value={answer}
+              onChangeText={(value) => setAnswer(value)}
+            />
+          </View>
+        ) : null
+      ) : (
         <></>
       )}
 
-      <Button
+      {/* <Button
         onPress={create}
         title="Ask"
         type="outline"
         disabled={!(question.length > 10 && id.length === 0)}
-      />
+      /> */}
 
-      { user ? user.role === "Support" ? (
-        <Button
-          onPress={save}
-          title="Answer"
-          disabled={!validEdit}
-          type="outline"
-        />
-      ) :
-        null
-      : null}
+      <TouchableOpacity
+        disabled={!(question.length > 10 && id.length === 0)}
+        onPress={create}
+        style={styles.loginBtn}
+      >
+        <Text style={styles.loginText}>Ask</Text>
+      </TouchableOpacity>
+
+      {user ? (
+        user.role === "Support" ? (
+          <TouchableOpacity
+            disabled={!validEdit}
+            onPress={save}
+            style={styles.loginBtn}
+          >
+            <Text style={styles.loginText}>Answer</Text>
+          </TouchableOpacity>
+        ) : null
+      ) : null}
 
       <View style={styles.container}>
-        {faq.map((faq) =>
-          faq.answer !== "" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : user ? user.role === "Support" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : null 
-          : null
-        )}
+        <Card>
+          <Text style={styles.title1}>Questions:</Text>
+          {faq.map((faq) =>
+            faq.answer !== "" ? (
+              <FaqScreen
+                key={faq.id}
+                userid={faq.userid}
+                edit={edit}
+                remove={remove}
+                faq={faq}
+                {...faq}
+              />
+            ) : user ? (
+              user.role === "Support" ? (
+                <FaqScreen
+                  key={faq.id}
+                  userid={faq.userid}
+                  edit={edit}
+                  remove={remove}
+                  faq={faq}
+                  {...faq}
+                />
+              ) : null
+            ) : null
+          )}
+        </Card>
       </View>
     </View>
   );
@@ -143,6 +189,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#EEFBFB",
+  },
+  title1: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#4DA8DA",
+  },
+  loginText: {
+    color: "#ffffff",
+    fontSize: 17,
+    fontWeight: "bold",
   },
   title: {
     fontSize: 20,
@@ -166,9 +223,53 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 5,
   },
+  loginBtn: {
+    width: "35%",
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    // marginTop: 25,
+    marginBottom: 20,
+    backgroundColor: "#007CC7",
+  },
+  inputView: {
+    borderColor: "#4DA8DA",
+    borderWidth: 2,
+    borderRadius: 15,
+    width: "80%",
+    paddingTop: 0,
+    height: 50,
+    fontSize: 15,
+    color: "#12232E",
+    marginBottom: 20,
+  },
+  TextInput: {
+    width: "80%",
+    height: 50,
+    flex: 1,
+    fontSize: 15,
+    padding: 10,
+    color: "#12232E",
+  },
   separator: {
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  navBar: {
+    backgroundColor: "#4DA8DA",
+    height: 60,
+    paddingRight: 10,
+    width: "100%",
+    marginBottom: 10,
+    flexDirection: "row",
+  },
+  headingText: {
+    top: "0.5%",
+    fontSize: 30,
+    textAlign: "center",
+    marginLeft: "32%",
+    fontWeight: "bold",
   },
 });

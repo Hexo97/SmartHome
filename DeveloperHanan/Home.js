@@ -46,7 +46,7 @@ export function Home({ navigation }) {
 
     setItems(items);
     showText(0);
-  }, []);
+  }, [ads]);
 
   const showText = async (p) => {
     // console.log("nailaaa " + p);
