@@ -11,6 +11,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-
+fb.js
+.firebaserc
 # macOS
 .DS_Store
