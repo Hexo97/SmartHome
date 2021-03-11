@@ -5,61 +5,61 @@ const db = firebase.firestore();
 
 class DB {
 
-    constructor(collection) {
-        this.collection = collection
-    }
+  constructor(collection) {
+    this.collection = collection
+  }
 
-    reformat(doc) {
-        // console.log('reformat', doc.id)
-        return { id: doc.id, ...doc.data() }
-    }
+  reformat(doc) {
+    // console.log('reformat', doc.id)
+    return { id: doc.id, ...doc.data() }
+  }
 
-    findAll = async () => {
-        const data = await db.collection(this.collection).get()
-        return data.docs.map(this.reformat)
-    }
+  findAll = async () => {
+    const data = await db.collection(this.collection).get()
+    return data.docs.map(this.reformat)
+  }
 
-    listenAll = set =>
-        db.collection(this.collection).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenAll = set =>
+    db.collection(this.collection).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 
-    findOne = async id => {
-        const doc = await db.collection(this.collection).doc(id).get()
-        return doc.exists ? this.reformat(doc) : undefined
-    }
+  findOne = async id => {
+    const doc = await db.collection(this.collection).doc(id).get()
+    return doc.exists ? this.reformat(doc) : undefined
+  }
 
-    listenOne = (set, id) =>
-        id === ""
-            ?
-            set(null)
-            :
-            db.collection(this.collection).doc(id).onSnapshot(snap => set(this.reformat(snap)))
+  listenOne = (set, id) =>
+    id === ""
+      ?
+      set(null)
+      :
+      db.collection(this.collection).doc(id).onSnapshot(snap => set(this.reformat(snap)))
 
-    // item has no id
-    create = async item => {
-        const { id, ...rest } = item
-        return await db.collection(this.collection).add(rest)
-    }
+  // item has no id
+  create = async item => {
+    const { id, ...rest } = item
+    return await db.collection(this.collection).add(rest)
+  }
 
-    // item has id
-    update = async item => {
-        const { id, ...rest } = item
-        await db.collection(this.collection).doc(id).set(rest)
-    }
+  // item has id
+  update = async item => {
+    const { id, ...rest } = item
+    await db.collection(this.collection).doc(id).set(rest)
+  }
 
-    remove = async id => {
-        await db.collection(this.collection).doc(id).delete()
-    }
+  remove = async id => {
+    await db.collection(this.collection).doc(id).delete()
+  }
 }
 
 class Ads extends DB {
 
   constructor() {
-      super('ads')
+    super('ads')
   }
 
   // max 10
   listenInIds = (set, ids) =>
-      db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+    db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 
 }
 
@@ -148,12 +148,12 @@ class Readings extends DB {
 }
 
 class Users extends DB {
-    constructor() {
-        super('users')
-    }
+  constructor() {
+    super('users')
+  }
 
-    listenByRole = (set, role) =>
-        db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenByRole = (set, role) =>
+    db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
 class Categories extends DB {
@@ -161,7 +161,7 @@ class Categories extends DB {
     super("categories");
   }
 
-  
+
 
   // max 10
   listenInIds = (set, ids) =>
@@ -177,6 +177,15 @@ class Request extends DB {
   }
 }
 
+class Reports extends DB {
+  constructor() {
+    super("reports");
+  }
+
+  reformat(doc) {
+    return { ...super.reformat(doc), dateCreated: doc.data().dateCreated.toDate() }
+  }
+}
 
 class Faq extends DB {
   constructor() {
@@ -185,28 +194,28 @@ class Faq extends DB {
 }
 
 class RealTimeMonitoring extends DB {
-    constructor() {
-        super('realtimemonitoring')
-    }
+  constructor() {
+    super('realtimemonitoring')
+  }
 
-    reformat(doc) {
-        return { ...super.reformat(doc), activityDate: doc.data().activityDate.toDate() }
-    }
+  reformat(doc) {
+    return { ...super.reformat(doc), activityDate: doc.data().activityDate.toDate() }
+  }
 
-    listentToTracksByOperation = (set, operation) =>
-        db.collection(this.collection).where('activity', '==', activity).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listentToTracksByOperation = (set, operation) =>
+    db.collection(this.collection).where('activity', '==', activity).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 
-    listenToTracksByUsers = (set, users) =>
-        db.collection(this.collection).where('userId', 'in', users.map(user => user.id)).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenToTracksByUsers = (set, users) =>
+    db.collection(this.collection).where('userId', 'in', users.map(user => user.id)).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
 class PopularSensor extends DB {
-    constructor() {
-        super('popularsensor')
-    }
+  constructor() {
+    super('popularsensor')
+  }
 
-    listenBySensor = (set, sensorid) =>
-        db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+  listenBySensor = (set, sensorid) =>
+    db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
 
 }
 
@@ -226,10 +235,11 @@ export default {
   Ads: new Ads(),
   Users: new Users(),
   Request: new Request(),
+  Reports: new Reports(),
   Faq: new Faq(),
   Simulator : new Simulator(),
 
-    //AISHA
-    RealTimeMonitoring: new RealTimeMonitoring(),
-    PopularSensor: new PopularSensor()
+  //AISHA
+  RealTimeMonitoring: new RealTimeMonitoring(),
+  PopularSensor: new PopularSensor()
 }

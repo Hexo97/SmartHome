@@ -1,6 +1,6 @@
 export type BottomTabParamList = {
   Dashboard: undefined;
-  Actions: undefined;
+  Reports: undefined;
   Settings: undefined;
   Faq:undefined;
 };
@@ -10,7 +10,7 @@ export type TabOneParamList = {
 };
 
 export type TabTwoParamList = {
-  ActionsScreen: undefined;
+  Reports: undefined;
 };
 
 export type TabThreeParamList = {
