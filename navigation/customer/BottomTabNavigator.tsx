@@ -19,7 +19,7 @@ import Faq from '../../DeveloperHanan/Faq';
 import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList} from './types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList} from './types';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -35,7 +35,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={30} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
         }}
       />
             <BottomTab.Screen
@@ -43,7 +43,7 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
            // @ts-expect-error
-           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
+           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={25} />,
         }}
       />
         <BottomTab.Screen
@@ -51,7 +51,15 @@ export default function BottomTabNavigator() {
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="shop" color="black"size={30} />,
+          tabBarIcon: ({ color }) => <Icon name="shop" color="black"size={25} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={TabFourNavigator}
+        options={{
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -76,19 +84,19 @@ function TabOneNavigator() {
         options={{ headerTitle: 'Home' }}
       />
       <TabOneStack.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        name="Faq"
+        component={Faq}
+        options={{ headerTitle: 'Faq' }}
+      />
+      <TabOneStack.Screen
+        name="Reviews"
+        component={Faq}
+        options={{ headerTitle: 'Reviews' }}
       />
       <TabOneStack.Screen
         name="Search"
         component={SearchSensors}
         options={{ headerTitle: 'Search' }}
-      />
-      <TabOneStack.Screen
-        name="Faq"
-        component={Faq}
-        options={{ headerTitle: 'Faq' }}
       />
     </TabOneStack.Navigator>
   );
@@ -108,20 +116,6 @@ function TabTwoNavigator() {
   );
 }
 
-// const TabFourtack = createStackNavigator<TabFourParamList>();
-
-// function TabFourNavigator() {
-//   return (
-//     <TabFourtack.Navigator>
-//       <TabFourtack.Screen
-//         name="Faq"
-//         component={Faq}
-//         options={{ headerTitle: 'Faqs' }}
-//       />
-//     </TabFourtack.Navigator>
-//   );
-// }
-
 const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
 function TabThreeNavigator() {
@@ -136,30 +130,17 @@ function TabThreeNavigator() {
   );
 }
 
-// const TabThreeStack = createStackNavigator<TabThreeParamList>();
 
-// function TabThreeNavigator() {
-//   return (
-//     <TabThreeStack.Navigator>
-//       <TabThreeStack.Screen
-//         name="Search"
-//         component={SearchSensors}
-//         options={{ headerTitle: 'Search' }}
-//       />
-//     </TabThreeStack.Navigator>
-//   );
-// }
+const TabFourStack = createStackNavigator<TabFourParamList>();
 
-// const TabFourStack = createStackNavigator<TabFourParamList>();
-
-// function TabFourNavigator() {
-//   return (
-//     <TabFourStack.Navigator>
-//       <TabFourStack.Screen
-//         name="SettingsScreen"
-//         component={SettingsScreen}
-//         options={{ headerTitle: 'Settings' }}
-//       />
-//     </TabFourStack.Navigator>
-//   );
-// }
+function TabFourNavigator() {
+  return (
+    <TabFourStack.Navigator>
+      <TabFourStack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ headerTitle: 'Settings' }}
+      />
+    </TabFourStack.Navigator>
+  );
+}

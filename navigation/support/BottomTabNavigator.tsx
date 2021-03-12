@@ -2,15 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-
+import { Icon } from 'react-native-elements'
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
-import SensorsScreen from '../../screens/Support/DashboardScreen';
+import SupportHomeScreen from '../../DeveloperAisha/SupportHomeScreen';
 // @ts-expect-error
-import ActionsScreen from '../../screens/Support/ActionsScreen';
-// @ts-expect-error
-import SettingsScreen from '../../screens/Support/SettingsScreen';
+import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
@@ -23,34 +21,38 @@ export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="Dashboard"
+        name="Home"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+           // @ts-expect-error
+            tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Reports"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+           // @ts-expect-error
+           tabBarIcon: ({ color }) => <Icon name="report" color="black"size={25} />,
         }}
       />
          <BottomTab.Screen
         name="Faq"
-        component={TabFourNavigator}
+        component={TabThreeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="question" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
-        component={TabThreeNavigator}
+        component={TabFourNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -72,9 +74,9 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="DashboardScreen"
-        component={SensorsScreen}
-        options={{ headerTitle: 'Dashboard' }}
+        name="Home"
+        component={SupportHomeScreen}
+        options={{ headerTitle: 'Home' }}
       />
     </TabOneStack.Navigator>
   );
@@ -100,9 +102,9 @@ function TabThreeNavigator() {
   return (
     <TabThreeStack.Navigator>
       <TabThreeStack.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        name="Faq"
+        component={Faq}
+        options={{ headerTitle: 'Faq' }}
       />
     </TabThreeStack.Navigator>
   );
@@ -114,9 +116,9 @@ function TabFourNavigator() {
   return (
     <TabFourtack.Navigator>
       <TabFourtack.Screen
-        name="Faq"
-        component={Faq}
-        options={{ headerTitle: 'Faqs' }}
+        name="Settings"
+        component={SettingsScreen}
+        options={{ headerTitle: 'Settings' }}
       />
     </TabFourtack.Navigator>
   );

@@ -7,7 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import UserContext from "../UserContext";
 
-import RegisterLogin from "./RegisterLogin";
+import Login from "./Login";
 import Register from "./Register";
 import Faq from "./Faq";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
@@ -142,7 +142,7 @@ function MyDrawer({ user }) {
         !user ?
           <>
             <Drawer.Screen name="Home" component={Home} />
-            <Drawer.Screen name="Login" component={RegisterLogin} />
+            <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Register" component={Register} />
             <Drawer.Screen name="Faq" component={Faq} />
           </>

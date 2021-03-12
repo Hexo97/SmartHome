@@ -18,9 +18,9 @@ export type TabTwoParamList = {
 };
 
 export type TabThreeParamList = {
-  SettingsScreen: undefined;
+  ManageSensors: undefined;
 };
 
 export type TabFourParamList = {
-  ManageSensors: undefined;
+  SettingsScreen: undefined;
 };

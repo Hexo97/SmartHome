@@ -1,11 +1,11 @@
 export type BottomTabParamList = {
-  Dashboard: undefined;
-  Actions: undefined;
+  Home: undefined;
+  AdsAction: undefined;
   Settings: undefined;
 };
 
 export type TabOneParamList = {
-  DashboardScreen: undefined;
+  Home: undefined;
 };
 
 export type TabTwoParamList = {

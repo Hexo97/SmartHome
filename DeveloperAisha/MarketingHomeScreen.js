@@ -10,7 +10,7 @@ import fb from '../fb'
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CustomerHomeScreen({navigation}) {
+export default function MarketingHomeScreen({navigation}) {
   const { user } = useContext(UserContext)
 
   const [dt, setDt] = useState(new Date().toLocaleString());
@@ -157,27 +157,6 @@ export default function CustomerHomeScreen({navigation}) {
                 <Text style={[styles.text, styles.subText],{textAlign:"right", color:"white"}}>{dt}</Text>
                 </View>
 
-                <Button
-                      title="View Notifications"
-                      type="outline"
-                      // onPress={() => navigation.navigate('Notifications')}
-                />
-                    <View style={styles.space} />
-                <Button
-                      title="FAQs"
-                      type="outline"
-                      onPress={() => navigation.navigate('Faq')}
-                />
-                 <Button
-                      title="Reviews"
-                      type="outline"
-                      // onPress={() => navigation.navigate('Settings')}
-                />
-                 <Button
-                      title="Search Sensors"
-                      type="outline"
-                      onPress={() => navigation.navigate('Search')}
-                />
                     <View style={styles.space} />
                 </ScrollView>
         </SafeAreaProvider>
@@ -305,13 +284,4 @@ const styles = StyleSheet.create({
       alignItems: "flex-start",
       marginBottom: 16
   },
-  // activityIndicator: {
-  //     backgroundColor: "#CABFAB",
-  //     padding: 4,
-  //     height: 12,
-  //     width: 12,
-  //     borderRadius: 6,
-  //     marginTop: 3,
-  //     marginRight: 20
-  // },
 });

@@ -87,6 +87,7 @@ export default function RealTimeMonitoring() {
         <View style= {{marginTop:20, marginBottom:5}}>
         <Text style= {{ color: '#fff',textAlign:"center", fontSize:15 }}>Track user's daily sign in activity by the user type here.</Text>
         </View>
+        
         <View style={styles.getStartedContainer}>
         <Picker
             selectedValue={userType}
