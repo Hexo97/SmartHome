@@ -2,11 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Icon } from 'react-native-elements'
+
 
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
-import SensorsScreen from '../../screens/Marketing/DashboardScreen';
+import MarketingHomeScreen from '../../DeveloperAisha/MarketingHomeScreen';
 // @ts-expect-error
 import AdsAction from '../../DeveloperHanan/AdsAction';
 // @ts-expect-error
@@ -19,28 +21,31 @@ export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
-      initialRouteName="Dashboard"
+      initialRouteName="Home"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="Dashboard"
+        name="Home"
         component={TabOneNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          options={{
+            // @ts-expect-error
+            tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
-        name="Actions"
+        name="AdsAction"
         component={TabTwoNavigator}
         
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+               // @ts-expect-error
+               tabBarIcon: ({ color }) => <Icon name="advertisement" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={TabThreeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+                // @ts-expect-error
+                tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -62,9 +67,9 @@ function TabOneNavigator() {
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
-        name="DashboardScreen"
-        component={SensorsScreen}
-        options={{ headerTitle: 'Dashboard' }}
+        name="Home"
+        component={MarketingHomeScreen}
+        options={{ headerTitle: 'Home' }}
       />
     </TabOneStack.Navigator>
   );
@@ -78,7 +83,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="AdsAction"
         component={AdsAction}
-        options={{ headerTitle: 'Actions', headerShown:false }}
+        options={{ headerTitle: 'Ads', headerShown:false }}
       />
     </TabTwoStack.Navigator>
   );

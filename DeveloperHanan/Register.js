@@ -19,6 +19,7 @@ export default function Register({ navigation }) {
         id: fb.auth().currentUser.uid,
         role: "Customer",
       });
+      await db.RealTimeMonitoring.create({userid: fb.auth().currentUser.uid, activity: "Register", activityDate: new Date() , email})
     } catch (error) {
       alert(error.message);
     }

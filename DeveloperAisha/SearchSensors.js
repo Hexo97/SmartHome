@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { View , Text} from '../components/Themed';
 import { SearchBar ,ListItem} from 'react-native-elements';
 import UserContext from '../UserContext'
@@ -49,6 +49,7 @@ export default function SearchSensors() {
 
   return (
     <SafeAreaProvider style={styles.container}>
+           <ScrollView showsVerticalScrollIndicator={false}>
       <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:20, marginBottom:10}}>
         <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:18 , fontWeight:"bold"}}> Search Sensors</Text>
         </View>
@@ -81,6 +82,7 @@ export default function SearchSensors() {
           <DisplaySearched sensor={sensorResult} />
         }
        </Text>
+       </ScrollView>
     </SafeAreaProvider>
   );
 }

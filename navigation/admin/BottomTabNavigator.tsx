@@ -33,7 +33,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={30} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -41,23 +41,23 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={30} />,
+          tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
         name="ManageSensors"
         component={TabThreeNavigator}
         options={{
-                    // @ts-expect-error
-                    tabBarIcon: ({ color }) => <Icon name="manage" color="black"size={30} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="publish" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={TabFourNavigator}
         options={{
-                    // @ts-expect-error
-                    tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={30} />,
+            // @ts-expect-error
+            tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
         }}
       />
     </BottomTab.Navigator>
