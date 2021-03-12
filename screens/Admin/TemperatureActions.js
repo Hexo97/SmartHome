@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Colors from '../../constants/Colors';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Text, View } from '../../components/Themed';
 import db from '../../db'
 import UserContext from '../../UserContext'
+import { Button, Card} from 'react-native-elements'
 
 export default function TemperatureActions({ sensor }) {
 
@@ -37,61 +39,64 @@ export default function TemperatureActions({ sensor }) {
   }
 
   return (
-    <View style={styles.helpContainer}>
-      <TouchableOpacity onPress={() => updateMinMax('min', -10)} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Decrement min by 10
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => updateMinMax('min', 10)} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Increment min by 10
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => updateMinMax('max', -10)} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Decrement max by 10
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => updateMinMax('max', 10)} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Increment max by 10
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={uploadReading} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Upload a new random reading
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleToggleAlert} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Toggle alert field
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleStartSimulator} style={styles.title} disabled={intervalId !== 0}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Start simulator
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setDelay(delay - 1)} style={styles.title} disabled={delay <= 1}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Decrement delay by 1
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setDelay(delay + 1)} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Increment delay by 1
-    </Text>
-      </TouchableOpacity>
-      <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-        Delay: {delay}
+    <SafeAreaProvider style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <Button
+            title=" Decrement min by 10"
+            type="outline"
+            onPress={() => updateMinMax('min', -10)} 
+      />
+    <Button
+            title=" Decrement max by 10"
+            type="outline"
+            onPress={() => updateMinMax('max', -10)}
+      />
+        <Button
+            title=" Increment max by 10"
+            type="outline"
+            onPress={() => updateMinMax('max', 10)}
+      />
+    <Button
+            title="Upload a new random reading"
+            type="outline"
+            onPress={uploadReading}
+      />
+    <Button
+            title="Toggle alert field"
+            type="outline"
+            onPress={handleToggleAlert} 
+      />
+            <Button
+            title=" Start simulator"
+            type="outline"
+            onPress={handleStartSimulator} 
+      />
+      <Button
+            title="Stop simulator"
+            type="outline"
+            onPress={handleStopSimulator}
+      />
+    <Button
+            title=" Decrement delay by 1"
+            type="outline"
+            onPress={() => setDelay(delay - 1)} 
+      />
+      <Button
+            title="Increment delay by 1"
+            type="outline"
+            onPress={() => setDelay(delay + 1)} 
+      />
+      <View style={{margin:10}}>
+      <Card>
+      <Text style={{color:"black", fontSize:20}}>
+        Delay {delay}
       </Text>
-      <TouchableOpacity onPress={handleStopSimulator} style={styles.title} disabled={intervalId === 0}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Stop simulator
-    </Text>
-      </TouchableOpacity>
-    </View>
+      </Card>
+      </View>
+
+
+      </ScrollView>
+        </SafeAreaProvider>
   )
 }
 

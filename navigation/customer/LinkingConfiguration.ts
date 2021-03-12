@@ -9,9 +9,9 @@ export default {
           TabOne: {
             screens: {
               Home: 'one',
-              Settings:'two',
-              Search:'three',
-              Faq:'four'
+              Faq:'two',
+              Reviews:'three',
+              Search:'four'
             },
           },
           TabTwo: {
@@ -22,6 +22,11 @@ export default {
           TabThree: {
             screens: {
               Shop: 'two',
+            },
+          },
+          TabFour: {
+            screens: {
+              Settings: 'two',
             },
           },
         },

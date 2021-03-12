@@ -33,10 +33,9 @@ export default function AdminDashboardScreen() {
   return (
     <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBar}>
-                    <Ionicons name="menu-outline" size={24} color="white"></Ionicons>
-                    <Ionicons name="notifications-outline" size={30} color="white"></Ionicons>
-        </View>
+        <View style={styles.navBar}>
+        <Text style={styles.headingText}>Admin Dashboard</Text>
+      </View>
 
         <View style= {{ backgroundColor:"#007CC7", height:30, marginRight:20, marginLeft:20}}>
                 <Text style= {{ fontWeight:"bold", fontStyle:"italic" ,color: 'black',textAlign:"center",marginTop:10, fontSize:15 }}>User Information</Text>
@@ -318,4 +317,17 @@ const styles = StyleSheet.create({
       alignItems: "flex-start",
       marginBottom: 16
   },
+  headingText: {
+    top: "9%",
+    fontSize: 30,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  navBar: {
+    backgroundColor: "#007CC7",
+    height: 50,
+    alignItems: "center",
+    marginBottom:20
+  },
 });
+

@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import React, { useState, useEffect, version } from 'react';
+import { StyleSheet, TouchableOpacity, Platform, ScrollView} from 'react-native';
 import Colors from '../../constants/Colors';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Text, View } from '../../components/Themed';
 import fb from '../../fb'
 import db from '../../db'
+import { Button} from 'react-native-elements'
 import * as ImagePicker from 'expo-image-picker';
 
 export default function MotionActions({ sensor }) {
@@ -50,18 +52,23 @@ export default function MotionActions({ sensor }) {
   const handleToggleMotionDetected = () => db.Sensors.toggleMotionDetected(sensor)
 
   return (
-    <View style={styles.helpContainer}>
-      <TouchableOpacity onPress={uploadImage} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Upload an image
-    </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleToggleMotionDetected} style={styles.title}>
-        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Toggle motion detected field
-    </Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaProvider style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+    
+    <View style={styles.space} />
+      <Button
+            title="Upload Image"
+            type="outline"
+            onPress={uploadImage} 
+      />
+            <Button
+            title="Toggle Motion Detection"
+            type="outline"
+            onPress={handleToggleMotionDetected}
+      />
+
+      </ScrollView>
+        </SafeAreaProvider>
   )
 }
 
@@ -79,5 +86,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  space: {
+    width: 0, // or whatever size you need
+    height: 7,
   },
 });
