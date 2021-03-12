@@ -99,7 +99,7 @@ export default function SettingsScreen() {
       </View>
 
       <TouchableOpacity onPress={saveName} style={styles.loginBtn}>
-        <Text style={styles.loginText}>Save Info</Text>
+        <Text style={styles.loginText}>Save</Text>
       </TouchableOpacity>
 
       <View style={styles.inputView}>
@@ -199,9 +199,9 @@ const styles = StyleSheet.create({
   },
 
   loginBtn: {
-    width: "45%",
+    width: "35%",
     borderRadius: 10,
-    height: 20,
+    height: 25,
     alignItems: "center",
     justifyContent: "center",
     // marginTop: 25,
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     top: "0.5%",
     fontSize: 30,
     textAlign: "center",
-    marginLeft: "32%",
+    marginLeft: "34%",
     fontWeight: "bold",
   },
 });

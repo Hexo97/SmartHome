@@ -15,7 +15,7 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
   return (
     <Collapse>
       <CollapseHeader>
-        <Text style={styles.title1}>Question:</Text>
+      
         <View>
           <Text>{faq.question} </Text>
         </View>
@@ -26,7 +26,7 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
           <>
             <TouchableOpacity onPress={() => edit(faq)} style={styles.title}>
               <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-                edit
+                Edit
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -114,16 +114,21 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#007CC7",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
     margin: 2,
+    color:"white",
+    fontWeight: "bold",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
+   
     textAlign: "center",
+    marginLeft:"30%",
+    
   },
   title1: {
     fontSize: 14,
