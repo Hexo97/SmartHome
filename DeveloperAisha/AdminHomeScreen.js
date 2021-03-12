@@ -88,10 +88,10 @@ export default function CustomerHomeScreen({navigation}) {
   return (
     <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.titleBar}>
+        {/* <View style={styles.titleBar}>
                     <Ionicons name="menu-outline" size={24} color="white"></Ionicons>
                     <Ionicons name="notifications-outline" size={30} color="white"></Ionicons>
-        </View>
+        </View> */}
             <View style={{ alignSelf: "center", backgroundColor:"#12232E"}}>
                 <View style={styles.profileImage}>
                     <Image source={{uri: currentProfile}} style={styles.image} resizeMode="center"></Image>
@@ -161,7 +161,7 @@ export default function CustomerHomeScreen({navigation}) {
                 <Text style={[styles.text, styles.subText],{textAlign:"right", color:"white"}}>{dt}</Text>
                 </View>
                 <Button
-                      title="Check Dashboard"
+                      title="Dashboard"
                       type="outline"
                       onPress={() => navigation.navigate('Dashboard')}
                     />
@@ -173,13 +173,13 @@ export default function CustomerHomeScreen({navigation}) {
                     />
                     <View style={styles.space} />
                     <Button
-                      title="Logs"
+                      title="Sensor Logs"
                       type="outline"
                       // onPress={() => navigation.navigate('Settings')}
                     />
                     <View style={styles.space} />
                 <Button
-                      title="Monitor Logins"
+                      title="Monitor Login Activity"
                       type="outline"
                       onPress={() => navigation.navigate('RealTimeMonitoring')}
                     />
