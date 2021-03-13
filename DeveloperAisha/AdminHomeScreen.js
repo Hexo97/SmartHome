@@ -173,9 +173,9 @@ export default function CustomerHomeScreen({navigation}) {
                     />
                     <View style={styles.space} />
                     <Button
-                      title="Sensor Logs"
+                      title="Sensors Logs"
                       type="outline"
-                      // onPress={() => navigation.navigate('Settings')}
+                      onPress={() => navigation.navigate('Logs')}
                     />
                     <View style={styles.space} />
                 <Button

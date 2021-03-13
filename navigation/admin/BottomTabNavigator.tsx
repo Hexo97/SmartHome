@@ -17,6 +17,8 @@ import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
 // @ts-expect-error
+import AdminSensorsLogs from '../../DeveloperMahmoud/AdminSensorsLogs';
+// @ts-expect-error
 import ManageSensors from '../../screens/Admin/ManageSensors';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList} from './types';
 
@@ -87,6 +89,11 @@ function TabOneNavigator() {
         name="Dashboard"
         component={AdminDashboardScreen}
         options={{ headerTitle: 'Dashboard' }}
+      />
+      <TabOneStack.Screen
+        name="Logs"
+        component={AdminSensorsLogs}
+        options={{ headerTitle: 'Logs' }}
       />
       <TabOneStack.Screen
         name="RealTimeMonitoring"

@@ -229,6 +229,12 @@ class Simulator extends DB {
 
 }
 
+class Logs extends DB {
+  constructor() {
+    super('logs')
+  }
+}
+
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
@@ -237,9 +243,8 @@ export default {
   Request: new Request(),
   Reports: new Reports(),
   Faq: new Faq(),
-  Simulator : new Simulator(),
-
-  //AISHA
+  Simulator: new Simulator(),
+  Logs: new Logs(),
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor()
 }
