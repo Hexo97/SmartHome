@@ -29,13 +29,13 @@ export default function DisplaySearched({ sensor }) {
 
     const sendRating = async (rating) =>
     {
-        await popularId && db.PopularSensor.update({id:popularId.id,rate:rating, datesearched: new Date(), sensorid:sensor.id})
+        await popularId && db.PopularSensor.update({id:popularId.id,rate:rating, dateSearched: new Date(), sensorid:sensor.id, name:sensor.location})
     }
     return (
         <SafeAreaProvider>
         <ScrollView showsVerticalScrollIndicator={false}>
         
-        <View style={{width:300 , marginLeft:40, marginHorizontal:40}}>
+        <View style={{width:300 , marginLeft:40, marginHorizontal:40, marginBottom:80}}>
         <Card>
         <Card.Title style={{fontSize:20,backgroundColor:"#4DA8DA"}}>{sensor.location}</Card.Title>
         <Card.Divider/>
@@ -53,7 +53,7 @@ export default function DisplaySearched({ sensor }) {
             {
                 categories
                 &&
-                categories.map(cat =>  cat.id == sensor.categoryid ?  <Text key={cat.id}>{cat.price}</Text> : undefined)
+                categories.map(cat =>  cat.id == sensor.categoryid ?  <Text key={cat.id}>{"QR:"}{cat.price}</Text> : undefined)
             }
          </Text>
 

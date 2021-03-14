@@ -12,6 +12,8 @@ import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
+import SensorRequest from '../../DeveloperHanan/SensorRequest';
+// @ts-expect-error
 import Reports from '../../DeveloperAahmad/Reports';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList } from './types';
 
@@ -31,6 +33,7 @@ export default function BottomTabNavigator() {
             tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
         }}
       />
+
       <BottomTab.Screen
         name="Reports"
         component={TabTwoNavigator}
@@ -77,6 +80,12 @@ function TabOneNavigator() {
         name="Home"
         component={SupportHomeScreen}
         options={{ headerTitle: 'Home' }}
+      />
+
+<TabOneStack.Screen
+        name="SensorRequest"
+        component={SensorRequest}
+        options={{ headerTitle: 'Sensor Request' }}
       />
     </TabOneStack.Navigator>
   );

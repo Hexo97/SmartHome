@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UserContext from '../UserContext'
 import db from '../db'
 import fb from '../fb'
+import { IconButton, Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -160,6 +161,7 @@ export default function CustomerHomeScreen({navigation}) {
                 <Button
                       title="View Notifications"
                       type="outline"
+                      buttonStyle = {styles.myButton}
                       // onPress={() => navigation.navigate('Notifications')}
                 />
                     <View style={styles.space} />
@@ -168,17 +170,31 @@ export default function CustomerHomeScreen({navigation}) {
                       type="outline"
                       onPress={() => navigation.navigate('Faq')}
                 />
+                   <View style={styles.space} />
                  <Button
                       title="Reviews"
                       type="outline"
                       // onPress={() => navigation.navigate('Settings')}
                 />
+                   <View style={styles.space} />
                  <Button
-                      title="Search Sensors"
+                      title="Find Sensors"
                       type="outline"
                       onPress={() => navigation.navigate('Search')}
                 />
+{/* ----------------------------------HANAN-------------------------------------------- */}
+                 <Button
+                      title="Payment History"
+                      type="outline"
+                      onPress={() => navigation.navigate('PaymentHistory')}
+                />  
+{/*--------------------------------------------------------------------------------------  */}
                     <View style={styles.space} />
+                <Button
+                      title="My List"
+                      type="outline"
+                      onPress={() => navigation.navigate('List')}
+                />
                 </ScrollView>
         </SafeAreaProvider>
   );
@@ -232,7 +248,7 @@ const styles = StyleSheet.create({
   },
   space: {
     width: 0, // or whatever size you need
-    height: 7,
+    height: 5,
   },
   add: {
       backgroundColor: "#41444B",
@@ -305,13 +321,4 @@ const styles = StyleSheet.create({
       alignItems: "flex-start",
       marginBottom: 16
   },
-  // activityIndicator: {
-  //     backgroundColor: "#CABFAB",
-  //     padding: 4,
-  //     height: 12,
-  //     width: 12,
-  //     borderRadius: 6,
-  //     marginTop: 3,
-  //     marginRight: 20
-  // },
 });

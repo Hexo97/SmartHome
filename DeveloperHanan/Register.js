@@ -32,7 +32,7 @@ export default function Register({ navigation }) {
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("../assets/images/menu.png")}
+            source={require("../assets/images/icon2.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
@@ -91,7 +91,7 @@ export default function Register({ navigation }) {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#007CC7",
     height: 60,
     paddingRight: 10,
     width: "100%",

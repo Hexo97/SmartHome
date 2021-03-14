@@ -11,7 +11,7 @@ import fb from '../fb'
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CustomerHomeScreen({navigation}) {
+export default function AdminHomeScreen({navigation}) {
   const { user } = useContext(UserContext)
 
   const [dt, setDt] = useState(new Date().toLocaleString());

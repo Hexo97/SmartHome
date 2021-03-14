@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -16,13 +16,12 @@ import db from "../db";
 export default function ShopItem({ category, edit, remove }) {
   const { user } = useContext(UserContext);
 
-
   const [payment, setPayment] = useState([]);
 
   const [catId, setCategory] = useState([]);
   const [cdate, setDate] = useState("");
   const [price, setPrice] = useState("");
-  const [cuser, setUser] = useState("");
+  const [userid, setUser] = useState("");
   const [id, setId] = useState("");
 
   const create = async (cprice, catId) => {
@@ -30,23 +29,29 @@ export default function ShopItem({ category, edit, remove }) {
       id: id,
       cdate: new Date(),
       price: cprice,
-      cuser: user.id,
-      categories: catId
+      userid: user.id,
+      categories: catId,
     });
     setId("");
     setPrice("");
     setUser("");
     setDate("");
     setCategory("");
+    alert("Item in process, Sensor will be avaibale in some time");
   };
+
 
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.container}>
+        <View style={styles.container}>
           <Card>
             <Card.Title
-              style={{ backgroundColor: "#4DA8DA",color:"black", fontWeight: "bold" }}
+              style={{
+                backgroundColor: "#4DA8DA",
+                color: "black",
+                fontWeight: "bold",
+              }}
             >
               {category.name}
             </Card.Title>
@@ -61,7 +66,7 @@ export default function ShopItem({ category, edit, remove }) {
                 fontSize: 15,
                 // fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
-                color:"black"
+                color: "black",
               }}
             >
               {category.description}
@@ -71,19 +76,21 @@ export default function ShopItem({ category, edit, remove }) {
                 fontSize: 20,
                 // fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
-                color:"black",
-                
+                color: "black",
               }}
             >
-             QR: {category.price}
+              QR: {category.price} 
             </Text>
 
-            <TouchableOpacity onPress={() => create(category.price, category.id)} style={styles.title}>
-          <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-          Buy
-          </Text>
-        </TouchableOpacity>
-            <Card.Divider />
+            <TouchableOpacity
+              onPress={() => create(category.price, category.id)}
+              style={styles.title}
+            >
+              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
+                Buy
+              </Text>
+            </TouchableOpacity>
+         
           </Card>
         </View>
       </ScrollView>
