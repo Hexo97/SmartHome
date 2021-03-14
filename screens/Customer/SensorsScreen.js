@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
 import { View, Text } from '../../components/Themed';
 import MotionInfo from './MotionInfo'
 import TemperatureInfo from './TemperatureInfo'
+import SoundInfo from './SoundInfo'
 import CategoryByUserPicker from '../pickers/CategoryByUserPicker';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SensorByUserAndCategoryPicker from '../pickers/SensorByUserAndCategoryPicker';
@@ -90,6 +91,11 @@ export default function SensorsScreen({navigation}) {
               category.name === "Temperature"
               &&
               <TemperatureInfo user={user} category={category} sensor={sensor} />
+            }
+            {
+              category.name === "Sound"
+              &&
+              <SoundInfo user={user} category={category} sensor={sensor} />
             }
 
 

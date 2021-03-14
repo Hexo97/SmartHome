@@ -1,66 +1,67 @@
 import firebase from "./fb";
-import fetch from "node-fetch";
 const db = firebase.firestore();
 
-
 class DB {
-
   constructor(collection) {
-    this.collection = collection
+    this.collection = collection;
   }
 
   reformat(doc) {
     // console.log('reformat', doc.id)
-    return { id: doc.id, ...doc.data() }
+    return { id: doc.id, ...doc.data() };
   }
 
   findAll = async () => {
-    const data = await db.collection(this.collection).get()
-    return data.docs.map(this.reformat)
-  }
+    const data = await db.collection(this.collection).get();
+    return data.docs.map(this.reformat);
+  };
 
-  listenAll = set =>
-    db.collection(this.collection).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+  listenAll = (set) =>
+    db
+      .collection(this.collection)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-  findOne = async id => {
-    const doc = await db.collection(this.collection).doc(id).get()
-    return doc.exists ? this.reformat(doc) : undefined
-  }
+  findOne = async (id) => {
+    const doc = await db.collection(this.collection).doc(id).get();
+    return doc.exists ? this.reformat(doc) : undefined;
+  };
 
   listenOne = (set, id) =>
     id === ""
-      ?
-      set(null)
-      :
-      db.collection(this.collection).doc(id).onSnapshot(snap => set(this.reformat(snap)))
+      ? set(null)
+      : db
+          .collection(this.collection)
+          .doc(id)
+          .onSnapshot((snap) => set(this.reformat(snap)));
 
   // item has no id
-  create = async item => {
-    const { id, ...rest } = item
-    return await db.collection(this.collection).add(rest)
-  }
+  create = async (item) => {
+    const { id, ...rest } = item;
+    return await db.collection(this.collection).add(rest);
+  };
 
   // item has id
-  update = async item => {
-    const { id, ...rest } = item
-    await db.collection(this.collection).doc(id).set(rest)
-  }
+  update = async (item) => {
+    const { id, ...rest } = item;
+    await db.collection(this.collection).doc(id).set(rest);
+  };
 
-  remove = async id => {
-    await db.collection(this.collection).doc(id).delete()
-  }
+  remove = async (id) => {
+    await db.collection(this.collection).doc(id).delete();
+  };
 }
 
 class Ads extends DB {
-
   constructor() {
-    super('ads')
+    super("ads");
   }
 
   // max 10
   listenInIds = (set, ids) =>
-    db.collection(this.collection).where(db.FieldPath.documentId(), "in", ids).onSnapshot(snap => set(snap.docs.map(this.reformat)))
-
+    db
+      .collection(this.collection)
+      .where(db.FieldPath.documentId(), "in", ids)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 class Sensors extends DB {
@@ -85,6 +86,12 @@ class Sensors extends DB {
     db
       .collection(this.collection)
       .where("userid", "==", userid)
+      .where("categoryid", "==", categoryid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  listenSensorsByCategory = (set, categoryid) =>
+    db
+      .collection(this.collection)
       .where("categoryid", "==", categoryid)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
@@ -154,7 +161,10 @@ class Users extends DB {
   }
 
   listenByRole = (set, role) =>
-    db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+    db
+      .collection(this.collection)
+      .where("role", "==", role)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 class SuggestionList extends DB {
@@ -200,7 +210,10 @@ class Reports extends DB {
   }
 
   reformat(doc) {
-    return { ...super.reformat(doc), dateCreated: doc.data().dateCreated.toDate() }
+    return {
+      ...super.reformat(doc),
+      dateCreated: doc.data().dateCreated.toDate(),
+    };
   }
 }
 
@@ -210,25 +223,54 @@ class Faq extends DB {
   }
 }
 
-class RealTimeMonitoring extends DB {
+class Payment extends DB {
   constructor() {
-    super('realtimemonitoring')
+    super("payments");
   }
 
   reformat(doc) {
-    return { ...super.reformat(doc), activityDate: doc.data().activityDate.toDate() }
+    return { ...super.reformat(doc), cdate: doc.data().cdate.toDate() };
+  }
+
+  listenByPayment = (set, userid) =>
+    db
+      .collection(this.collection)
+      .where("userid", "==", userid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+}
+
+class RealTimeMonitoring extends DB {
+  constructor() {
+    super("realtimemonitoring");
+  }
+
+  reformat(doc) {
+    return {
+      ...super.reformat(doc),
+      activityDate: doc.data().activityDate.toDate(),
+    };
   }
 
   listentToTracksByOperation = (set, operation) =>
-    db.collection(this.collection).where('activity', '==', activity).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+    db
+      .collection(this.collection)
+      .where("activity", "==", activity)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
   listenToTracksByUsers = (set, users) =>
-    db.collection(this.collection).where('userId', 'in', users.map(user => user.id)).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+    db
+      .collection(this.collection)
+      .where(
+        "userId",
+        "in",
+        users.map((user) => user.id)
+      )
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 class PopularSensor extends DB {
   constructor() {
-    super('popularsensor')
+    super("popularsensor");
   }
   reformat(doc) {
     return { ...super.reformat(doc), dateSearched: doc.data().dateSearched.toDate() }
@@ -243,26 +285,39 @@ class PopularSensor extends DB {
 
 class Simulator extends DB {
   constructor() {
-      super('simulator')
+    super("simulator");
   }
 
   listenBySensor = (set, sensorid) =>
-      db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+    db
+      .collection(this.collection)
+      .where("sensorid", "==", sensorid)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
+}
 
+class Logs extends DB {
+  constructor() {
+    super('logs')
+  }
 }
 
 
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
-  Ads: new Ads(),
   Users: new Users(),
   Request: new Request(),
   Reports: new Reports(),
+  
+  //HANAN
+  Ads: new Ads(),
   Faq: new Faq(),
-  Simulator : new Simulator(),
+  Payment: new Payment(),
 
   //AISHA
+  Simulator: new Simulator(),
+  Logs: new Logs(),
+
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),
-}
+};

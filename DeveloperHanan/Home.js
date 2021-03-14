@@ -3,63 +3,27 @@ import * as React from "react";
 import { useState, useEffect, useContext } from "react";
 import { Image, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Carousel, { Pagination } from "react-native-snap-carousel";
 import UserContext from "../UserContext";
 
 import Login from "./Login";
 import Register from "./Register";
-import Faq from "./Faq";
 import Popular from "../DeveloperAisha/Popular";
+import FaqPublic from "./FaqPublic";
+import Advertisments from "./Advertisments";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
-import Gallery from "react-native-image-gallery";
-import db from "../db";
-import { SliderBox } from "react-native-image-slider-box";
 import "react-native-gesture-handler";
 import { View, Text } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 
-import { Card } from "react-native-elements";
+
 
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
-
-  const [items, setItems] = useState([]);
-  const [ads, setAds] = useState([]);
-  useEffect(() => db.Ads.listenAll(setAds), []);
-
-  // useEffect(() => {categorries})
-
-  let [myText, setMyText] = useState("");
-  let [myDate, setMyDate] = useState("");
-
-  useEffect(() => {
-    let items = ads.map((v, i) => {
-      //Loop to make image array to show in slider
-      return v.image;
-    });
-    // console.log(items)
-    setItems(items);
-    showText(0);
-  }, [ads]);
-
-  const showText = async (p) => {
-    // console.log("nailaaa " + p);
-    await ads.map((y, i) => {
-      //get the description from that position
-      if (p == i) {
-        setMyText(y.desc);
-        setMyDate(y.date);
-      }
-    });
-  };
-
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.imagebg}>
@@ -67,7 +31,7 @@ export function Home({ navigation }) {
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("../assets/images/menu.png")}
+            source={require("../assets/images/icon2.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
@@ -149,7 +113,8 @@ function MyDrawer({ user }) {
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Register" component={Register} />
             <Drawer.Screen name="Popular" component={Popular} />
-            <Drawer.Screen name="Faq" component={Faq} />
+            <Drawer.Screen name="Faq" component={FaqPublic} />
+            <Drawer.Screen name="Advertisments" component={Advertisments} />
           </>
           :
           <>
@@ -171,7 +136,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#007CC7",
     height: 60,
     paddingRight: 10,
     width: "100%",

@@ -9,6 +9,7 @@ export default {
           TabOne: {
             screens: {
               Home: 'one',
+              SensorRequest:'two',
               Reviews:'three',
             },
           },

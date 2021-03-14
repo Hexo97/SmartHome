@@ -13,7 +13,8 @@ export default {
               Reviews:'three',
               Search:'four',
               List:'five',
-              AllUserSensors:'six'
+              AllUserSensors:'six',
+              PaymentHistory:'seven'
             },
           },
           TabTwo: {
