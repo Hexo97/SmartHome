@@ -55,6 +55,8 @@ exports.createSampleData = functions.https.onCall(
       )
     )
 
+    //----------------------------------HANAN-----------------------------------------------//
+
     const ads = await findAll('ads')
     await Promise.all(
       ads.map(
@@ -71,6 +73,7 @@ exports.createSampleData = functions.https.onCall(
       )
     )
 
+    //-----------------------------------------------------------------------------------------//
     const users = await findAll('users')
     await Promise.all(
       users.map(
@@ -124,16 +127,16 @@ exports.createSampleData = functions.https.onCall(
     const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
     functions.logger.info("result6", { result6 })
 
-    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt26P0l14fu4z1s2kbn18zKiv5WrMUwBDyig&usqp=CAU", price:150 })
+    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png", price:1500 })
     functions.logger.info("categoryId1", { categoryId1 })
 
-    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW1muEnGAVO4oHm2VxXQbsKl5IzAbzOo4acg&usqp=CAU", price:20 })
+    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1", price:2000 })
     functions.logger.info("categoryId2", { categoryId2 })
 
-    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpX4FXkePmm2IoZ7AwrsA9PXR_6-b5sb2PYA&usqp=CAU", price:458 })
+    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://cordis.europa.eu/docs/news/images/2020-04/417988.jpg", price:1520 })
     functions.logger.info("categoryId3", { categoryId3 })
 
-    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyGxYQREXgAEY-isMpl79tpMB13a3HxC_d7g&usqp=CAU" , price:890})
+    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg" , price:4900})
 
     functions.logger.info("categoryId4", { categoryId4 })
 
@@ -143,26 +146,30 @@ exports.createSampleData = functions.https.onCall(
     const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
     functions.logger.info("sensorId2", { sensorId2 })
 
+    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
+    functions.logger.info("sensorId3", { sensorId3 })
+
+    //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
+    
+
     const { id: faq1 } = await db.collection('faqs').add({ question: "What is the price of sensors package?", answer: "It is 10,000 QR yearly based" })
     functions.logger.info("faq1", { faq1 })
 
     const { id: faq2 } = await db.collection('faqs').add({ question: "Do you have promotions?", answer: "yes we provide promotion to sensors eith more thne 2 users" })
     functions.logger.info("faq2", { faq2 })
 
-    const { id: adId1 } = await db.collection('ads').add({ desc: "Stay safe! Buy our motion sensors" , categoryid: categoryId1, image: "https://mashtips.com/wp-content/uploads/2016/05/android-as-motion-detector-camera_f.jpg", date:"4th march 2021" })
+    const { id: adId1 } = await db.collection('ads').add({ desc: "Stay safe! buy our motion sensors" , categoryid: categoryId1, image: "https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png", date:"4th march 2021" })
     functions.logger.info("adId1", { adId1 })
 
     const { id: adId2 } = await db.collection('ads').add({ desc: "Stay updated with the sound around you. Buy our Temperature sensors", categoryid: categoryId2, image: "https://image.winudf.com/v2/image1/Y29vY2VudC5hcHAudG9vbHMuc291bmRtZXRlci5ub2lzZWRldGVjdG9yX3NjcmVlbl8wXzE1ODg3NjYwMjRfMDUw/screen-0.jpg?h=355&fakeurl=1&type=.jpg", date:"6th march 2021" })
     functions.logger.info("adId2", { adId2 })
-    const { id: adId3 } = await db.collection('ads').add({ desc: "This is sound sensor ad2", categoryid: categoryId3, image: "https://cdn.maikoapp.com/3d4b/4r2dg/180h.jpg", date:"5th march 2021" })
+    const { id: adId3 } = await db.collection('ads').add({ desc: "A sound sensor is defined as a module that detects sound waves", categoryid: categoryId3, image: "https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1", date:"5th march 2021" })
     functions.logger.info("adId3", { adId3 })
 
-    const { id: adId4 } = await db.collection('ads').add({ desc: "This is promiximyt sensor ad3", categoryid: categoryId3, image: "http://www.wirelessavenuerepair.com/wp-content/uploads/2017/02/proximity-sensor.png", date:"7th march 2021" })
+    const { id: adId4 } = await db.collection('ads').add({ desc: "Proximity Sensors ", categoryid: categoryId3, image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", date:"7th march 2021" })
     functions.logger.info("adId4", { adId4 })
-
-    const { id: adId5 } = await db.collection('ads').add({ desc: "This is light sensor ad3", categoryid: categoryId3, image: "https://play-lh.googleusercontent.com/oVW9zzp7qFlY-8FDxcJgGMRy6x5OWEm_n-vhFXVa_mKvKECukqNI9fVYlNRK8BwUUVY=w412-h220-rw", date:"6th march 2021" })
-    functions.logger.info("adId5", { adId5 })
   }
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 )
 
 exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings/{readingid}').onCreate(
@@ -183,9 +190,12 @@ exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings
     const category = { id: categoryDoc.id, ...categoryDoc.data() }
     functions.logger.info("category", { category })
 
-    const adDoc = await db.collection('ads').doc(sensor.adId).get()
+  //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
+    const adDoc = await db.collection('ads').doc(sensorid).get()
     const ad = { id: adDoc.id, ...adDoc.data() }
     functions.logger.info("ad", { ad })
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------//
     
     if (category.name === "Motion") {
       const readingData = await db.collection('sensors').doc(sensor.id).collection('readings').orderBy("when", "desc").limit(2).get()
@@ -220,7 +230,12 @@ exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings
     else if (category.name = "Temperature") {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
       functions.logger.info("temp alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
-    } else {
+    }
+    else if (category.name = "Sound") {
+      await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.maxDB || reading.current < sensor.minDB }, { merge: true })
+      functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
+    } 
+    else {
       functions.logger.info("No such category", { category });
     }
 

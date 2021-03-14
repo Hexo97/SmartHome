@@ -16,6 +16,7 @@ export default function ActionsScreen() {
   const [when, setWhen] = useState("");
   const [id, setId] = useState("");
   const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
 
   useEffect(() => db.Categories.listenAll(setCategory), []);
 
@@ -27,17 +28,20 @@ export default function ActionsScreen() {
       description: description,
       image: image,
       name: name,
+      price: price + "",
     });
 
     setDescription("");
     setImage("");
     setName("");
+    setPrice("");
 
     // automatically create ad with default values
     await db.Ads.create({
       desc: "COMING SOON !!",
       categoryid: id,
-      image: "https://media.istockphoto.com/vectors/coming-soon-neon-banner-vector-template-glowing-night-bright-sign-vector-id1144514162?k=6&m=1144514162&s=612x612&w=0&h=np7sPl0hycuFTiDgfKCZFy3SF7XCjbRTcyF-sSKfMO8=",
+      image:
+        "https://media.istockphoto.com/vectors/coming-soon-neon-banner-vector-template-glowing-night-bright-sign-vector-id1144514162?k=6&m=1144514162&s=612x612&w=0&h=np7sPl0hycuFTiDgfKCZFy3SF7XCjbRTcyF-sSKfMO8=",
       date: new Date().toDateString(),
     });
 
@@ -49,6 +53,7 @@ export default function ActionsScreen() {
     setDescription(category.description);
     setImage(category.image);
     setName(category.name);
+    setPrice(category.price + "");
   };
 
   const save = () => {
@@ -57,15 +62,16 @@ export default function ActionsScreen() {
       description: description,
       image: image,
       name: name,
+      price: price,
     });
     setId("");
     setDescription("");
     setImage("");
     setName("");
+    setPrice("");
   };
 
   const remove = (id) => {
-    console.log("naila" + id);
     db.Categories.remove(id);
   };
 
@@ -105,52 +111,72 @@ export default function ActionsScreen() {
     <View style={styles.container}>
       <StatusBar hidden={true} />
 
-      <View style={styles.navBar}>
-        <Text style={styles.headingText}> Actions</Text>
-      </View>
-      <View style={styles.catFormContainer}>
-        <Text style={styles.title}>Categories</Text>
-
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Name"
-            placeholderTextColor="#12232E"
-            value={name}
-            onChangeText={(value) => setName(value)}
-          />
-        </View>
-
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Description"
-            placeholderTextColor="#12232E"
-            value={description}
-            onChangeText={(value) => setDescription(value)}
-          />
-        </View>
-
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Image-Url"
-            placeholderTextColor="#12232E"
-            value={image}
-            onChangeText={(value) => setImage(value)}
-          />
-        </View>
-
-        <TouchableOpacity onPress={create} style={styles.btn}>
-          <Text style={styles.btnText}>Create Category</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={save} style={styles.btn}>
-          <Text style={styles.btnText}>Save</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* <SafeAreaProvider > */}
+      <SafeAreaProvider>
         <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.navBar}>
+            <Text style={styles.headingText}> Category User Actions</Text>
+          </View>
+          <View style={styles.catFormContainer}>
+        
+
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="Name"
+                placeholderTextColor="#12232E"
+                value={name}
+                onChangeText={(value) => setName(value)}
+              />
+            </View>
+
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="Description"
+                placeholderTextColor="#12232E"
+                value={description}
+                onChangeText={(value) => setDescription(value)}
+              />
+            </View>
+
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="Image-Url"
+                placeholderTextColor="#12232E"
+                value={image}
+                onChangeText={(value) => setImage(value)}
+              />
+            </View>
+
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="price"
+                placeholderTextColor="#12232E"
+                value={price}
+                onChangeText={(value) => setPrice(value)}
+              />
+            </View>
+
+            <TouchableOpacity onPress={create} style={styles.btn}>
+              <Text style={styles.btnText}>Create Category</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={save} style={styles.btn}>
+              <Text style={styles.btnText}>Save</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.catContainer}>
+            {category.map((category) => (
+              <CategoryAction
+                key={category.id}
+                category={category}
+                edit={edit}
+                remove={remove}
+                {...category}
+              />
+            ))}
+          </View>
           <Card>
             <View style={styles.rolesContainer}>
               <Text style={styles.title}>All customer roles</Text>
@@ -167,8 +193,8 @@ export default function ActionsScreen() {
               <TouchableOpacity onPress={saveUser} style={styles.btn}>
                 <Text style={styles.btnText}>SaveUserRole</Text>
               </TouchableOpacity>
-            
-              <View style={{marginTop:10, alignItems:"flex-end"}}>
+
+              <View style={{ marginTop: 10, alignItems: "flex-end" }}>
                 {customers.map((c) => (
                   <View
                     key={c.id}
@@ -196,7 +222,7 @@ export default function ActionsScreen() {
               </View>
             </View>
           </Card>
-          <View style={styles.catContainer}>
+          {/* <View style={styles.catContainer}>
             {category.map((category) => (
               <CategoryAction
                 key={category.id}
@@ -206,9 +232,9 @@ export default function ActionsScreen() {
                 {...category}
               />
             ))}
-          </View>
+          </View> */}
         </ScrollView>
-      {/* </SafeAreaProvider> */}
+      </SafeAreaProvider>
     </View>
   );
 }
@@ -243,11 +269,11 @@ const styles = StyleSheet.create({
   catContainer: {
     height: 2100,
     width: 365,
-    margin:20,
+    margin: 20,
     marginTop: 30, // equal to roles Container height
     alignItems: "center",
     justifyContent: "center",
-    marginBottom:30
+    marginBottom: 30,
     // backgroundColor: "#EEFBFB",
   },
 
@@ -332,7 +358,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "black",
     fontSize: 15,
-    paddingLeft:7,
+    paddingLeft: 7,
     fontWeight: "bold",
   },
   helpLinkText3: {

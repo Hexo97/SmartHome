@@ -178,6 +178,13 @@ export default function CustomerHomeScreen({navigation}) {
                       type="outline"
                       onPress={() => navigation.navigate('Search')}
                 />
+{/* ----------------------------------HANAN-------------------------------------------- */}
+                 <Button
+                      title="Payment History"
+                      type="outline"
+                      onPress={() => navigation.navigate('PaymentHistory')}
+                />  
+{/*--------------------------------------------------------------------------------------  */}
                     <View style={styles.space} />
                 </ScrollView>
         </SafeAreaProvider>

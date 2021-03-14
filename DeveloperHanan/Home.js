@@ -1,71 +1,35 @@
 import * as React from "react";
 
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Carousel, { Pagination } from "react-native-snap-carousel";
 import UserContext from "../UserContext";
 
 import Login from "./Login";
 import Register from "./Register";
-import Faq from "./Faq";
+import FaqPublic from "./FaqPublic";
+import Advertisments from "./Advertisments";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
-import Gallery from "react-native-image-gallery";
-import db from "../db";
-import { SliderBox } from "react-native-image-slider-box";
 import "react-native-gesture-handler";
 import { View, Text } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 
-import { Card } from "react-native-elements";
+
 
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
-
-  const [items, setItems] = useState([]);
-  const [ads, setAds] = useState([]);
-  useEffect(() => db.Ads.listenAll(setAds), []);
-
-  // useEffect(() => {categorries})
-
-  let [myText, setMyText] = useState("");
-  let [myDate, setMyDate] = useState("");
-
-  useEffect(() => {
-    let items = ads.map((v, i) => {
-      //Loop to make image array to show in slider
-      return v.image;
-    });
-    // console.log(items)
-    setItems(items);
-    showText(0);
-  }, [ads]);
-
-  const showText = async (p) => {
-    // console.log("nailaaa " + p);
-    await ads.map((y, i) => {
-      //get the description from that position
-      if (p == i) {
-        setMyText(y.desc);
-        setMyDate(y.date);
-      }
-    });
-  };
-
   return (
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
-            source={require("../assets/images/menu.png")}
+            source={require("../assets/images/icon2.png")}
             style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
@@ -75,49 +39,6 @@ export function Home({ navigation }) {
           style={styles.image}
           source={require("../assets/images/welcome.png")}
         ></Image>
-      </View>
-
-      <View style={{ width: "90%" }}>
-        <Card
-          styles={{ height: 80, marginTop: 400, backgroundColor: "#203647" }}
-        >
-          <Text
-            style={{
-              fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
-              marginTop: 5,
-              textAlign: "center",
-              width: "100%",
-              paddingTop: 5,
-            }}
-          >
-            {myText}
-          </Text>
-
-          <Text
-            style={{
-              fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
-              textAlign: "center",
-              paddingBottom: 5,
-              width: "100%"
-            }}
-          >
-            {myDate}
-          </Text>
-
-          <SliderBox
-            currentImageEmitter={(index) => showText(index)}
-
-            // onPageSelected={(index) => showText(index)}
-            images={items}
-            //  autoplay
-            circleLoop
-            // autoplaySpeed={1000}
-            style={{ width: "74.2%", height: 200 }}
-            dotColor="#203647"
-          />
-        </Card>
       </View>
     </View>
   );
@@ -144,7 +65,8 @@ function MyDrawer({ user }) {
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Register" component={Register} />
-            <Drawer.Screen name="Faq" component={Faq} />
+            <Drawer.Screen name="Faq" component={FaqPublic} />
+            <Drawer.Screen name="Advertisments" component={Advertisments} />
           </>
           :
           <>
@@ -166,7 +88,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#007CC7",
     height: 60,
     paddingRight: 10,
     width: "100%",

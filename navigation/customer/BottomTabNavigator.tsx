@@ -18,6 +18,8 @@ import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
 import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
+import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
+// @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList} from './types';
 
@@ -97,6 +99,11 @@ function TabOneNavigator() {
         name="Search"
         component={SearchSensors}
         options={{ headerTitle: 'Search' }}
+      />
+       <TabOneStack.Screen
+        name="PaymentHistory"
+        component={PaymentHistory}
+        options={{ headerTitle: 'PaymentHistory' }}
       />
     </TabOneStack.Navigator>
   );

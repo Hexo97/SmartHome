@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from '../../components/Themed';
 import MotionInfo from './MotionInfo'
+import SoundInfo from './SoundInfo'
 import TemperatureInfo from './TemperatureInfo'
 import CategoryByUserPicker from '../pickers/CategoryByUserPicker';
 import SensorByUserAndCategoryPicker from '../pickers/SensorByUserAndCategoryPicker';
@@ -49,6 +50,11 @@ export default function ActionsScreen() {
               category.name === "Temperature"
               &&
               <TemperatureInfo user={user} category={category} sensor={sensor} />
+            }
+             {
+              category.name === "Sound"
+              &&
+              <SoundInfo user={user} category={category} sensor={sensor} />
             }
           </>
         }

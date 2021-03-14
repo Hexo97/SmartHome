@@ -8,7 +8,7 @@ import FaqScreen from "./FaqScreen";
 import { Button } from "react-native-elements";
 import { Card } from "react-native-elements";
 
-export default function Faq({ navigation }) {
+export default function FaqPublic({ navigation }) {
   const [faq, setFaq] = useState([]);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -78,7 +78,7 @@ export default function Faq({ navigation }) {
       
 
       <View style={styles.navBar}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={{ width: 50, height: 50 }}
           onPress={() => navigation.openDrawer()}
         >
@@ -87,7 +87,7 @@ export default function Faq({ navigation }) {
             source={require("../assets/images/icon2.png")}
             style={{ width: 60, height: 60 }}
           />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <Text style={styles.headingText}>FAQ's</Text>
       </View>
       {/* 
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     top: "0.5%",
     fontSize: 30,
     textAlign: "center",
-    marginLeft: "39.8%",
+    marginLeft: "32%",
     fontWeight: "bold",
   },
 });

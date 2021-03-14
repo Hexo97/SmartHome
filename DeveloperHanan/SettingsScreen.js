@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   loginBtn: {
     width: "35%",
     borderRadius: 10,
-    height: 25,
+    height: 35,
     alignItems: "center",
     justifyContent: "center",
     // marginTop: 25,

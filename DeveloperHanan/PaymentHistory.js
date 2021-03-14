@@ -12,67 +12,80 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-import { Button } from "react-native-elements";
-// import { Button } from "native-base";
 
-export default function CategoryAction({ category, edit, remove }) {
+export default function PaymentHistory({ payments }) {
   const { user } = useContext(UserContext);
 
-  const [sensors, setSensors] = useState([]);
+  const [payment, setPayment] = useState([]);
+  useEffect(() => db.Payment.listenByPayment(setPayment, user?.id || ""), [
+    user,
+  ]);
+
+  //console.log(payment);
+  // console.log(payments);
+
+  const [categories, setCategories] = useState("");
   useEffect(
-    () => db.Sensors.listenSensorsByCategory(setSensors, category?.id || ""),
-    [category]
+    () =>
+      payment
+        ? db.Categories.listenOne(setCategories, payment.categories)
+        : undefined,
+    [payment]
   );
+  //  console.log(categories.id)
 
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
-          <Card>
-            <Card.Title
-              style={{ backgroundColor: "#4DA8DA", fontWeight: "bold" }}
-            >
-              {category.name}
-            </Card.Title>
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: category.image,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-              }}
-            >
-              {category.description}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-              }}
-            >
-              QR: {category.price}
-            </Text>
-            <Card.Divider />
-            
-            <Button
-              onPress={() => edit(category)}
-              title="Edit"
-              buttonStyle={styles.myButton}
-            />
-            <Button
-              onPress={() => remove(category.id)}
-              title="Delete"
-              disabled={sensors.length === 0 ? false : true}
-              buttonStyle={styles.myButton}
-            />
-          </Card>
-        </View>
+        {payment.map((c) => (
+          <View style={styles.container} key={c.id}>
+            <Card>
+              <Card.Title
+                style={{
+                  backgroundColor: "#4DA8DA",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                <Text key={c.id}> Receipt Code: {c.id} </Text>
+              </Card.Title>
+
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                <Text key={c.id}> Customer: {user.name}</Text>
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                <Text key={c.id}> Amount paid: {c.price} QR</Text>
+              </Text>
+              {/* <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                <Text key={c.id}> Sensor requested: {c.categories}</Text>
+              </Text> */}
+
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                <Text key={c.id}> Date: {c.cdate.toDateString()}</Text>
+              </Text>
+            </Card>
+          </View>
+        ))}
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -86,7 +99,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#EEFBFB",
+    backgroundColor: "#203647",
   },
   cardBg: {
     backgroundColor: "rgba(96,100,109, 0.8)",
@@ -141,9 +154,12 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     textAlign: "center",
+    // display: "flex",
     height: 30,
     width: 100,
     borderRadius: 4,
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "#4DA8DA",
     shadowColor: "white",
     shadowOpacity: 0.4,
@@ -177,11 +193,5 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
-  },
-  myButton: {
-    backgroundColor: "#4DA8DA",
-    alignSelf: "center",
-    width: 100,
-    marginLeft: 39,
   },
 });

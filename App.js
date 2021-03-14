@@ -55,18 +55,21 @@ export default function App() {
 
   const selectNavigation = () => {
     if (!user) {
-      // return <RegisterLogin />;
+  
       //--------------------------------------HANAN----------------------------------------//
       return <Home/>;
+      //-----------------------------------------------------------------------------------//
     } else if (user?.role === "Customer") {
       return <NavigationCustomer colorScheme={colorScheme} />;
     } else if (user?.role === "Admin") {
       return <NavigationAdmin colorScheme={colorScheme} />;
     } else if (user?.role === "Support") {
       return <NavigationSupport colorScheme={colorScheme} />;
+
      //--------------------------------------HANAN----------------------------------------//
     } else if (user?.role === "Marketing") {
       return <NavigationMarketing colorScheme={colorScheme} />
+    //-----------------------------------------------------------------------------------//
     } else {
       // console.log('user role', user?.role)
       fb.auth().signOut()

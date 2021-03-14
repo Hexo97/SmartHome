@@ -11,7 +11,8 @@ export default {
               Home: 'one',
               Faq:'two',
               Reviews:'three',
-              Search:'four'
+              Search:'four',
+              PaymentHistory:'five'
             },
           },
           TabTwo: {

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -12,65 +12,67 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-import { Button } from "react-native-elements";
-// import { Button } from "native-base";
 
-export default function CategoryAction({ category, edit, remove }) {
+export default function SensorRequestProcessed({ payment}) {
   const { user } = useContext(UserContext);
 
-  const [sensors, setSensors] = useState([]);
-  useEffect(
-    () => db.Sensors.listenSensorsByCategory(setSensors, category?.id || ""),
-    [category]
-  );
 
+  const create = async (userid,categoryid) => {
+    db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+    });
+    alert("Sensor created");
+  };
+
+  const [categories, setCategories] = useState("");
+  useEffect(() => payment ? db.Categories.listenOne(setCategories,payment.categories) : undefined, [payment])
+  console.log(categories)
+
+  const [rusers, setRusers] = useState("");
+  useEffect(() => payment ? db.Users.listenOne(setRusers,payment.userid) : undefined, [payment])
+  console.log(rusers)
+  
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
+        <View style={styles.container}>
           <Card>
             <Card.Title
-              style={{ backgroundColor: "#4DA8DA", fontWeight: "bold" }}
+              style={{
+                backgroundColor: "#4DA8DA",
+                color: "black",
+                fontWeight: "bold",
+              }}
             >
-              {category.name}
+             Customer Name: {rusers.name}
             </Card.Title>
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: category.image,
-              }}
-            />
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
+                color: "black",
               }}
             >
-              {category.description}
+              Amount paid: QR {payment.price}
             </Text>
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
+                color: "black",
               }}
             >
-              QR: {category.price}
+              Sensor requested: {categories.name} 
             </Text>
-            <Card.Divider />
-            
-            <Button
-              onPress={() => edit(category)}
-              title="Edit"
-              buttonStyle={styles.myButton}
-            />
-            <Button
-              onPress={() => remove(category.id)}
-              title="Delete"
-              disabled={sensors.length === 0 ? false : true}
-              buttonStyle={styles.myButton}
-            />
+
+            <TouchableOpacity
+              onPress={() => create(payment.userid, payment.categories)}
+              style={styles.title}
+            >
+              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
+               Add Sensor
+              </Text>
+            </TouchableOpacity>
+     
           </Card>
         </View>
       </ScrollView>
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#EEFBFB",
+    backgroundColor: "#203647",
   },
   cardBg: {
     backgroundColor: "rgba(96,100,109, 0.8)",
@@ -141,15 +143,19 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     textAlign: "center",
+    // display: "flex",
     height: 30,
     width: 100,
     borderRadius: 4,
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "#4DA8DA",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
     margin: 2,
-    marginLeft: 120,
+    marginLeft: 35,
+    marginTop: 10,
   },
   title: {
     fontSize: 20,
@@ -177,11 +183,5 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
-  },
-  myButton: {
-    backgroundColor: "#4DA8DA",
-    alignSelf: "center",
-    width: 100,
-    marginLeft: 39,
   },
 });
