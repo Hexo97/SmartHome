@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useState, useEffect, useContext } from "react";
-import { Image } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -10,6 +10,7 @@ import UserContext from "../UserContext";
 import Login from "./Login";
 import Register from "./Register";
 import Faq from "./Faq";
+import Popular from "../DeveloperAisha/Popular";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
 import Gallery from "react-native-image-gallery";
@@ -60,6 +61,7 @@ export function Home({ navigation }) {
   };
 
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
@@ -106,6 +108,7 @@ export function Home({ navigation }) {
             {myDate}
           </Text>
 
+
           <SliderBox
             currentImageEmitter={(index) => showText(index)}
 
@@ -120,6 +123,7 @@ export function Home({ navigation }) {
         </Card>
       </View>
     </View>
+    </ScrollView>
   );
 }
 
@@ -144,6 +148,7 @@ function MyDrawer({ user }) {
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Register" component={Register} />
+            <Drawer.Screen name="Popular" component={Popular} />
             <Drawer.Screen name="Faq" component={Faq} />
           </>
           :
@@ -205,5 +210,9 @@ const styles = StyleSheet.create({
   image: {
     marginRight: "30%",
     marginLeft: "30%",
+  },
+  space: {
+    width: 0, // or whatever size you need
+    height: 10,
   },
 });

@@ -25,13 +25,6 @@ const removeOne = async (collection, id) => await db.collection(collection).doc(
 exports.createSampleData = functions.https.onCall(
   async (data, context) => {
 
-    // comment the following out to reset auth db every time
-    // const users = await db.collection('users').get()
-    // if (users.docs.length > 0) {
-    //   functions.logger.info("already have data", {})
-    //   return
-    // }
-
     const sensors = await findAll('sensors')
     await Promise.all(
       sensors.map(
@@ -71,13 +64,37 @@ exports.createSampleData = functions.https.onCall(
       )
     )
 
+    const popularsensor = await findAll('popularsensor')
+    await Promise.all(
+      popularsensor.map(
+        async popularsensor =>
+          await removeOne('popularsensor', popularsensor.id)
+      )
+    )
+
+    const realtimemonitoring = await findAll('realtimemonitoring')
+    await Promise.all(
+      realtimemonitoring.map(
+        async realtimemonitoring =>
+          await removeOne('realtimemonitoring', realtimemonitoring.id)
+      )
+    )
+
+
     const users = await findAll('users')
     await Promise.all(
       users.map(
-        async user =>
+        async user => {
+          const suggestionlist = await findOneSubAll('users', user.id, 'suggestionlist')
+          await Promise.all(
+            suggestionlist.map(
+              async list =>
+                await removeOneSubOne('users', user.id, 'suggestionlist', list.id))
+          )
           await removeOne('users', user.id)
+        }
+        )
       )
-    )
 
     const authUsers = (await admin.auth().listUsers()).users
     await Promise.all(
@@ -121,7 +138,7 @@ exports.createSampleData = functions.https.onCall(
     const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing" ,age: 21, phone: 55674532 })
     functions.logger.info("result5", { result5 })
     
-    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
+    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Customer" ,age: 23, phone: 66985647 })
     functions.logger.info("result6", { result6 })
 
     const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt26P0l14fu4z1s2kbn18zKiv5WrMUwBDyig&usqp=CAU", price:150 })
@@ -143,6 +160,10 @@ exports.createSampleData = functions.https.onCall(
     const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
     functions.logger.info("sensorId2", { sensorId2 })
 
+    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId4, location: "Kitchen", state: "off", latitude:25.354826, longitude:25.40000, motiondetected: false })
+    functions.logger.info("sensorId3", { sensorId3 })
+
+
     const { id: faq1 } = await db.collection('faqs').add({ question: "What is the price of sensors package?", answer: "It is 10,000 QR yearly based" })
     functions.logger.info("faq1", { faq1 })
 
@@ -162,6 +183,15 @@ exports.createSampleData = functions.https.onCall(
 
     const { id: adId5 } = await db.collection('ads').add({ desc: "This is light sensor ad3", categoryid: categoryId3, image: "https://play-lh.googleusercontent.com/oVW9zzp7qFlY-8FDxcJgGMRy6x5OWEm_n-vhFXVa_mKvKECukqNI9fVYlNRK8BwUUVY=w412-h220-rw", date:"6th march 2021" })
     functions.logger.info("adId5", { adId5 })
+
+    const { id: popular1 } = await db.collection('popularsensor').add({ name: "Garage" , dateSearched: new Date(), sensorid:sensorId1 , rating:5})
+    functions.logger.info("popular1", { popular1 })
+
+    const { id: popular2 } = await db.collection('popularsensor').add({ name : "Back Door" ,dateSearched: new Date(), sensorid:sensorId2 , rating:4 })
+    functions.logger.info("popular2", { popular2 })
+
+    const { id: popular3 } = await db.collection('popularsensor').add({ name: "Front Door" ,dateSearched: new Date(), sensorid:sensorId2 , rating:3 })
+    functions.logger.info("popular3", { popular3 })
   }
 )
 

@@ -150,18 +150,35 @@ class Readings extends DB {
 class Users extends DB {
   constructor() {
     super('users')
+    this.SuggestionList = new SuggestionList(this.collection);
   }
 
   listenByRole = (set, role) =>
     db.collection(this.collection).where('role', '==', role).onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
+class SuggestionList extends DB {
+  constructor(containing) {
+    super("suggestionlist");
+    this.containing = containing;
+  }
+
+  createList = (userid, list) =>
+  // console.log(userid)
+    db.collection(this.containing).doc(userid).collection(this.collection).add(list);
+
+  listenToUserSuggestion = (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  removeUserSuggestList = (userid, listid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).doc(listid).delete()
+}
+
+
 class Categories extends DB {
   constructor() {
     super("categories");
   }
-
-
 
   // max 10
   listenInIds = (set, ids) =>
@@ -213,10 +230,15 @@ class PopularSensor extends DB {
   constructor() {
     super('popularsensor')
   }
+  reformat(doc) {
+    return { ...super.reformat(doc), dateSearched: doc.data().dateSearched.toDate() }
+  }
 
   listenBySensor = (set, sensorid) =>
     db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
-
+  
+  listenToLatestThree = (set) =>
+    db.collection(this.collection).orderBy("dateSearched", "desc").limit(3).onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 class Simulator extends DB {
@@ -228,6 +250,7 @@ class Simulator extends DB {
       db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
 
 }
+
 
 export default {
   Categories: new Categories(),
@@ -241,5 +264,5 @@ export default {
 
   //AISHA
   RealTimeMonitoring: new RealTimeMonitoring(),
-  PopularSensor: new PopularSensor()
+  PopularSensor: new PopularSensor(),
 }

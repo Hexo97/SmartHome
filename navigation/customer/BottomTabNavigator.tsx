@@ -10,6 +10,10 @@ import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
 import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
+import SuggestionList from '../../DeveloperAisha/SuggestionList';
+// @ts-expect-error
+import AllUserSensors from '../../DeveloperAisha/AllUserSensors';
+// @ts-expect-error
 import SensorsScreen from '../../screens/Customer/SensorsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
@@ -97,6 +101,16 @@ function TabOneNavigator() {
         name="Search"
         component={SearchSensors}
         options={{ headerTitle: 'Search' }}
+      />
+      <TabOneStack.Screen
+        name="List"
+        component={SuggestionList}
+        options={{ headerTitle: 'List' }}
+      />
+      <TabOneStack.Screen
+        name="AllUserSensors"
+        component={AllUserSensors}
+        options={{ headerTitle: 'AllUserSensors' }}
       />
     </TabOneStack.Navigator>
   );

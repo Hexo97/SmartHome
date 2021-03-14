@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
 import { View, Text } from '../../components/Themed';
 import MotionInfo from './MotionInfo'
 import TemperatureInfo from './TemperatureInfo'
 import CategoryByUserPicker from '../pickers/CategoryByUserPicker';
-import { Input } from "react-native-elements";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SensorByUserAndCategoryPicker from '../pickers/SensorByUserAndCategoryPicker';
 import Colors from "../../constants/Colors";
 import UserContext from '../../UserContext'
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
-import { Button } from 'react-native'
+import { Button} from 'react-native-elements'
 import { TextInput } from "react-native";
 import db from '../../db'
 
 
-export default function SensorsScreen() {
+export default function SensorsScreen({navigation}) {
 
   const { user } = useContext(UserContext)
   useEffect(() => setCategory(null), [user])
@@ -47,19 +47,31 @@ export default function SensorsScreen() {
   // console.log(user, category, sensor)
 
   return (
-    <View>
-      <View style={styles.getStartedContainer}>
+    <SafeAreaProvider style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+    <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
+        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Control Sensors</Text>
+    </View>
+            <Button
+              title="View All Sensors"
+              type="outline"
+              onPress={() => navigation.navigate('AllUserSensors')}
+            />
         {
           user
           &&
+          <View style={styles.getStartedContainer}>
           <CategoryByUserPicker set={setCategory} />
+          </View>
         }
         {
           user
           &&
           category
           &&
+          <View style={styles.getStartedContainer}>
           <SensorByUserAndCategoryPicker category={category} set={setSensor} />
+          </View>
         }
         {
           user
@@ -136,8 +148,8 @@ export default function SensorsScreen() {
 
           </>
         }
-      </View>
-    </View >
+                  </ScrollView>
+        </SafeAreaProvider>
   );
 }
 
@@ -148,8 +160,19 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    flexDirection: "column",
+    backgroundColor:"#12232E"
+},
+getStartedContainer: {
+  alignItems: "center",
+  marginHorizontal:30,
+  marginTop:5,
+  marginBottom:5,
+  backgroundColor:"#EEFBFB",
+  borderRadius: 10,
+  borderBottomColor: "black",
+  borderWidth: 2
+},
   developmentModeText: {
     marginBottom: 20,
     fontSize: 14,
@@ -177,10 +200,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginTop: 3,
     marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
   },
   homeScreenFilename: {
     marginVertical: 7,
