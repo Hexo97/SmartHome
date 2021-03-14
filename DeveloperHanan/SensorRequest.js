@@ -4,26 +4,28 @@ import Colors from "../constants/Colors";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
-import ShopItem from "./ShopItem";
+import SensorRequestProcessed from "./SensorRequestProcessed";
 import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function Shop() {
+export default function SensorRequest() {
 
-  const [category, setCategory] = useState([]);
-  useEffect(() => db.Categories.listenAll(setCategory), []);
+  const [payment, setPayment] = useState([]);
+  useEffect(() => db.Payment.listenAll(setPayment), []);
+
   const { user } = useContext(UserContext);
+
   return (
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>BUY Smart Home Sensors </Text>
+        <Text style={styles.title}> User's Sensor Request </Text>
           <View style={styles.container}>
-            {category.map((category) => (
-              <ShopItem
-                key={category.id}
-                category={category}
-                {...category}
+            {payment.map((payment) => (
+              <SensorRequestProcessed
+                key={payment.id}
+                payment={payment}
+                {...payment}
               />
             ))}
           </View>
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "bold",
-    marginLeft:60,
+    marginLeft:10,
     color:"white"
   },
   helpLink: {

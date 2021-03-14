@@ -1,34 +1,40 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
-import ShopItem from "./ShopItem";
-import { Input, Card } from "react-native-elements";
+import PaymentHistory from "./PaymentHistory";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function Shop() {
+export default function Payment() {
 
-  const [category, setCategory] = useState([]);
-  useEffect(() => db.Categories.listenAll(setCategory), []);
   const { user } = useContext(UserContext);
+
+  const [payments, setPayments] = useState([]);
+  useEffect(() => db.Payments.listenByPayments(setPayments, user?.id || ""), [
+    user,
+  ]);
+
+  console.log(payments )
+  console.log("hellooo")
+
   return (
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>BUY Smart Home Sensors </Text>
           <View style={styles.container}>
-            {category.map((category) => (
-              <ShopItem
-                key={category.id}
-                category={category}
-                {...category}
+            {payments.map((payments) => (
+              <PaymentsHistory
+                key={payments.id}
+                payments={payments}
+                {...payments}
               />
             ))}
           </View>
         </ScrollView>
       </SafeAreaProvider>
+      <>
+      </>
     </View>
   );
 }
