@@ -10,7 +10,8 @@ export default {
             screens: {
               Home: 'one',
               Dashboard:'two',
-              RealTimeMonitoring:'three'
+              RealTimeMonitoring:'three',
+              Logs:'four'
             },
           },
           TabTwo: {

@@ -273,18 +273,28 @@ class Simulator extends DB {
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
 }
 
+class Logs extends DB {
+  constructor() {
+    super('logs')
+  }
+}
+
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
   Users: new Users(),
   Request: new Request(),
   Reports: new Reports(),
-  Simulator: new Simulator(),
+  
   //HANAN
   Ads: new Ads(),
   Faq: new Faq(),
   Payment: new Payment(),
+
   //AISHA
+  Simulator: new Simulator(),
+  Logs: new Logs(),
+
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),
 };

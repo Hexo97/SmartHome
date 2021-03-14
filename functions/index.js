@@ -109,22 +109,22 @@ exports.createSampleData = functions.https.onCall(
     const { uid: authId6 } = await admin.auth().createUser({ email: "max@max.com", password: "maxmax" })
     functions.logger.info("authId6", { authId6 })
 
-    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer" ,age: 21, phone: 55346789})
+    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer", age: 21, phone: 55346789 })
     functions.logger.info("result1", { result1 })
 
-    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer",age: 20, phone: 77584690 })
+    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer", age: 20, phone: 77584690 })
     functions.logger.info("result2", { result2 })
 
-    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin",age: 40, phone: 55097856 })
+    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin", age: 40, phone: 55097856 })
     functions.logger.info("result3", { result3 })
 
-    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support" ,age: 35, phone: 44356789 })
+    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support", age: 35, phone: 44356789 })
     functions.logger.info("result4", { result4 })
-    
-    const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing" ,age: 21, phone: 55674532 })
+
+    const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing", age: 21, phone: 55674532 })
     functions.logger.info("result5", { result5 })
-    
-    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance" ,age: 23, phone: 66985647 })
+
+    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Finance", age: 23, phone: 66985647 })
     functions.logger.info("result6", { result6 })
 
     const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png", price:1500 })
@@ -161,13 +161,20 @@ exports.createSampleData = functions.https.onCall(
     const { id: adId1 } = await db.collection('ads').add({ desc: "Stay safe! buy our motion sensors" , categoryid: categoryId1, image: "https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png", date:"4th march 2021" })
     functions.logger.info("adId1", { adId1 })
 
-    const { id: adId2 } = await db.collection('ads').add({ desc: "Stay updated with the sound around you. Buy our Temperature sensors", categoryid: categoryId2, image: "https://image.winudf.com/v2/image1/Y29vY2VudC5hcHAudG9vbHMuc291bmRtZXRlci5ub2lzZWRldGVjdG9yX3NjcmVlbl8wXzE1ODg3NjYwMjRfMDUw/screen-0.jpg?h=355&fakeurl=1&type=.jpg", date:"6th march 2021" })
+    const { id: adId2 } = await db.collection('ads').add({ desc: "Stay updated with the sound around you. Buy our Temperature sensors", categoryid: categoryId2, image: "https://image.winudf.com/v2/image1/Y29vY2VudC5hcHAudG9vbHMuc291bmRtZXRlci5ub2lzZWRldGVjdG9yX3NjcmVlbl8wXzE1ODg3NjYwMjRfMDUw/screen-0.jpg?h=355&fakeurl=1&type=.jpg", date: "6th march 2021" })
     functions.logger.info("adId2", { adId2 })
+
     const { id: adId3 } = await db.collection('ads').add({ desc: "A sound sensor is defined as a module that detects sound waves", categoryid: categoryId3, image: "https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1", date:"5th march 2021" })
     functions.logger.info("adId3", { adId3 })
 
     const { id: adId4 } = await db.collection('ads').add({ desc: "Proximity Sensors ", categoryid: categoryId3, image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", date:"7th march 2021" })
     functions.logger.info("adId4", { adId4 })
+
+    const { id: logId1 } = await db.collection('logs').add({ sensorId: sensorId1, date: new Date(), logMessage: `[${new Date().toDateString()}] [${sensorId1}] Created.` })
+    functions.logger.info("logId1", { logId1 })
+
+    const { id: logId2 } = await db.collection('logs').add({ sensorId: sensorId2, date: new Date(), logMessage: `[${new Date().toDateString()}] [${sensorId2}] Created.` })
+    functions.logger.info("logId2", { logId2 })
   }
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 )
@@ -190,7 +197,6 @@ exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings
     const category = { id: categoryDoc.id, ...categoryDoc.data() }
     functions.logger.info("category", { category })
 
-  //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
     const adDoc = await db.collection('ads').doc(sensorid).get()
     const ad = { id: adDoc.id, ...adDoc.data() }
     functions.logger.info("ad", { ad })
