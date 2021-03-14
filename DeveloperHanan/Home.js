@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { Image, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import UserContext from "../UserContext";
-
+import { Card} from 'react-native-elements'
 import Login from "./Login";
 import Register from "./Register";
 import Popular from "../DeveloperAisha/Popular";
@@ -25,7 +25,7 @@ import {
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+ 
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
@@ -43,51 +43,9 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-      <View style={{ width: "90%" }}>
-        <Card
-          styles={{ height: 80, marginTop: 400, backgroundColor: "#203647" }}
-        >
-          <Text
-            style={{
-              fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
-              marginTop: 5,
-              textAlign: "center",
-              width: "100%",
-              paddingTop: 5,
-            }}
-          >
-            {myText}
-          </Text>
-
-          <Text
-            style={{
-              fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
-              textAlign: "center",
-              paddingBottom: 5,
-              width: "100%"
-            }}
-          >
-            {myDate}
-          </Text>
-
-
-          <SliderBox
-            currentImageEmitter={(index) => showText(index)}
-
-            // onPageSelected={(index) => showText(index)}
-            images={items}
-            //  autoplay
-            circleLoop
-            // autoplaySpeed={1000}
-            style={{ width: "74.2%", height: 200 }}
-            dotColor="#203647"
-          />
-        </Card>
-      </View>
+     
     </View>
-    </ScrollView>
+  
   );
 }
 
