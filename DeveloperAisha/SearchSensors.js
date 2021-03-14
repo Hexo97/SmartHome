@@ -42,7 +42,7 @@ export default function SearchSensors() {
   const [go, setGo] = useState("")
 
   const DisplayResults = async (sensor) => {
-    await db.PopularSensor.create({ sensorid: sensor.id, datesearched: new Date() })
+    await db.PopularSensor.create({ sensorid: sensor.id, name:sensor.location, dateSearched: new Date(), rating:null })
     setGo("go")
     setSensorResult(sensor)
   }

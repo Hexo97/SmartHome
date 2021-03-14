@@ -31,7 +31,7 @@ return (
         
             :
             <View style={{
-                backgroundColor: 'red',
+                backgroundColor: '#932432',
                 heigth:500,
                 width:100,
                 marginHorizontal:50,

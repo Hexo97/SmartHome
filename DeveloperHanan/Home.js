@@ -1,12 +1,13 @@
 import * as React from "react";
 
-import { useContext } from "react";
-import { Image } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { Image, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import UserContext from "../UserContext";
-
+import { Card} from 'react-native-elements'
 import Login from "./Login";
 import Register from "./Register";
+import Popular from "../DeveloperAisha/Popular";
 import FaqPublic from "./FaqPublic";
 import Advertisments from "./Advertisments";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
@@ -24,6 +25,7 @@ import {
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
   return (
+ 
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
@@ -40,7 +42,10 @@ export function Home({ navigation }) {
           source={require("../assets/images/welcome.png")}
         ></Image>
       </View>
+
+     
     </View>
+  
   );
 }
 
@@ -65,6 +70,7 @@ function MyDrawer({ user }) {
             <Drawer.Screen name="Home" component={Home} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Register" component={Register} />
+            <Drawer.Screen name="Popular" component={Popular} />
             <Drawer.Screen name="Faq" component={FaqPublic} />
             <Drawer.Screen name="Advertisments" component={Advertisments} />
           </>
@@ -127,5 +133,9 @@ const styles = StyleSheet.create({
   image: {
     marginRight: "30%",
     marginLeft: "30%",
+  },
+  space: {
+    width: 0, // or whatever size you need
+    height: 10,
   },
 });

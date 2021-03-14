@@ -12,7 +12,9 @@ export default {
               Faq:'two',
               Reviews:'three',
               Search:'four',
-              PaymentHistory:'five'
+              List:'five',
+              AllUserSensors:'six',
+              PaymentHistory:'seven'
             },
           },
           TabTwo: {

@@ -6,7 +6,7 @@ import LoginPicker from "../screens/pickers/LoginPicker";
 import db from '../db'
 
 
-export default function RegisterLogin({ navigation }) {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
