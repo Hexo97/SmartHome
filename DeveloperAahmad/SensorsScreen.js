@@ -21,9 +21,13 @@ export default function SensorsScreen() {
   const [category, setCategory] = useState(null)
   useEffect(() => setSensor(null), [category])
   const [sensor, setSensor] = useState(null)
+  
 
 
   const createRequest = async (sensor) => {
+    console.log("###sensor:", sensor);
+    console.log("###category:", category);
+
     if (!message) {
       setAlert(true)
     }

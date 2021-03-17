@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -12,27 +12,35 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-
-export default function SensorRequestProcessed({ payment}) {
+import currentTime from "../DeveloperMahmoud/PrintTime"
+export default function SensorRequestProcessed({ payment }) {
   const { user } = useContext(UserContext);
 
 
-  const create = async (userid,categoryid) => {
-    db.Sensors.create({
+  const create = async (userid, categoryid) => {
+    const { id: newSensorId } = await db.Sensors.create({
       categoryid: categoryid,
       userid: userid,
     });
+    await db.Logs.create(
+      {
+        sensorId: newSensorId,
+        categoryId: categoryid,
+        date: new Date(),
+        logMessage: ` Sensor Created`
+      }
+    )
     alert("Sensor created");
   };
 
   const [categories, setCategories] = useState("");
-  useEffect(() => payment ? db.Categories.listenOne(setCategories,payment.categories) : undefined, [payment])
+  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
   console.log(categories)
 
   const [rusers, setRusers] = useState("");
-  useEffect(() => payment ? db.Users.listenOne(setRusers,payment.userid) : undefined, [payment])
+  useEffect(() => payment ? db.Users.listenOne(setRusers, payment.userid) : undefined, [payment])
   console.log(rusers)
-  
+
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -45,7 +53,7 @@ export default function SensorRequestProcessed({ payment}) {
                 fontWeight: "bold",
               }}
             >
-             Customer Name: {rusers.name}
+              Customer Name: {rusers.name}
             </Card.Title>
             <Text
               style={{
@@ -61,7 +69,7 @@ export default function SensorRequestProcessed({ payment}) {
                 color: "black",
               }}
             >
-              Sensor requested: {categories.name} 
+              Sensor requested: {categories.name}
             </Text>
 
             <TouchableOpacity
@@ -69,10 +77,10 @@ export default function SensorRequestProcessed({ payment}) {
               style={styles.title}
             >
               <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-               Add Sensor
+                Add Sensor
               </Text>
             </TouchableOpacity>
-     
+
           </Card>
         </View>
       </ScrollView>

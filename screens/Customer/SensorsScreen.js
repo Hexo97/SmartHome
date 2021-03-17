@@ -36,6 +36,14 @@ export default function SensorsScreen({navigation}) {
         dateCreated: new Date(),
         status: "Pending"
       });
+      await db.Logs.create(
+        {
+          sensorId: sensor.sensor.id,
+          categoryId: category.id,
+          date: new Date(),
+          logMessage: ` Sensor Reported`
+        }
+      )
       setVisible(false)
     }
   };

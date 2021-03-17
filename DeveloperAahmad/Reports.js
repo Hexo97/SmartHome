@@ -31,6 +31,14 @@ export default function Reports() {
     await db.Sensors.remove(report.sensorId)
     console.log(report.sensorId)
     await db.Reports.update({ ...report, status: status });
+    await db.Logs.create(
+      {
+        sensorId: sensor.id,
+        categoryId: sensor.categoryid,
+        date: new Date(),
+        logMessage: ` Sensor Removed`
+      }
+    )
     setAlert(false)
   };
 
