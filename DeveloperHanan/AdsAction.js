@@ -5,10 +5,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { View, Text } from "../components/Themed";
+import { View, Text, Icon } from "../components/Themed";
 import db from "../db";
 import { StatusBar, SafeAreaView, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function AdsScreen() {
   const [categories, setCategories] = useState([]);
@@ -59,120 +60,128 @@ export default function AdsScreen() {
   };
 
   return (
-    <View style={styles.imagebg}>
-      <StatusBar hidden={true} />
-      <View style={styles.navBar}>
-        <Text style={styles.headingText}> Ad</Text>
-      </View>
-      <View style={styles.createContainer}>
-        {isEdit == "false" ? (
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Create Ad</Text>
-        ) : null}
-        {isEdit == "true" ? (
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Edit Ad</Text>
-        ) : null}
+    <SafeAreaProvider style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.imagebg}>
+          <StatusBar hidden={true} />
 
-        {/* <CatPicker set={setCategory} /> */}
-        <View
-          style={{
-            width: "80%",
-            height: 50,
-            borderColor: "#4DA8DA",
-            borderWidth: 2,
-            marginBottom: 20,
-            borderRadius: 15,
-          }}
-        >
-          <Picker selectedValue={categoryId} onValueChange={setCategoryId}>
-            <Picker.Item label="Select Category" value="" />
-            {categories.map((category) => (
-              <Picker.Item
-                key={category.id}
-                label={category.name}
-                value={category.id}
-              />
-            ))}
-          </Picker>
-        </View>
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Enter Description"
-            placeholderTextColor="#12232E"
-            onChangeText={(text) => setDesc(text)}
-            value={desc}
-          />
-        </View>
+          <View style={styles.navBar}>
+            <Text style={styles.headingText}> Ad</Text>
+          </View>
 
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Enter Image Url"
-            placeholderTextColor="#12232E"
-            onChangeText={(text) => setUrl(text)}
-            value={url}
-          />
-        </View>
+          <View>
+            {isEdit == "false" ? (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                Create Ad
+              </Text>
+            ) : null}
+            {isEdit == "true" ? (
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Edit Ad</Text>
+            ) : null}
+          </View>
 
-        {isEdit == "false" ? (
-          <TouchableOpacity
-            disabled={!valid()}
-            onPress={create}
-            style={styles.createBtn}
-          >
-            <Text style={styles.createText}>Create</Text>
-          </TouchableOpacity>
-        ) : null}
-        {isEdit == "true" ? (
-          <TouchableOpacity
-            disabled={!valid()}
-            onPress={edit}
-            style={styles.createBtn}
-          >
-            <Text style={styles.createText}>Edit</Text>
-          </TouchableOpacity>
-        ) : null}
-
-        {isEdit == "true" ? (
-          <Text
-            style={styles.footerLink}
-            onPress={() => {
-              console.log("Switch");
-              setIsEdit("false");
-              setDesc(""), setCategoryId(""), setUrl("");
+          <View
+            style={{
+              width: "80%",
+              height: 50,
+              borderColor: "#4DA8DA",
+              borderWidth: 2,
+              marginBottom: 20,
+              borderRadius: 15,
             }}
           >
-            Switch to create
-          </Text>
-        ) : null}
+            <Picker selectedValue={categoryId} onValueChange={setCategoryId}>
+              <Picker.Item label="Select Category" value="" />
+              {categories.map((category) => (
+                <Picker.Item
+                  key={category.id}
+                  label={category.name}
+                  value={category.id}
+                />
+              ))}
+            </Picker>
+          </View>
 
-        {myText == "TRUE" ? <Text>Creating Ad, Please Wait...</Text> : null}
-      </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Enter Description"
+              placeholderTextColor="#12232E"
+              onChangeText={(text) => setDesc(text)}
+              value={desc}
+            />
+          </View>
 
-      <View style={styles.editContainer}>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}>Edit/Delete Ad</Text>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Enter Image Url"
+              placeholderTextColor="#12232E"
+              onChangeText={(text) => setUrl(text)}
+              value={url}
+            />
+          </View>
 
-        <SafeAreaView style={styles.sContainer}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {ads.map((c) => (
-            <View
-            key={c.id}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                width: 220,
-                height: 170,
-                borderColor: "#000",
-                marginRight: 3,
-                marginTop: 10,
-                paddingRight: 10,
-                paddingLeft: 10,
-                borderWidth: 2,
+          {isEdit == "false" ? (
+            <TouchableOpacity
+              disabled={!valid()}
+              onPress={create}
+              style={styles.createBtn}
+            >
+              <Text style={styles.createText}>Create</Text>
+            </TouchableOpacity>
+          ) : null}
+          {isEdit == "true" ? (
+            <TouchableOpacity
+              disabled={!valid()}
+              onPress={edit}
+              style={styles.createBtn}
+            >
+              <Text style={styles.createText}>Edit</Text>
+            </TouchableOpacity>
+          ) : null}
+
+          {isEdit == "true" ? (
+            <Text
+              style={styles.footerLink}
+              onPress={() => {
+                console.log("Switch");
+                setIsEdit("false");
+                setDesc(""), setCategoryId(""), setUrl("");
               }}
             >
-              <Text>{c.desc}</Text>
-              <Text>{c.date}</Text>
-              <TouchableOpacity>
+              Switch to create
+            </Text>
+          ) : null}
+
+          {myText == "TRUE" ? <Text>Creating Ad, Please Wait...</Text> : null}
+
+          <View style={styles.space} />
+
+          <View>
+            <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+              Edit/Delete Ad
+            </Text>
+
+            {ads.map((c) => (
+              <View
+                key={c.id}
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: 220,
+                  height: 170,
+                  borderColor: "#000",
+                  marginRight: 3,
+                  marginTop: 10,
+                  paddingRight: 10,
+                  paddingLeft: 10,
+                  borderWidth: 2,
+                }}
+              >
+                <Text>{c.desc}</Text>
+                <Text>{c.date}</Text>
+                <TouchableOpacity>
                   <Text
                     style={{
                       width: 90,
@@ -191,8 +200,7 @@ export default function AdsScreen() {
                       setDesc(c.desc),
                         setCategoryId(c.categoryid),
                         setUrl(c.image);
-                      setIsEdit("true"),
-                      setMyId(c.id);
+                      setIsEdit("true"), setMyId(c.id);
                       console.log("is edit " + isEdit);
                     }}
                   >
@@ -200,7 +208,7 @@ export default function AdsScreen() {
                   </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                 <TouchableOpacity
                   onPress={() => {
                     remove(c.id);
                   }}
@@ -222,14 +230,14 @@ export default function AdsScreen() {
                   >
                     Remove
                   </Text>
-                </TouchableOpacity>
-            </View>
-          ))}
-          </ScrollView>
-      
-        </SafeAreaView>
-      </View>
-    </View>
+                </TouchableOpacity> 
+
+              </View>
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaProvider>
   );
 }
 
@@ -259,6 +267,7 @@ const styles = StyleSheet.create({
   navBar: {
     backgroundColor: "#4DA8DA",
     height: 60,
+    marginBottom: 20,
     alignItems: "center",
     width: "100%",
   },
@@ -267,7 +276,7 @@ const styles = StyleSheet.create({
     height: "50%",
     width: "90%",
     backgroundColor: "#fff",
-    marginTop: 0,
+    marginTop: 20,
     // marginTop:3,
     alignItems: "center",
     position: "absolute",
@@ -363,5 +372,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     // marginLeft: "32%",
     fontWeight: "bold",
+  },
+  space: {
+    height: 30,
   },
 });

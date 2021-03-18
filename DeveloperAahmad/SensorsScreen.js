@@ -83,7 +83,7 @@ export default function SensorsScreen() {
 
             <View>
               <Button
-                title="Report Seansor"
+                title="Report Sensor"
                 onPress={() => {
                   setVisible(true)
                 }}

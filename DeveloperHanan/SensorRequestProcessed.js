@@ -12,30 +12,77 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
+import { Button } from "react-native-elements";
 
 export default function SensorRequestProcessed({ payment}) {
   const { user } = useContext(UserContext);
 
+  const [addd, setAddd] = useState(false);
 
   const create = async (userid,categoryid) => {
-    db.Sensors.create({
+
+    if(category && category.name === "Temperature")
+    {
+      db.Sensors.create({
       categoryid: categoryid,
       userid: userid,
+      alert:false,
+      location:"Default",
+      min:0,
+      max:100
     });
+    setAddd(true)
+    }
+    if(category && category.name === "Sound")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      alert:false,
+      location:"Default",
+      minDB:0,
+      maxDB:100
+    });
+    setAddd(true)
+    }
+    if(category && category.name === "Motion")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      motiondetected:false,
+      location:"Default",
+    });
+    setAddd(true)
+    }
+  
     alert("Sensor created");
+  
   };
+
+  const [category, setCategory] = useState("");
+  useEffect(() => payment ? db.Categories.listenOne(setCategory,payment.categories) : undefined, [payment])
+
+
+  // const [request, setRequest] = useState("");
+  // useEffect(() => db.Payment.listenAll(setRequest), []);
+
+  // console.log(request.length, "-----------------")
 
   const [categories, setCategories] = useState("");
   useEffect(() => payment ? db.Categories.listenOne(setCategories,payment.categories) : undefined, [payment])
-  console.log(categories)
+  // console.log(categories)
 
   const [rusers, setRusers] = useState("");
   useEffect(() => payment ? db.Users.listenOne(setRusers,payment.userid) : undefined, [payment])
-  console.log(rusers)
+  // console.log(rusers)
+
   
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
+    
+      <>
         <View style={styles.container}>
           <Card>
             <Card.Title
@@ -64,17 +111,16 @@ export default function SensorRequestProcessed({ payment}) {
               Sensor requested: {categories.name} 
             </Text>
 
-            <TouchableOpacity
+            <Button
               onPress={() => create(payment.userid, payment.categories)}
-              style={styles.title}
-            >
-              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-               Add Sensor
-              </Text>
-            </TouchableOpacity>
+              title="Create"
+              disabled={addd}
+              buttonStyle={styles.myButton}
+            />
      
           </Card>
         </View>
+        </>
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -183,5 +229,17 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  myButton: {
+    backgroundColor: "#4DA8DA",
+    alignSelf: "center",
+    width: 100,
+    marginLeft: 10,
+    height:30,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop:5
+   
   },
 });
