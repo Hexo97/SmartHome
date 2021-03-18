@@ -5,6 +5,7 @@ import db from "../db";
 import { StyleSheet } from "react-native";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Card, AirbnbRating, Rating } from "react-native-elements";
+import Review from "./Review";
 
 export default function Reviews({ route }) {
 
@@ -13,43 +14,16 @@ export default function Reviews({ route }) {
     const [reviews, setReviews] = useState([]);
     useEffect(() => db.Categories.Reviews.listenToAll(setReviews, reviewCategory.id), [reviewCategory]);
 
+    const [user, setUser] = useState([]);
+    useEffect(() => db.Users.listenOne(setUser, reviewCategory.userId), [reviewCategory])
+
     return (
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {reviews.length !== 0 ? (
                     <>
                         {reviews.map((c) => (
-                            <View style={styles.container} key={c.id}>
-                                <Card>
-                                    <Card.Title
-                                        style={{
-                                            backgroundColor: "#4DA8DA",
-                                            color: "black",
-                                            fontWeight: "bold",
-                                        }}
-                                    >
-                                        <Text key={c.id}> Customer: {c.userId}</Text>
-                                    </Card.Title>
-                                    <Text
-                                        style={{
-                                            fontSize: 15,
-                                            color: "black",
-                                            fontWeight: "bold",
-                                            fontStyle: "italic",
-                                        }}
-                                    >
-                                        <Text key={c.id}> Review: {c.reviewMsg} </Text>
-                                    </Text>
-                                    <AirbnbRating
-                                        count={5}
-                                        reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
-                                        defaultRating={c.rating}
-                                        size={20}
-                                        onFinishRating={c.rating}
-                                        disabled
-                                    />
-                                </Card>
-                            </View>
+                            <Review review={c}/>
                         ))}
                     </>
                 ) : (

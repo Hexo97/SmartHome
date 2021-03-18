@@ -91,21 +91,15 @@ export default function ShopItem({ navigation, category, edit, remove }) {
                 Buy
               </Text>
             </TouchableOpacity>
-
-            {/* <TouchableOpacity
-              onPress={() => reviews(category.id)}
+            
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Reviews', { reviewCategory: category })}
               style={styles.title}
             >
               <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
                 Reviews
               </Text>
-            </TouchableOpacity> */}
-
-            <Button
-              title="Reviews"
-              type="outline"
-              onPress={() => navigation.navigate('Reviews', {reviewCategory:category})}
-            />
+            </TouchableOpacity>
 
           </Card>
         </View>
