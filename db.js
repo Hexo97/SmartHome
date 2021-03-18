@@ -30,9 +30,9 @@ class DB {
     id === ""
       ? set(null)
       : db
-          .collection(this.collection)
-          .doc(id)
-          .onSnapshot((snap) => set(this.reformat(snap)));
+        .collection(this.collection)
+        .doc(id)
+        .onSnapshot((snap) => set(this.reformat(snap)));
 
   // item has no id
   create = async (item) => {
@@ -154,6 +154,26 @@ class Readings extends DB {
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
 }
 
+class Reviews extends DB {
+  constructor(containing) {
+    super("reviews");
+    this.containing = containing;
+  }
+
+  createReview = (categoryId,review) => {
+    const { ...rest } = review;
+    console.log("review?:",review);
+    console.log("rest?:",rest);
+    console.log("categoryId?:",categoryId);
+    db
+      .collection(this.containing)
+      .doc(categoryId)
+      .collection(this.collection)
+      .add(rest);
+  }
+}
+
+
 class Users extends DB {
   constructor() {
     super('users')
@@ -174,7 +194,7 @@ class SuggestionList extends DB {
   }
 
   createList = (userid, list) =>
-  // console.log(userid)
+    // console.log(userid)
     db.collection(this.containing).doc(userid).collection(this.collection).add(list);
 
   listenToUserSuggestion = (set, userid) =>
@@ -188,6 +208,7 @@ class SuggestionList extends DB {
 class Categories extends DB {
   constructor() {
     super("categories");
+    this.Reviews = new Reviews(this.collection);
   }
 
   // max 10
@@ -278,7 +299,7 @@ class PopularSensor extends DB {
 
   listenBySensor = (set, sensorid) =>
     db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
-  
+
   listenToLatestThree = (set) =>
     db.collection(this.collection).orderBy("dateSearched", "desc").limit(3).onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
@@ -308,7 +329,8 @@ export default {
   Users: new Users(),
   Request: new Request(),
   Reports: new Reports(),
-  
+  Reviews: new Reviews(),
+
   //HANAN
   Ads: new Ads(),
   Faq: new Faq(),

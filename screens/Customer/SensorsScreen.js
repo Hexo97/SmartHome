@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
+import { StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { View, Text } from '../../components/Themed';
 import MotionInfo from './MotionInfo'
 import TemperatureInfo from './TemperatureInfo'
@@ -10,12 +10,13 @@ import SensorByUserAndCategoryPicker from '../pickers/SensorByUserAndCategoryPic
 import Colors from "../../constants/Colors";
 import UserContext from '../../UserContext'
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
-import { Button} from 'react-native-elements'
+import { Button, Icon, AirbnbRating } from 'react-native-elements'
 import { TextInput } from "react-native";
+import Modal from 'react-native-modal';
 import db from '../../db'
 
 
-export default function SensorsScreen({navigation}) {
+export default function SensorsScreen({ navigation }) {
 
   const { user } = useContext(UserContext)
   useEffect(() => setCategory(null), [user])
@@ -40,29 +41,52 @@ export default function SensorsScreen({navigation}) {
     }
   };
 
+  const createReview = async (category, reviewMsg) => {
+    if (!reviewMsg) {
+      setReviewAlert(true)
+    }
+    else {
+      const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
+      // console.log("review:",review);
+      await db.Categories.Reviews.createReview(category.id,review);
+      console.log("here");
+      setReviewVisible(false)
+      setReviewMessage("")
+    }
+  };
+
+  const [reviewVisible, setReviewVisible] = useState(false)
+
   const [visible, setVisible] = useState(false)
   const [alert, setAlert] = useState(false)
+  const [reviewAlert, setReviewAlert] = useState(false)
   const [message, setMessage] = useState("")
+  const [reviewMessage, setReviewMessage] = useState("")
+  const [rating, setRating] = useState(0)
 
+  // const sendRating = async (rating) => {
+  //   // await popularId && db.PopularSensor.update({ id: popularId.id, rate: rating, dateSearched: new Date(), sensorid: sensor.id, name: sensor.location })
+  //   console.log(rating);
+  // }
 
   // console.log(user, category, sensor)
 
   return (
     <SafeAreaProvider style={styles.container}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-    <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
-        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Control Sensors</Text>
-    </View>
-            <Button
-              title="View All Sensors"
-              type="outline"
-              onPress={() => navigation.navigate('AllUserSensors')}
-            />
+      <ScrollView showsVerticalScrollIndicator={true}>
+        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
+          <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Control Sensors</Text>
+        </View>
+        <Button
+          title="View All Sensors"
+          type="outline"
+          onPress={() => navigation.navigate('AllUserSensors')}
+        />
         {
           user
           &&
           <View style={styles.getStartedContainer}>
-          <CategoryByUserPicker set={setCategory} />
+            <CategoryByUserPicker set={setCategory} />
           </View>
         }
         {
@@ -71,7 +95,7 @@ export default function SensorsScreen({navigation}) {
           category
           &&
           <View style={styles.getStartedContainer}>
-          <SensorByUserAndCategoryPicker category={category} set={setSensor} />
+            <SensorByUserAndCategoryPicker category={category} set={setSensor} />
           </View>
         }
         {
@@ -100,12 +124,26 @@ export default function SensorsScreen({navigation}) {
 
 
             <View>
-              <Button
-                title="Report Sensor"
+              <Icon
+                name="report"
+                type="material-icons"
+                size={20}
+                reverse
+                containerStyle={{
+                  left: "42.5%"
+                }}
+                color="#f50"
+
                 onPress={() => {
                   setVisible(true)
                 }}
               />
+              {/* <Button
+                title="Report Sensor"
+                onPress={() => {
+                  setVisible(true)
+                }}
+              /> */}
               <Dialog
                 style={{ width: "80%" }}
                 visible={visible}
@@ -123,7 +161,7 @@ export default function SensorsScreen({navigation}) {
                     <DialogButton
                       text="OK"
                       onPress={() => {
-                          createRequest({ sensor }),
+                        createRequest({ sensor }),
                           setMessage("")
                       }
                       }
@@ -151,11 +189,77 @@ export default function SensorsScreen({navigation}) {
                 </DialogContent>
               </Dialog>
             </View>
+            {/* //============================================================================================= */}
+            <View>
+              <Icon
+                name="star"
+                type="ant-design"
+                size={20}
+                reverse
+                containerStyle={{
+                  left: "42.5%"
+                }}
+                color="#f50"
 
+                onPress={() => {
+                  setReviewVisible(true)
+                }}
+              />
+              <Dialog
+                style={{ width: "80%" }}
+                visible={reviewVisible}
+                footer={
+                  <DialogFooter>
+                    <DialogButton
+                      text="CANCEL"
+                      onPress={() => {
+                        setReviewVisible(false),
+                          setReviewMessage(""),
+                          setReviewAlert(false)
+                      }
+                      }
+                    />
+                    <DialogButton
+                      text="OK"
+                      onPress={() => {
+                        createReview( category, reviewMessage )
+                      }
+                      }
+                    />
+                  </DialogFooter>
+                }
+                onTouchOutside={() => {
+                  setReviewVisible(false);
+                }}
+              >
+                <DialogContent>
+                  <TextInput
+                    style={{ fontSize: 15, alignItems: "center" }}
+                    style={styles.TextInput}
+                    placeholder="Leave your review here ..."
+                    value={reviewMessage}
+                    onChangeText={(value) => setReviewMessage(value)}
+                  />
+                  <AirbnbRating
+                    count={5}
+                    reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
+                    defaultRating={1}
+                    size={20}
+                    onPress={setRating}
+                    onFinishRating={rating => setRating(rating)}
+                  />
+                  {
+                    reviewAlert
+                    &&
+                    <Text style={styles.alert}>Please enter a review</Text>
+                  }
+                </DialogContent>
+              </Dialog>
+            </View>
           </>
         }
-                  </ScrollView>
-        </SafeAreaProvider>
+      </ScrollView>
+    </SafeAreaProvider >
   );
 }
 
@@ -167,18 +271,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor:"#12232E"
-},
-getStartedContainer: {
-  alignItems: "center",
-  marginHorizontal:30,
-  marginTop:5,
-  marginBottom:5,
-  backgroundColor:"#EEFBFB",
-  borderRadius: 10,
-  borderBottomColor: "black",
-  borderWidth: 2
-},
+    backgroundColor: "#12232E"
+  },
+  getStartedContainer: {
+    alignItems: "center",
+    marginHorizontal: 30,
+    marginTop: 5,
+    marginBottom: 5,
+    backgroundColor: "#EEFBFB",
+    borderRadius: 10,
+    borderBottomColor: "black",
+    borderWidth: 2
+  },
   developmentModeText: {
     marginBottom: 20,
     fontSize: 14,
