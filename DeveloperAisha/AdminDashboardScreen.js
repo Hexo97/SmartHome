@@ -50,9 +50,8 @@ export default function AdminDashboardScreen() {
                     <ListItem.Subtitle>{u.role}</ListItem.Subtitle>
                     </ListItem.Content>
                     <ListItem.Content>
-                    <ListItem.Subtitle>                {
-                        sensors.map((sensor,index) => sensor.userid == u.id && 
-                        <Text key={index}>{index + index }</Text>)}
+                      <ListItem.Subtitle>     
+                            <Text >{sensors.reduce((pre, cur) => (cur.userid === u.id) ? ++pre : pre, 0)}</Text> 
                     </ListItem.Subtitle>
                     </ListItem.Content>
                 </ListItem>

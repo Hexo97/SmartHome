@@ -11,7 +11,6 @@ import MotionActions from './MotionActions'
 import { ListItem } from 'react-native-elements'
 import Colors from "../../constants/Colors";
 import SoundActions from "./SoundActions";
-import ProximityActions from "../../DeveloperAisha/ProximityActions"
 
 export default function ManageSensors() {
   const [category, setCategory] = useState(null);
@@ -114,27 +113,6 @@ export default function ManageSensors() {
           </ListItem>
         </View>
 
-        <View style={styles.getStartedContainer}>
-          <CategoryPicker set={setCategory} />
-        </View>
-        {category && (
-          <View style={styles.getStartedContainer}>
-            <SensorByCategoryPicker category={category} set={setSensor} />
-          </View>
-        )}
-        {category && sensor && category.name === "Motion" && (
-          <MotionActions sensor={sensor} />
-        )}
-        {category && sensor && category.name === "Temperature" && (
-          <TemperatureActions sensor={sensor} />
-        )}
-
-        {category && sensor && category.name === "Sound" && (
-          <SoundActions sensor={sensor} />
-        )}
-        {category && sensor && category.name === "Proximity" && (
-          <ProximityActions sensor={sensor} />
-        )}
       </ScrollView>
     </SafeAreaProvider>
   );

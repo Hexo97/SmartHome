@@ -1,21 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, Avatar, ScrollView } from "react-native";
-import { ListItem, Icon , Card, Button } from 'react-native-elements'
+import { StyleSheet, Text, ScrollView } from "react-native";
+import { ListItem,Avatar } from 'react-native-elements'
 import { View } from '../components/Themed';
 import UserContext from '../UserContext'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import db from '../db'
+import { Icon } from 'react-native-elements'
 
 export default function AllUserSensors() {
   const { user } = useContext(UserContext)
-
-  const [profilePics, setProfilePics] = useState([])
-  useEffect(() => db.Users.listenOne(setProfilePics, user.id), [])
-
-  let currentProfile = "https://www.pinclipart.com/picdir/middle/355-3553881_stockvader-predicted-adig-user-profile-icon-png-clipart.png"
-  if (profilePics.url) {
-      currentProfile = profilePics.url
-  }
 
   const[userSensors, setUserSensors] = useState([])
   useEffect(() => db.Sensors.listenByUser(setUserSensors,user.id),[user])
@@ -27,40 +20,75 @@ export default function AllUserSensors() {
 
     <SafeAreaProvider style={styles.container}>
     <ScrollView showsVerticalScrollIndicator={false}>
-        <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
-        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Sensors Status</Text>
+        <View style= {{ backgroundColor:"#12232E", height:50, margin:5, marginBottom:10}}>
+        <Text style= {{ color: 'red',textAlign:"center",marginTop:10, fontSize:20 , fontStyle:"italic"}}>Precautions</Text>
+        <Icon name='warning' color='white'/>
         </View>
 
-        <View>
-        {/* {
-            userSensors.map((item, i) => (
-            <ListItem key={i} bottomDivider>
-
-                <ListItem.Content>
-                <ListItem.Title>{item.location}</ListItem.Title>
-                </ListItem.Content>
-                <ListItem.Chevron />
-
-            </ListItem>
-            ))
-        } */}
-
+        <View style={{ margin:20}}>
           {
             categories
             .filter(category => userSensors.find(sensor => sensor.categoryid === category.id) !== undefined)
             .map((category, i) => 
                 <ListItem key={i} bottomDivider>
+                     <Avatar source={{uri: category.image ? category.image : "https://www.pinclipart.com/picdir/middle/355-3553881_stockvader-predicted-adig-user-profile-icon-png-clipart.png"}} />
                     <ListItem.Content>
                     <ListItem.Title>{category.name}</ListItem.Title>
+                    <ListItem.Subtitle>{userSensors.location}</ListItem.Subtitle>
                     </ListItem.Content>
-                    <ListItem.Chevron />
                     </ListItem>
                 )
           }
-
         </View>
 
-    
+
+        <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+            These products cannot be used in safety devices for presses or other safety devices used to protect human life.
+            These products are designed for use in applications for sensing workpieces and workers that do not affect safety.
+        </Text> 
+
+        <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+        Operating Environment
+        Do not use the products in an environment where there are explosive or inflammable gases.
+
+        Power Supply Voltage
+        Do not use a voltage that exceeds the power supply voltage range.
+        Using a voltage that exceeds the range may cause burning.
+
+        Load Short-circuiting
+        Do not short-circuit the load. Doing so may cause explosion or burning.
+        </Text> 
+
+        <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+        Incorrect Wiring
+        Be sure that the power supply polarity and other wiring is correct.
+        Incorrect wiring may cause explosion or burning.
+        </Text> 
+
+        <View style= {{ backgroundColor:"#12232E", height:50, margin:5, marginBottom:10}}>
+        <Text style= {{ color: 'red',textAlign:"center",marginTop:10, fontSize:20 , fontStyle:"italic"}}>Precautions for Correct Use</Text>
+        <Icon name='warning' color='white'/>
+        </View>
+
+
+        <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+        • When using a Sensor that supports non-corrosive gas as the applicable fluid, use an air filter to remove moisture and oil from the gas.
+
+        • Do not insert any wire or other object into the pressure port. Doing so may damage the pressure elements and cause a malfunction.
+
+        • Mount the Sensor so that it is not subject to ultrasonic vibration.
+
+        • The cable can be extended to a maximum of 10 m. For details, see the output impedance section on the previous page.
+        </Text>
+
+        <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+        Unplug it
+        Simply disconnecting your devices or turning them off when not in use can significantly reduce your vulnerability to cyberattacks. It removes potential entry points into your network and minimizes the chances of unauthorized access to your network.
+
+        With the advent of IoT devices in homes and offices, hackers also developed more cunning ways to exploit them.
+        Adopting the abovementioned security habits can prevent a variety of IoT attacks, but if you need to beef up your security, contact us today. We have robust security solutions to keep your hardware and systems safe.
+        </Text>
+
     </ScrollView>
     </SafeAreaProvider>
 
@@ -196,5 +224,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center"
+  },
+  space: {
+    width: 0,
+    height: 20,
   },
 });

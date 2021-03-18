@@ -162,7 +162,7 @@ exports.createSampleData = functions.https.onCall(
     const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
     functions.logger.info("sensorId2", { sensorId2 })
 
-    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId4, location: "Kitchen", state: "off", latitude:25.354826, longitude:25.40000, motiondetected: false })
+    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Kitchen", state: "close", latitude:25.354826, longitude:25.40000, presenceDetected: false , fill:"Empty"})
     functions.logger.info("sensorId3", { sensorId3 })
 
     const { id: sensorId4 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
@@ -264,15 +264,31 @@ exports.onNewReading = functions.firestore.document('sensors/{sensorid}/readings
         await db.collection('sensors').doc(sensor.id).set({ motiondetected: base64_1 != base64_2 }, { merge: true })
       }
     }
-    else if (category.name = "Temperature") {
+    else if (category.name === "Temperature")
+    {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
       functions.logger.info("temp alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
     }
-    else if (category.name = "Sound") {
+    else if (category.name === "Sound") 
+    {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.maxDB || reading.current < sensor.minDB }, { merge: true })
       functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
     } 
-    else {
+    else if (category.name === "Proximity") 
+    {
+      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude }, { merge: true })
+      if(sensor.presenceDetected)
+      {
+        await db.collection('sensors').doc(sensor.id).update({state : "open"})
+      }
+      else if((!sensor.presenceDetected))
+      {
+        await db.collection('sensors').doc(sensor.id).update({state : "close"})
+      }
+      functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude  });
+    } 
+    else 
+    {
       functions.logger.info("No such category", { category });
     }
 

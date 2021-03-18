@@ -12,7 +12,9 @@ import UserContext from '../../UserContext'
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import { Button} from 'react-native-elements'
 import { TextInput } from "react-native";
+import { Icon } from 'react-native-elements'
 import db from '../../db'
+import ProximityInfo from '../../DeveloperAisha/ProximityInfo'
 
 
 export default function SensorsScreen({navigation}) {
@@ -53,11 +55,16 @@ export default function SensorsScreen({navigation}) {
     <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
         <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Control Sensors</Text>
     </View>
-            <Button
-              title="View All Sensors"
-              type="outline"
-              onPress={() => navigation.navigate('AllUserSensors')}
-            />
+
+    <View style={{alignSelf:"center",  backgroundColor:"#12232E"}}>
+    <Icon
+      raised
+      name='warning'
+      type='font-awesome'
+      color='red'
+      onPress={() => navigation.navigate('AllUserSensors')} />
+    </View>
+
         {
           user
           &&
@@ -97,8 +104,13 @@ export default function SensorsScreen({navigation}) {
               &&
               <SoundInfo user={user} category={category} sensor={sensor} />
             }
+            {
+              category.name === "Proximity"
+              &&
+              <ProximityInfo user={user} category={category} sensor={sensor} />
+            }
 
-
+            <View style={styles.space} />   
             <View>
               <Button
                 title="Report Seansor"
@@ -163,6 +175,10 @@ const styles = StyleSheet.create({
   tinyLogo: {
     width: 150,
     height: 150,
+  },
+  space: {
+    width: 0, // or whatever size you need
+    height: 5,
   },
   container: {
     flex: 1,
