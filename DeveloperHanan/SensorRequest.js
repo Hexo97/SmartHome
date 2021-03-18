@@ -9,9 +9,10 @@ import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function SensorRequest() {
-
   const [payment, setPayment] = useState([]);
   useEffect(() => db.Payment.listenAll(setPayment), []);
+
+  console.log(payment.length, "--------------------------------")
 
   const { user } = useContext(UserContext);
 
@@ -19,15 +20,32 @@ export default function SensorRequest() {
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}> User's Sensor Request </Text>
+          <Text style={styles.title}> User's Sensor Request </Text>
           <View style={styles.container}>
-            {payment.map((payment) => (
-              <SensorRequestProcessed
-                key={payment.id}
-                payment={payment}
-                {...payment}
-              />
-            ))}
+            {payment.length !== 0 ? 
+              <>
+                {payment.map((payment) => (
+                  <SensorRequestProcessed
+                    key={payment.id}
+                    payment={payment}
+                    {...payment}
+                  />
+                ))}
+              </>
+             : 
+              <>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: "white",
+                    marginTop: "60%",
+                    marginLeft: "5%",
+                  }}
+                >
+                  NO SENSOR REQUESTED
+                </Text>
+              </>
+            }
           </View>
         </ScrollView>
       </SafeAreaProvider>
@@ -52,8 +70,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "bold",
-    marginLeft:10,
-    color:"white"
+    marginLeft: 10,
+    color: "white",
   },
   helpLink: {
     paddingVertical: 15,

@@ -11,7 +11,8 @@ export default {
               Home: 'one',
               Dashboard:'two',
               RealTimeMonitoring:'three',
-              Logs:'four'
+              Logs:'four',
+              SimulatorActions:'five'
             },
           },
           TabTwo: {

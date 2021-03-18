@@ -34,39 +34,62 @@ export default function PaymentHistory({ payments }) {
   );
   //  console.log(categories.id)
 
+  //console.log(payment.length);
+
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {payment.map((c) => (
-          <View style={styles.container} key={c.id}>
-            <Card>
-              <Card.Title
-                style={{
-                  backgroundColor: "#4DA8DA",
-                  color: "black",
-                  fontWeight: "bold",
-                }}
-              >
-                <Text key={c.id}> Receipt Code: {c.id} </Text>
-              </Card.Title>
+        {payment.length !== 0 ? (
+          <>
+            {payment.map((c) => (
+              <View style={styles.container} key={c.id}>
+                <Card>
+                  <Card.Title
+                    style={{
+                      backgroundColor: "#4DA8DA",
+                      color: "black",
+                      fontWeight: "bold",
+                      // paddingBottom:"10%",
+                      // marginTop:"10%"
+                    }}
+                  >
+                    <Text key={c.id}> Receipt Code: {c.id} </Text>
+                    </Card.Title>
+                    <View   style={{
+                      backgroundColor: "white",
+                     alignContent:"center",
+                    }}>
+                      <Image
+                        style={styles.tinyLogo}
+                        source={{
+                          uri:
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png",
+                        }}
+                      />
+                    </View>
+                 
 
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "black",
-                }}
-              >
-                <Text key={c.id}> Customer: {user.name}</Text>
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "black",
-                }}
-              >
-                <Text key={c.id}> Amount paid: {c.price} QR</Text>
-              </Text>
-              {/* <Text
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "black",
+                      fontWeight: "bold",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    <Text key={c.id}> Customer: {user.name}</Text>
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "black",
+                      fontWeight: "bold",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    <Text key={c.id}> Amount paid: {c.price} QR</Text>
+                  </Text>
+                  {/* <Text
                 style={{
                   fontSize: 15,
                   color: "black",
@@ -75,17 +98,33 @@ export default function PaymentHistory({ payments }) {
                 <Text key={c.id}> Sensor requested: {c.categories}</Text>
               </Text> */}
 
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "black",
-                }}
-              >
-                <Text key={c.id}> Date: {c.cdate.toDateString()}</Text>
-              </Text>
-            </Card>
-          </View>
-        ))}
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      color: "black",
+                      fontWeight: "bold",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    <Text key={c.id}> Date: {c.cdate.toDateString()}</Text>
+                  </Text>
+                </Card>
+              </View>
+            ))}
+          </>
+        ) : (
+          <Text
+            style={{
+              fontSize: 15,
+              color: "white",
+              marginTop: "60%",
+              marginLeft: "28%",
+            }}
+          >
+            {" "}
+            NO PAYMENT HISTORY{" "}
+          </Text>
+        )}
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -93,9 +132,9 @@ export default function PaymentHistory({ payments }) {
 
 const styles = StyleSheet.create({
   tinyLogo: {
-    width: 150,
-    height: 150,
-    marginLeft: 100,
+    width: 200,
+    height: 200,
+    marginLeft: 70,
   },
   container: {
     flex: 1,

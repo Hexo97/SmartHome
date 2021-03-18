@@ -11,8 +11,6 @@ export default function Popular({ navigation }) {
 
   const[popular, setPopular] = useState([])
   useEffect(() => db.PopularSensor.listenToLatestThree(setPopular),[])
-  
-  console.log(popular, "LET C")
 
   let onePop = ""
   let twoPop = ""
@@ -40,7 +38,7 @@ export default function Popular({ navigation }) {
   const[thirdCategory , setThirdCategory] = useState(null)
   useEffect(() => thirdSensor ? db.Categories.listenOne(setThirdCategory, thirdSensor.categoryid):undefined,[thirdSensor])
 
-  const image = { uri: "https://64.media.tumblr.com/20b44154c89a794515d21750ec5813d0/tumblr_pips1snsWe1uzwgsuo1_400.gifv" };
+  const image = { uri: "https://media.istockphoto.com/vectors/abstract-white-background-geometric-texture-vector-id1069183510?k=6&m=1069183510&s=612x612&w=0&h=IsR2U2IjDpCVAyY6oeeANwvIP1SHpBalMZPB_QNGnbw=" };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.imagebg}>
@@ -49,7 +47,7 @@ export default function Popular({ navigation }) {
           style={{ width: 50, height: 50}}
           onPress={() => navigation.openDrawer()}
         >
-                  <Image
+        <Image
             source={require("../assets/images/menu.png")}
             style={{ width: 60, height: 60 }}
           />
@@ -57,6 +55,13 @@ export default function Popular({ navigation }) {
         <Text style={styles.headingText}>Customer Favourite Products</Text>
       </View>
       <ImageBackground source={image} style={styles.image}>
+      {/* <View style={{alignSelf:"center", margin:50}}> */}
+      <Tile
+          imageSrc={require('../assets/images/customer.gif')}
+          featured
+          onPress ={() => console.log("HELLO")}        />
+      {/* </View> */}
+  
       {
         firstCategory
         &&
@@ -94,8 +99,9 @@ export default function Popular({ navigation }) {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#007CC7",
     height: 60,
+    paddingRight: 10,
     width: "100%",
     flexDirection: "row",
   },

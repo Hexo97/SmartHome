@@ -1,26 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  Image,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, ScrollView, } from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-import currentTime from "../DeveloperMahmoud/PrintTime"
+import { Button } from "react-native-elements";
+
 export default function SensorRequestProcessed({ payment }) {
   const { user } = useContext(UserContext);
 
+  const [addd, setAddd] = useState(false);
 
   const create = async (userid, categoryid) => {
     const { id: newSensorId } = await db.Sensors.create({
       categoryid: categoryid,
       userid: userid,
+      alert: false,
+      location: "Default",
+      minDB: 0,
+      maxDB: 100
     });
     await db.Logs.create(
       {
@@ -30,64 +29,80 @@ export default function SensorRequestProcessed({ payment }) {
         logMessage: ` Sensor Created`
       }
     )
-    alert("Sensor created");
-  };
+    setAddd(true)
+  }
+
+  if (category && category.name === "Motion") {
+    db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      motiondetected: false,
+      location: "Default",
+    });
+    setAddd(true)
+  }
+
+  alert("Sensor created");
+
+  const [category, setCategory] = useState("");
+  useEffect(() => payment ? db.Categories.listenOne(setCategory, payment.categories) : undefined, [payment])
 
   const [categories, setCategories] = useState("");
   useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
-  console.log(categories)
+  // console.log(categories)
 
   const [rusers, setRusers] = useState("");
   useEffect(() => payment ? db.Users.listenOne(setRusers, payment.userid) : undefined, [payment])
-  console.log(rusers)
+  // console.log(rusers)
+
+  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
+  // console.log(categories)
 
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Card>
-            <Card.Title
-              style={{
-                backgroundColor: "#4DA8DA",
-                color: "black",
-                fontWeight: "bold",
-              }}
-            >
-              Customer Name: {rusers.name}
-            </Card.Title>
-            <Text
-              style={{
-                fontSize: 15,
-                color: "black",
-              }}
-            >
-              Amount paid: QR {payment.price}
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                color: "black",
-              }}
-            >
-              Sensor requested: {categories.name}
-            </Text>
-
-            <TouchableOpacity
-              onPress={() => create(payment.userid, payment.categories)}
-              style={styles.title}
-            >
-              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-                Add Sensor
+        <>
+          <View style={styles.container}>
+            <Card>
+              <Card.Title
+                style={{
+                  backgroundColor: "#4DA8DA",
+                  color: "black",
+                  fontWeight: "bold",
+                }}
+              >
+                Customer Name: {rusers.name}
+              </Card.Title>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                Amount paid: QR {payment.price}
               </Text>
-            </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: "black",
+                }}
+              >
+                Sensor requested: {categories.name}
+              </Text>
 
-          </Card>
-        </View>
+              <Button
+                onPress={() => create(payment.userid, payment.categories)}
+                title="Create"
+                disabled={addd}
+                buttonStyle={styles.myButton}
+              />
+            </Card>
+          </View>
+        </>
       </ScrollView>
     </SafeAreaProvider>
   );
-}
-
+};
 const styles = StyleSheet.create({
   tinyLogo: {
     width: 150,
@@ -191,5 +206,17 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  myButton: {
+    backgroundColor: "#4DA8DA",
+    alignSelf: "center",
+    width: 100,
+    marginLeft: 10,
+    height: 30,
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 5
+
   },
 });

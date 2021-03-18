@@ -4,31 +4,78 @@ import { View } from '../components/Themed';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UserContext from '../UserContext'
 import db from '../db'
+import { Icon , ListItem } from 'react-native-elements'
 import { IconButton, Colors } from 'react-native-paper';
-import { ListItem  } from 'react-native-elements'
+import { Picker } from '@react-native-picker/picker';
 
-export default function showSuggestions({suggestionType}) {
+export default function suggestionforSupport() {
   const { user } = useContext(UserContext)
 
+  const[suggestionType, setSuggestionType] = useState("")
+  const[allState, setAllState] = useState(false)
+
+  const [users, setUsers] = useState([])
+  useEffect(() => db.Users.listenAll(setUsers),[])
+
+  const[userid, setUserId] = useState("")
+
   const[productsuggestions , setProductSuggestions] = useState([])
-  useEffect(() => db.Users.SuggestionList.listenToProductSuggestion(setProductSuggestions, user.id),[user])
+  useEffect(() => userid ? db.Users.SuggestionList.listenToProductSuggestion(setProductSuggestions, userid):undefined,[userid])
 
   const[appsuggestions , setAppSuggestions] = useState([])
-  useEffect(() => db.Users.SuggestionList.listenToAppSuggestion(setAppSuggestions, user.id),[user])
+  useEffect(() => userid ? db.Users.SuggestionList.listenToAppSuggestion(setAppSuggestions, userid):undefined,[userid])
 
   const[staffsuggestions , setStaffSuggestion] = useState([])
-  useEffect(() => db.Users.SuggestionList.listenToStaffSuggestion(setStaffSuggestion, user.id),[user])
+  useEffect(() =>userid ? db.Users.SuggestionList.listenToStaffSuggestion(setStaffSuggestion, userid):undefined,[userid])
 
-
-  const deleteSuggestion = async (listId) =>
-  {
-      await db.Users.SuggestionList.removeUserSuggestList(user.id,listId)
-  }
   return (
     <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            
-            {
+        <View style={{alignItems:'center' , backgroundColor:"#EEFBFB", margin:10}}>
+        <Icon
+            reverse
+            name='heart'
+            type='ionicon'
+            color='#F06292'
+            />
+        </View>
+        <Text style={{alignSelf:'center' , marginBottom:30,backgroundColor:"#EEFBFB", fontSize:20,fontWeight:"bold"}}>User Suggestions</Text>
+
+        <View style={styles.getStartedContainer}>
+        <Picker
+          style={{ height: 50, width: 200 }}
+          selectedValue={userid}
+          onValueChange={setUserId}
+        >
+          <Picker.Item label='Select Users' value="" />
+          {
+            users
+            .map(user => <Picker.Item key={user.id} label={user.name} value={user.id} />)
+          }
+        </Picker>
+        </View>
+
+        <Text style={{marginLeft:100}}>
+        {
+            userid
+            &&
+                <View style={styles.getStartedContainer}>
+                <Picker
+                    selectedValue={suggestionType}
+                    style={{ height: 50, width: 200 ,color:"black"}}
+                    selectedValue={suggestionType}
+                    onValueChange={setSuggestionType}
+                >
+                    <Picker.Item label="Select Suggestion Type" value="suggestionType" />
+                    <Picker.Item label="Products" value="Products" />
+                    <Picker.Item label="Application" value="Application" />
+                    <Picker.Item label="Staff" value="Staff" />
+                </Picker> 
+                </View>
+        }
+        </Text>
+
+                {
                 productsuggestions.length > 0
                 && 
                 suggestionType === "Products"
@@ -49,14 +96,6 @@ export default function showSuggestions({suggestionType}) {
                         </ListItem.Content>
                         <ListItem.Content>
                         <ListItem.Subtitle>{s.price}</ListItem.Subtitle>
-                        </ListItem.Content>
-                        <ListItem.Content>
-                        <IconButton
-                            icon="delete"
-                            color={Colors.pink300}
-                            size={25}
-                            onPress= { () => deleteSuggestion(s.id)}
-                        />
                         </ListItem.Content>
                     </ListItem>
                     ))
@@ -82,14 +121,6 @@ export default function showSuggestions({suggestionType}) {
                         <ListItem.Content>
                         <ListItem.Subtitle>{s.improve}</ListItem.Subtitle>
                         </ListItem.Content>
-                        <ListItem.Content>
-                        <IconButton
-                            icon="delete"
-                            color={Colors.pink300}
-                            size={25}
-                            onPress= { () => deleteSuggestion(s.id)}
-                        />
-                        </ListItem.Content>
                     </ListItem>
                     ))
                 }
@@ -113,14 +144,6 @@ export default function showSuggestions({suggestionType}) {
                         </ListItem.Content>
                         <ListItem.Content>
                         <ListItem.Subtitle>{s.staff}</ListItem.Subtitle>
-                        </ListItem.Content>
-                        <ListItem.Content>
-                        <IconButton
-                            icon="delete"
-                            color={Colors.pink300}
-                            size={25}
-                            onPress= { () => deleteSuggestion(s.id)}
-                        />
                         </ListItem.Content>
                     </ListItem>
                     ))
@@ -253,13 +276,13 @@ const styles = StyleSheet.create({
       alignItems: "flex-start",
       marginBottom: 16
   },
-  // activityIndicator: {
-  //     backgroundColor: "#CABFAB",
-  //     padding: 4,
-  //     height: 12,
-  //     width: 12,
-  //     borderRadius: 6,
-  //     marginTop: 3,
-  //     marginRight: 20
-  // },
+  getStartedContainer: {
+    alignItems: "center",
+    marginHorizontal:30,
+    marginTop:5,
+    marginBottom:10,
+    backgroundColor:"skyblue",
+    borderRadius: 10,
+    borderWidth: 2
+  },
 });
