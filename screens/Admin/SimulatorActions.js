@@ -2,15 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet,TouchableOpacity ,Text, ScrollView, ActivityIndicator} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View } from '../../components/Themed';
-import CategoryPicker from '../pickers/CategoryPicker'
-import SensorByCategoryPicker from '../pickers/SensorByCategoryPicker'
-import TemperatureActions from './TemperatureActions'
 import db from '../../db'
 import { Button} from 'react-native-elements'
-import MotionActions from './MotionActions'
 import { ListItem } from 'react-native-elements'
-import Colors from "../../constants/Colors";
-import SoundActions from "./SoundActions";
 
 export default function ManageSensors() {
   const [category, setCategory] = useState(null);

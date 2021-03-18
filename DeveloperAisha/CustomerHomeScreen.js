@@ -10,29 +10,29 @@ import fb from '../fb'
 import { IconButton, Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Audio } from 'expo-av';
+// import { Audio } from 'expo-av';
 
 export default function CustomerHomeScreen({navigation}) {
   const { user } = useContext(UserContext)
-  const [sound, setSound] = React.useState();
+  // const [sound, setSound] = React.useState();
 
-  async function playSound() {
-    console.log('Loading Sound');
-    const { sound } = await Audio.Sound.createAsync(
-       require('./assets/Hello.mp3')
-    );
-    setSound(sound);
+  // async function playSound() {
+  //   console.log('Loading Sound');
+  //   const { sound } = await Audio.Sound.createAsync(
+  //      require('./assets/Hello.mp3')
+  //   );
+  //   setSound(sound);
 
-    console.log('Playing Sound');
-    await sound.playAsync(); }
+  //   console.log('Playing Sound');
+  //   await sound.playAsync(); }
 
-    React.useEffect(() => {
-      return sound
-        ? () => {
-            console.log('Unloading Sound');
-            sound.unloadAsync(); }
-        : undefined;
-    }, [sound]);
+  //   React.useEffect(() => {
+  //     return sound
+  //       ? () => {
+  //           console.log('Unloading Sound');
+  //           sound.unloadAsync(); }
+  //       : undefined;
+  //   }, [sound]);
 
   const [dt, setDt] = useState(new Date().toLocaleString());
   useEffect(() => {
@@ -216,7 +216,7 @@ export default function CustomerHomeScreen({navigation}) {
                       onPress={() => navigation.navigate('List')}
                 />
                  <View style={styles.container}>
-      <Button title="Play Sound" onPress={playSound} />
+      {/* <Button title="Play Sound" onPress={playSound} /> */}
     </View>
                 </ScrollView>
         </SafeAreaProvider>
