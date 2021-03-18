@@ -1,30 +1,33 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { View, Text } from "../../components/Themed";
-import MotionInfo from "./MotionInfo";
-import TemperatureInfo from "./TemperatureInfo";
-import SoundInfo from "../../DeveloperHanan/SoundInfo";
-import CategoryByUserPicker from "../pickers/CategoryByUserPicker";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPicker";
-import Colors from "../../constants/Colors";
 import UserContext from "../../UserContext";
-import Dialog, {
-  DialogFooter,
-  DialogButton,
-  DialogContent,
-} from "react-native-popup-dialog";
-import { Button } from "react-native-elements";
-import { TextInput } from "react-native";
-import db from "../../db";
-import { Icon } from "react-native-elements";
+import { Button, Icon, AirbnbRating } from "react-native-elements";
+import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import MotionInfo from './MotionInfo'
+
+import db from '../../db'
+import CategoryByUserPicker from "../pickers/CategoryByUserPicker";
+import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPicker";
+import ProximityInfo from '../../DeveloperAisha/ProximityInfo'
+import SoundInfo from "../../DeveloperHanan/SoundInfo";
+import TemperatureInfo from './TemperatureInfo'
+import ReportButton from "../../DeveloperAahmad/ReportButton";
+
 
 export default function SensorsScreen({ navigation }) {
-  const { user } = useContext(UserContext);
-  useEffect(() => setCategory(null), [user]);
-  const [category, setCategory] = useState(null);
-  useEffect(() => setSensor(null), [category]);
-  const [sensor, setSensor] = useState(null);
+
+  const { user } = useContext(UserContext)
+  const [category, setCategory] = useState(null)
+  const [sensor, setSensor] = useState(null)
+  const [reviewVisible, setReviewVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [alert, setAlert] = useState(false)
+  const [reviewAlert, setReviewAlert] = useState(false)
+  const [message, setMessage] = useState("")
+  const [reviewMessage, setReviewMessage] = useState("")
+  const [rating, setRating] = useState(0)
 
   const createRequest = async (sensor) => {
     if (!message) {
@@ -37,132 +40,91 @@ export default function SensorsScreen({ navigation }) {
         dateCreated: new Date(),
         status: "Pending",
       });
-      setVisible(false);
+      setVisible(false)
     }
   };
 
-  const [visible, setVisible] = useState(false);
-  const [alert, setAlert] = useState(false);
-  const [message, setMessage] = useState("");
+  const createReview = async (category, reviewMsg) => {
+    if (!reviewMsg) {
+      setReviewAlert(true)
+    }
+    else {
+      const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
+      await db.Categories.Reviews.createReview(category.id, review);
+      setReviewVisible(false)
+      setReviewMessage("")
+    }
+  };
 
-  // console.log(user, category, sensor)
+  useEffect(() => setCategory(null), [user])
+  useEffect(() => setSensor(null), [category])
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View
-          style={{
-            backgroundColor: "#4DA8DA",
-            height: 50,
-            margin: 5,
-            marginBottom: 10,
-          }}
-        >
-          <Text
-            style={{
-              color: "black",
-              textAlign: "center",
-              marginTop: 10,
-              fontSize: 20,
-              fontWeight: "bold",
-              fontStyle: "italic",
-            }}
-          >
-            Control Sensors
-          </Text>
+      <ScrollView showsVerticalScrollIndicator={true}>
+
+        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
+          <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Control Sensors</Text>
         </View>
-        <Button
-          title="View All Sensors"
-          type="outline"
-          onPress={() => navigation.navigate("AllUserSensors")}
-        />
-        {user && (
+
+        <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
+          <Icon
+            raised
+            name='warning'
+            type='font-awesome'
+            color='red'
+            onPress={() => navigation.navigate('AllUserSensors')} />
+        </View>
+
+        {
+          user
+          &&
           <View style={styles.getStartedContainer}>
             <CategoryByUserPicker set={setCategory} />
           </View>
-        )}
-        {user && category && (
+        }
+        {
+          user
+          &&
+          category
+          &&
           <View style={styles.getStartedContainer}>
-            <SensorByUserAndCategoryPicker
-              category={category}
-              set={setSensor}
-            />
+            <SensorByUserAndCategoryPicker category={category} set={setSensor} />
           </View>
-        )}
-        {user && category && sensor && (
+        }
+        {
+          user
+          &&
+          category
+          &&
+          sensor
+          &&
           <>
-            {category.name === "Motion" && (
+            {category.name === "Motion"
+              &&
               <MotionInfo user={user} category={category} sensor={sensor} />
-            )}
-            {category.name === "Temperature" && (
-              <TemperatureInfo
-                user={user}
-                category={category}
-                sensor={sensor}
-              />
-            )}
+            }
+            {
+              category.name === "Temperature" && (
+                <TemperatureInfo
+                  user={user}
+                  category={category}
+                  sensor={sensor}
+                />
+              )}
             {category.name === "Sound" && (
               <SoundInfo user={user} category={category} sensor={sensor} />
             )}
-
-            <View style={{backgroundColor:"#12232E" , alignItems:"center", marginTop:10}} >
-              <Icon
-                raised
-                name="bug"
-                type="font-awesome"
-                color="#4DA8DA"
-  
-                onPress={() => {
-                  setVisible(true);
-                }}
-              />
-              {/* <Button
-                title="Report Sensor"
-                onPress={() => {
-                  setVisible(true);
-                }}
-              /> */}
-              <Dialog
-                style={{ width: "80%" }}
-                visible={visible}
-                footer={
-                  <DialogFooter>
-                    <DialogButton
-                      text="CANCEL"
-                      onPress={() => {
-                        setVisible(false), setMessage(""), setAlert(false);
-                      }}
-                    />
-                    <DialogButton
-                      text="OK"
-                      onPress={() => {
-                        createRequest({ sensor }), setMessage("");
-                      }}
-                    />
-                  </DialogFooter>
-                }
-                onTouchOutside={() => {
-                  setVisible(false);
-                }}
-              >
-                <DialogContent>
-                  <TextInput
-                    style={{ fontSize: 15, alignItems: "center" }}
-                    style={styles.TextInput}
-                    placeholder="Report Message"
-                    value={message}
-                    onChangeText={(value) => setMessage(value)}
-                  />
-                  {alert && (
-                    <Text style={styles.alert}>Please enter a message</Text>
-                  )}
-                </DialogContent>
-              </Dialog>
-            </View>
+            {
+              category.name === "Proximity"
+              &&
+              <ProximityInfo user={user} category={category} sensor={sensor} />
+            }
+            <ReportButton user={user} category={category} sensor={sensor} />
           </>
-        )}
+        }
       </ScrollView>
-    </SafeAreaProvider>
+    </SafeAreaProvider >
   );
 }
 
@@ -171,10 +133,14 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
   },
+  space: {
+    width: 0, // or whatever size you need
+    height: 5,
+  },
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#12232E",
+    backgroundColor: "#12232E"
   },
   getStartedContainer: {
     alignItems: "center",
@@ -184,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEFBFB",
     borderRadius: 10,
     borderBottomColor: "black",
-    borderWidth: 2,
+    borderWidth: 2
   },
   developmentModeText: {
     marginBottom: 20,
@@ -251,6 +217,6 @@ const styles = StyleSheet.create({
   },
   alert: {
     color: "red",
-    textAlign: "center",
+    textAlign: "center"
   },
 });

@@ -1,115 +1,59 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text,  TextInput, ScrollView } from "react-native";
+import { StyleSheet,  TextInput, ScrollView, Text } from "react-native";
 import { View } from '../components/Themed';
-import { Button , Avatar , Badge} from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UserContext from '../UserContext'
 import db from '../db'
-import { Icon  } from 'react-native-elements'
-import ShowSuggestions from './ShowSuggestions'
-import ProductSuggest from './ProductSuggest'
-import AppSuggest from './AppSuggest'
+import { IconButton, Colors } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import StaffSuggest from './StaffSuggest';
 
-export default function SuggestionList() {
+export default function StaffSuggest({type}) {
   const { user } = useContext(UserContext)
 
-  const[allState, setAllState] = useState(false)
-  const showAll = () =>
-  {
-      if (allState === true)
-      {
-        setAllState(false)
-      }
-      else{
-        setAllState(true)
-      }
-  }
+  const [id, setId] = useState("");
+  const [improve , setImprove] = useState("");
+  const[staffType, setStaffType] = useState("")
 
-  const[suggestionType, setSuggestionType] = useState("")
+  const createSuggestion = async () =>
+  {
+    await db.Users.SuggestionList.createList(user.id,{improve, staff:staffType,type,suggestDate: new Date().toDateString()});
+    setImprove("")
+  }
 
   return (
     <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-
-        <View style={{alignItems:'center' , backgroundColor:"#EEFBFB", margin:10}}>
-        <Icon
-            reverse
-            name='heart'
-            type='ionicon'
-            color='#F06292'
-            />
-        </View>
-
-        <Text style={{alignSelf:'center' , marginBottom:30,backgroundColor:"#EEFBFB", fontSize:20,fontWeight:"bold"}}>Create your Suggestions List</Text>
-
         <View style={styles.getStartedContainer}>
         <Picker
-            selectedValue={suggestionType}
+            selectedValue={staffType}
             style={{ height: 50, width: 200 ,color:"black"}}
-            selectedValue={suggestionType}
-            onValueChange={setSuggestionType}
+            selectedValue={staffType}
+            onValueChange={setStaffType}
         >
-            <Picker.Item label="Select Suggestion Type" value="suggestionType" />
-            <Picker.Item label="Products" value="Products" />
-            <Picker.Item label="Application" value="Application" />
-            <Picker.Item label="Staff" value="Staff" />
+            <Picker.Item label="Staff type" value="staffType" />
+            <Picker.Item label="Marketing" value="Marketing" />
+            <Picker.Item label="Support" value="Support" />
         </Picker> 
+        </View>  
+        <View style= {{ marginBottom:10, borderColor: "#F06292",borderWidth: 2,color: "#12232E",borderRadius: 15,marginHorizontal:50, marginLeft:30,marginRight:20, alignSelf:"center", width:350}}>
+                <TextInput
+                  style={styles.TextInput}
+                  placeholder="What can we Improve?"
+                  placeholderTextColor="black"
+                  value={improve}
+                  onChangeText={(value) => setImprove(value)}
+                />
         </View>
 
-        <Text>
-              {
-                suggestionType
-                &&
-                suggestionType === "Products"
-                &&
-                <ProductSuggest type={suggestionType}/>
-              }
-        </Text>
 
-        <Text>
-              {
-                suggestionType
-                &&
-                suggestionType === "Application"
-                &&
-                <AppSuggest type={suggestionType}/>
-              }
-        </Text>
-
-        <Text>
-              {
-                suggestionType
-                &&
-                suggestionType === "Staff"
-                &&
-                <StaffSuggest type={suggestionType}/>
-              }
-        </Text>
-
-        <Button
-        icon={
-            <Icon
-                name="arrow-right"
-                size={30}
-                color="#F06292"
+        <View style={{alignSelf:"center" ,backgroundColor:"#EEFBFB"}}>
+                <IconButton
+                    icon="plus"
+                    color={Colors.pink300}
+                    size={40}
+                    onPress={createSuggestion}
                 />
-            }
-        type="clear"
-        iconRight
-        title="View All"
-        onPress={showAll}
-        />      
-        <Text>
-        {
-            allState
-            &&
-            allState === true
-            &&
-            <ShowSuggestions suggestionType={suggestionType}/>
-        }
-        </Text>
+                </View>
 
         </ScrollView>
         </SafeAreaProvider>
@@ -120,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor:"#EEFBFB"
+      backgroundColor:"#EEFBFB",
   },
   text: {
       color: "#EEFBFB",
@@ -259,7 +203,6 @@ const styles = StyleSheet.create({
   getStartedContainer: {
     alignItems: "center",
     marginHorizontal:30,
-    marginTop:5,
     marginBottom:10,
     backgroundColor:"skyblue",
     borderRadius: 10,

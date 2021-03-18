@@ -57,7 +57,7 @@ export default function BottomTabNavigator() {
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="shop" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="shopping-cart" color="black"size={25} />,
         }}
       />
       <BottomTab.Screen

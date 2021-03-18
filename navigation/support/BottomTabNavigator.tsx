@@ -8,6 +8,8 @@ import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
 import SupportHomeScreen from '../../DeveloperAisha/SupportHomeScreen';
 // @ts-expect-error
+import SuggestionForSupport from '../../DeveloperAisha/SuggestionForSupport';
+// @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
 // @ts-expect-error
 import Faq from '../../DeveloperHanan/Faq';
@@ -81,7 +83,11 @@ function TabOneNavigator() {
         component={SupportHomeScreen}
         options={{ headerTitle: 'Home' }}
       />
-
+      <TabOneStack.Screen
+        name="SuggestionForSupport"
+        component={SuggestionForSupport}
+        options={{ headerTitle: 'SuggestionForSupport' }}
+      />
 <TabOneStack.Screen
         name="SensorRequest"
         component={SensorRequest}
