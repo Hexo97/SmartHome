@@ -12,11 +12,43 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-import { Button } from "react-native-elements";
+import fb from "../fb";
+import { Button, Icon } from "react-native-elements";
+import * as ImagePicker from "expo-image-picker";
 // import { Button } from "native-base";
 
 export default function CategoryAction({ category, edit, remove }) {
   const { user } = useContext(UserContext);
+
+  const uploadImage = async () => {
+    const image = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
+
+    if (!image.cancelled) {
+      const when = new Date();
+      const imageName = when.toISOString();
+      const imageRef = fb
+        .storage()
+        .ref(`categories/${category.id}/images/${imageName}.jpg`);
+
+      const response = await fetch(image.uri);
+      const blob = await response.blob();
+      await imageRef.put(blob);
+      const url = await imageRef.getDownloadURL();
+      blob.close();
+      await db.Categories.update({
+        id: category.id,
+        name: category.name,
+        description: category.description,
+        price: category.price,
+        image: url,
+      });
+    }
+  };
 
   const [sensors, setSensors] = useState([]);
   useEffect(
@@ -45,6 +77,8 @@ export default function CategoryAction({ category, edit, remove }) {
                 fontSize: 15,
                 fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
+                paddingLeft:"5%",
+                paddingTop:"2%"
               }}
             >
               {category.description}
@@ -54,23 +88,46 @@ export default function CategoryAction({ category, edit, remove }) {
                 fontSize: 15,
                 fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
+                paddingLeft:"36%"
               }}
             >
               QR: {category.price}
             </Text>
             <Card.Divider />
-            
-            <Button
-              onPress={() => edit(category)}
-              title="Edit"
-              buttonStyle={styles.myButton}
-            />
-            <Button
-              onPress={() => remove(category.id)}
-              title="Delete"
-              disabled={sensors.length === 0 ? false : true}
-              buttonStyle={styles.myButton}
-            />
+            <View
+              style={{
+                backgroundColor: "#4DA8DA",
+                marginLeft: "8%",
+                marginRight:"10%",
+                marginTop: "5%",
+                flexDirection: "row",
+                marginTop:"0%",
+              }}
+            >
+              <Icon
+                raised
+                name="edit"
+                type="font-awesome"
+                color="#4DA8DA"
+                size={20}
+                onPress={() => edit(category)}
+              />
+              <Icon
+                raised
+                name="upload"
+                type="font-awesome"
+                color="#4DA8DA"
+                size={20}
+                onPress={() => uploadImage()}
+              />
+
+              <Button
+                onPress={() => remove(category.id)}
+                title="Delete"
+                disabled={sensors.length === 0 ? false : true}
+                buttonStyle={styles.myButton}
+              />
+            </View>
           </Card>
         </View>
       </ScrollView>
@@ -80,13 +137,17 @@ export default function CategoryAction({ category, edit, remove }) {
 
 const styles = StyleSheet.create({
   tinyLogo: {
-    width: 150,
-    height: 150,
-    marginLeft: 100,
+    width: 302.5,
+    height: 200,
+    marginLeft: 0,
   },
   container: {
     flex: 1,
-    backgroundColor: "#EEFBFB",
+    // backgroundColor: "",
+    // marginTop:"5%",
+    // marginBottom:"80%"
+    marginVertical: 20
+
   },
   cardBg: {
     backgroundColor: "rgba(96,100,109, 0.8)",
@@ -182,6 +243,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4DA8DA",
     alignSelf: "center",
     width: 100,
-    marginLeft: 39,
+    marginLeft: 15,
+    marginTop: "7%"
   },
 });

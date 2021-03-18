@@ -1,10 +1,9 @@
 import * as React from "react";
-
+import { Tile } from 'react-native-elements';
 import { useState, useEffect, useContext } from "react";
 import { Image, ScrollView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import UserContext from "../UserContext";
-import { Card} from 'react-native-elements'
 import Login from "./Login";
 import Register from "./Register";
 import Popular from "../DeveloperAisha/Popular";
@@ -43,7 +42,12 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-     
+      <View style={{alignSelf:"center", margin:50}}>
+      <Tile
+          imageSrc={require('../assets/images/home.gif')}
+          featured
+          onPress ={() => console.log("HELLO")}        />
+      </View>
     </View>
   
   );
@@ -126,6 +130,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fff",
     height: 200,
     width: 100,
+    marginTop:20,
     alignItems: "center",
     justifyContent: "center",
   },
