@@ -164,7 +164,7 @@ export default function ReportButton({ user, category, sensor }) {
                         />
                         <AirbnbRating
                             count={5}
-                            reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
+                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
                             defaultRating={1}
                             size={20}
                             onPress={setRating}

@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,13 +7,13 @@ import {
   ScrollView,
 } from "react-native";
 import { View } from "../components/Themed";
-import { Card } from "react-native-elements";
+import { Card, Button } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
 
-export default function ShopItem({ category, edit, remove }) {
+export default function ShopItem({ navigation, category, edit, remove }) {
   const { user } = useContext(UserContext);
 
   const [payment, setPayment] = useState([]);
@@ -39,6 +39,7 @@ export default function ShopItem({ category, edit, remove }) {
     setCategory("");
     alert("Payment successfully done, Sensor will be avaibale in some time");
   };
+
 
 
   return (
@@ -79,7 +80,7 @@ export default function ShopItem({ category, edit, remove }) {
                 color: "black",
               }}
             >
-              QR: {category.price} 
+              QR: {category.price}
             </Text>
 
             <TouchableOpacity
@@ -90,7 +91,22 @@ export default function ShopItem({ category, edit, remove }) {
                 Buy
               </Text>
             </TouchableOpacity>
-         
+
+            {/* <TouchableOpacity
+              onPress={() => reviews(category.id)}
+              style={styles.title}
+            >
+              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
+                Reviews
+              </Text>
+            </TouchableOpacity> */}
+
+            <Button
+              title="Reviews"
+              type="outline"
+              onPress={() => navigation.navigate('Reviews', {reviewCategory:category})}
+            />
+
           </Card>
         </View>
       </ScrollView>
