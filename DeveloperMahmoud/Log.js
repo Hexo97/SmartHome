@@ -33,14 +33,19 @@ export default function AdminSensorsLogs({ ...sentlog }) {
                     </Text>
                 }
                 {
-                    sentlog.logMessage.includes("Removed")
+                    sentlog.logMessage.includes("Remove")
                     &&
                     <Text style={styles.LogsTextLogsMsgRemoved}>
                         {sentlog.logMessage}
                     </Text>
                 }
-
-
+                {
+                    sentlog.logMessage.includes("Review")
+                    &&
+                    <Text style={styles.LogsTextLogsMsgReview}>
+                        {sentlog.logMessage}
+                    </Text>
+                }
             </Text>
         </View>
     )

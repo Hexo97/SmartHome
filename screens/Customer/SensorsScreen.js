@@ -5,12 +5,14 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import UserContext from "../../UserContext";
 import { Button, Icon, AirbnbRating } from "react-native-elements";
 import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import MotionInfo from './MotionInfo'
 
 import db from '../../db'
 import CategoryByUserPicker from "../pickers/CategoryByUserPicker";
 import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPicker";
 import ProximityInfo from '../../DeveloperAisha/ProximityInfo'
 import SoundInfo from "../../DeveloperHanan/SoundInfo";
+import TemperatureInfo from './TemperatureInfo'
 import ReportButton from "../../DeveloperAahmad/ReportButton";
 
 
@@ -38,14 +40,6 @@ export default function SensorsScreen({ navigation }) {
         dateCreated: new Date(),
         status: "Pending",
       });
-      await db.Logs.create(
-        {
-          sensorId: sensor.sensor.id,
-          categoryId: category.id,
-          date: new Date(),
-          logMessage: ` Sensor Reported`
-        }
-      )
       setVisible(false)
     }
   };
@@ -56,9 +50,7 @@ export default function SensorsScreen({ navigation }) {
     }
     else {
       const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
-      // console.log("review:",review);
       await db.Categories.Reviews.createReview(category.id, review);
-      console.log("here");
       setReviewVisible(false)
       setReviewMessage("")
     }
@@ -131,8 +123,6 @@ export default function SensorsScreen({ navigation }) {
             <ReportButton user={user} category={category} sensor={sensor} />
           </>
         }
-
-
       </ScrollView>
     </SafeAreaProvider >
   );

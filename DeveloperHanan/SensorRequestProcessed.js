@@ -8,56 +8,77 @@ import db from "../db";
 import { Button } from "react-native-elements";
 
 export default function SensorRequestProcessed({ payment }) {
-  const { user } = useContext(UserContext);
 
   const [addd, setAddd] = useState(false);
+  const [category, setCategory] = useState("");
+  const [rusers, setRusers] = useState("");
+  const [categories, setCategories] = useState("");
+  let sensorid
+  useEffect(() => payment ? db.Categories.listenOne(setCategory, payment.categories) : undefined, [payment])
+  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
+  useEffect(() => payment ? db.Users.listenOne(setRusers, payment.userid) : undefined, [payment])
+  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
 
   const create = async (userid, categoryid) => {
-    const { id: newSensorId } = await db.Sensors.create({
-      categoryid: categoryid,
-      userid: userid,
-      alert: false,
-      location: "Default",
-      minDB: 0,
-      maxDB: 100
-    });
-    await db.Logs.create(
-      {
-        sensorId: newSensorId,
-        categoryId: categoryid,
-        date: new Date(),
-        logMessage: ` Sensor Created`
-      }
-    )
-    setAddd(true)
+
+
+    if (category && category.name === "Temperature") {
+      const { id: sensorid } = await db.Sensors.create({
+        categoryid: categoryid,
+        userid: userid,
+        alert: false,
+        location: "Default",
+        min: 0,
+        max: 100
+      });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      setAddd(true)
+    }
+    if (category && category.name === "Sound") {
+      const { id: sensorid } = await db.Sensors.create({
+        categoryid: categoryid,
+        userid: userid,
+        alert: false,
+        location: "Default",
+        minDB: 0,
+        maxDB: 100
+      });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      setAddd(true)
+    }
+    if (category && category.name === "Motion") {
+      const { id: sensorid } = await db.Sensors.create({
+        categoryid: categoryid,
+        userid: userid,
+        motiondetected: false,
+        location: "Default",
+      });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      setAddd(true)
+    }
+    alert("Sensor created");
   }
-
-  if (category && category.name === "Motion") {
-    db.Sensors.create({
-      categoryid: categoryid,
-      userid: userid,
-      motiondetected: false,
-      location: "Default",
-    });
-    setAddd(true)
-  }
-
-  alert("Sensor created");
-
-  const [category, setCategory] = useState("");
-  useEffect(() => payment ? db.Categories.listenOne(setCategory, payment.categories) : undefined, [payment])
-
-  const [categories, setCategories] = useState("");
-  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
-  // console.log(categories)
-
-  const [rusers, setRusers] = useState("");
-  useEffect(() => payment ? db.Users.listenOne(setRusers, payment.userid) : undefined, [payment])
-  // console.log(rusers)
-
-  useEffect(() => payment ? db.Categories.listenOne(setCategories, payment.categories) : undefined, [payment])
-  // console.log(categories)
-
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>

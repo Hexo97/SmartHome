@@ -55,9 +55,22 @@ exports.createSampleData = functions.https.onCall(
     const categories = await findAll("categories");
     await Promise.all(
       categories.map(
-        async (category) => await removeOne("categories", category.id)
-      )
+        async (category) => {
+          const suggestionlist = await findOneSubAll(
+            "categories",
+            category.id,
+            "reviews"
+          );
+          await Promise.all(
+            reviews.map(
+              async (list) =>
+                await removeOneSubOne("categories", category.id, "reviews", list.id)
+            )
+          );
+          await removeOne("categories", category.id)
+        })
     );
+
 
     //----------------------------------HANAN-----------------------------------------------//
 
@@ -73,6 +86,9 @@ exports.createSampleData = functions.https.onCall(
 
     const logs = await findAll("logs");
     await Promise.all(logs.map(async (log) => await removeOne("logs", log.id)));
+
+    const reports = await findAll("reports");
+    await Promise.all(reports.map(async (report) => await removeOne("reports", report.id)));
 
     const popularsensor = await findAll("popularsensor");
     await Promise.all(
@@ -284,31 +300,25 @@ exports.onNewReading = functions.firestore
           .set({ motiondetected: base64_1 != base64_2 }, { merge: true });
       }
     }
-    else if (category.name === "Temperature")
-    {
+    else if (category.name === "Temperature") {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
       functions.logger.info("temp alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
     }
-    else if (category.name === "Sound") 
-    {
+    else if (category.name === "Sound") {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.maxDB || reading.current < sensor.minDB }, { merge: true })
       functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
-    } 
-    else if (category.name === "Proximity") 
-    {
+    }
+    else if (category.name === "Proximity") {
       await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude }, { merge: true })
-      if(sensor.presenceDetected)
-      {
-        await db.collection('sensors').doc(sensor.id).update({state : "open"})
+      if (sensor.presenceDetected) {
+        await db.collection('sensors').doc(sensor.id).update({ state: "open" })
       }
-      else if((!sensor.presenceDetected))
-      {
-        await db.collection('sensors').doc(sensor.id).update({state : "close"})
+      else if ((!sensor.presenceDetected)) {
+        await db.collection('sensors').doc(sensor.id).update({ state: "close" })
       }
-      functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude  });
-    } 
-    else 
-    {
+      functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude });
+    }
+    else {
       functions.logger.info("No such category", { category });
     }
   });

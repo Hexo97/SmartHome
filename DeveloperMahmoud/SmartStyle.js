@@ -46,5 +46,8 @@ module.exports = StyleSheet.create({
     },
     LogsTextLogsMsgRemoved: {
         color: 'red'
+    },
+    LogsTextLogsMsgReview: {
+        color: 'lightblue'
     }
 })
