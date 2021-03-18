@@ -45,6 +45,19 @@ export default function SensorRequestProcessed({ payment}) {
     });
     setAddd(true)
     }
+    if(category && category.name === "Proximity")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      location: "Kitchen",
+        state: "off",
+        latitude: 25.354826,
+        longitude: 25.4,
+        motiondetected: false,
+    });
+    setAddd(true)
+    }
     if(category && category.name === "Motion")
     {
       db.Sensors.create({
