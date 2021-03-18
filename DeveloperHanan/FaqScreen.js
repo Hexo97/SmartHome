@@ -8,6 +8,7 @@ import {
   CollapseHeader,
   CollapseBody,
 } from "accordion-collapse-react-native";
+import { Card } from "react-native-elements";
 
 export default function FaqScreen({ faq, userid, edit, remove }) {
   const { user } = useContext(UserContext);
@@ -17,11 +18,13 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
       <CollapseHeader>
       
         <View>
-          <Text>{faq.question} </Text>
+          <Text> + {faq.question} </Text>
+          <Card.Divider/>
+          
         </View>
       </CollapseHeader>
       <CollapseBody>
-        <Text style={styles.title1}>Answer: {faq.answer}</Text>
+        <Text style={styles.title1}>Answer: {faq.answer} </Text>
         {user ? user.role === "Support" ? (
           <>
             <TouchableOpacity onPress={() => edit(faq)} style={styles.title}>
