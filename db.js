@@ -174,6 +174,13 @@ class Reviews extends DB {
       .collection(this.collection)
       .add(rest);
   }
+
+  listenToAll = (set, categoryId) =>
+    db
+      .collection(this.containing)
+      .doc(categoryId)
+      .collection(this.collection)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 

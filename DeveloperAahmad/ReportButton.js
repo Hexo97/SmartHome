@@ -8,10 +8,7 @@ import db from '../db'
 
 
 export default function ReportButton({ user, category, sensor }) {
-    console.log("sensor in reportbut:",sensor);
-    // const { user } = useContext(UserContext)
-    // const [category, setCategory] = useState(null)
-    // const [sensor, setSensor] = useState(null)
+
     const [reviewVisible, setReviewVisible] = useState(false)
     const [visible, setVisible] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -48,7 +45,7 @@ export default function ReportButton({ user, category, sensor }) {
             setReviewAlert(true)
         }
         else {
-            console.log("else:",sensor.id);
+            console.log("else:", sensor.id);
             const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
             await db.Categories.Reviews.createReview(category.id, review);
             await db.Logs.create(
@@ -63,9 +60,6 @@ export default function ReportButton({ user, category, sensor }) {
             setReviewMessage("")
         }
     };
-
-    // useEffect(() => setCategory(null), [user])
-    // useEffect(() => setSensor(null), [category])
 
     return (
         <SafeAreaProvider style={styles.container}>
@@ -177,7 +171,7 @@ export default function ReportButton({ user, category, sensor }) {
                             />
                             <AirbnbRating
                                 count={5}
-                                reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
+                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
                                 defaultRating={1}
                                 size={20}
                                 onPress={setRating}
