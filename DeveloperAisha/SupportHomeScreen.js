@@ -195,6 +195,11 @@ export default function SupportHomeScreen({ navigation }) {
         />
 {/* ------------------------------------------------------------------------------------- */}
         <View style={styles.space} />
+        <Button
+          title="Show User Suggestions"
+          type="outline"
+          onPress={() => navigation.navigate('SuggestionForSupport')}
+        />
       </ScrollView>
     </SafeAreaProvider>
   );

@@ -11,6 +11,7 @@ export default {
               Home: 'one',
               SensorRequest:'two',
               Reviews:'three',
+              SuggestionForSupport:'four'
             },
           },
           TabTwo: {

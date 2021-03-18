@@ -112,7 +112,10 @@ class Sensors extends DB {
       .collection(this.collection)
       .doc(sensor.id)
       .set({ alert: !sensor.alert }, { merge: true });
-}
+
+  togglePresence = (sensor) =>
+    db.collection(this.collection).doc(sensor.id).set({ presenceDetected: !sensor.presenceDetected }, { merge: true });
+  }
 
 class Readings extends DB {
   constructor(containing) {
@@ -188,6 +191,14 @@ class SuggestionList extends DB {
       .collection(this.collection)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
+  listenToProductSuggestion= (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Products").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+  
+  listenToAppSuggestion= (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Application").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  listenToStaffSuggestion = (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Staff").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
   removeUserSuggestList = (userid, listid) =>
     db
       .collection(this.containing)

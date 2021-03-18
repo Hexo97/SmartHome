@@ -115,167 +115,66 @@ exports.createSampleData = functions.https.onCall(
 
     // auth and db should be completely empty now
 
-    const { uid: authId1 } = await admin
-      .auth()
-      .createUser({ email: "joe@joe.com", password: "joejoe" });
-    functions.logger.info("authId1", { authId1 });
+    const { uid: authId1 } = await admin.auth().createUser({ email: "joe@joe.com", password: "joejoe" })
+    functions.logger.info("authId1", { authId1 })
 
-    const { uid: authId2 } = await admin
-      .auth()
-      .createUser({ email: "ann@ann.com", password: "annann" });
-    functions.logger.info("authId2", { authId2 });
+    const { uid: authId2 } = await admin.auth().createUser({ email: "ann@ann.com", password: "annann" })
+    functions.logger.info("authId2", { authId2 })
 
-    const { uid: authId3 } = await admin
-      .auth()
-      .createUser({ email: "admin@admin.com", password: "adminadmin" });
-    functions.logger.info("authId3", { authId3 });
+    const { uid: authId3 } = await admin.auth().createUser({ email: "admin@admin.com", password: "adminadmin" })
+    functions.logger.info("authId3", { authId3 })
 
-    const { uid: authId4 } = await admin
-      .auth()
-      .createUser({ email: "fred@fred.com", password: "fredfred" });
-    functions.logger.info("authId4", { authId4 });
+    const { uid: authId4 } = await admin.auth().createUser({ email: "fred@fred.com", password: "fredfred" })
+    functions.logger.info("authId4", { authId4 })
 
-    const { uid: authId5 } = await admin
-      .auth()
-      .createUser({ email: "julie@julie.com", password: "juliejulie" });
-    functions.logger.info("authId5", { authId5 });
+    const { uid: authId5 } = await admin.auth().createUser({ email: "julie@julie.com", password: "juliejulie" })
+    functions.logger.info("authId5", { authId5 })
 
-    const { uid: authId6 } = await admin
-      .auth()
-      .createUser({ email: "max@max.com", password: "maxmax" });
-    functions.logger.info("authId6", { authId6 });
+    const { uid: authId6 } = await admin.auth().createUser({ email: "max@max.com", password: "maxmax" })
+    functions.logger.info("authId6", { authId6 })
 
-    const result1 = await db
-      .collection("users")
-      .doc(authId1)
-      .set({ name: "Joe", role: "Customer", age: 21, phone: 55346789 });
-    functions.logger.info("result1", { result1 });
+    const result1 = await db.collection('users').doc(authId1).set({ name: "Joe", role: "Customer", age: 21, phone: 55346789 })
+    functions.logger.info("result1", { result1 })
 
-    const result2 = await db
-      .collection("users")
-      .doc(authId2)
-      .set({ name: "Ann", role: "Customer", age: 20, phone: 77584690 });
-    functions.logger.info("result2", { result2 });
+    const result2 = await db.collection('users').doc(authId2).set({ name: "Ann", role: "Customer", age: 20, phone: 77584690 })
+    functions.logger.info("result2", { result2 })
 
-    const result3 = await db
-      .collection("users")
-      .doc(authId3)
-      .set({ name: "Admin", role: "Admin", age: 40, phone: 55097856 });
-    functions.logger.info("result3", { result3 });
+    const result3 = await db.collection('users').doc(authId3).set({ name: "Admin", role: "Admin", age: 40, phone: 55097856 })
+    functions.logger.info("result3", { result3 })
 
-    const result4 = await db
-      .collection("users")
-      .doc(authId4)
-      .set({ name: "Fred", role: "Support", age: 35, phone: 44356789 });
-    functions.logger.info("result4", { result4 });
+    const result4 = await db.collection('users').doc(authId4).set({ name: "Fred", role: "Support", age: 35, phone: 44356789 })
+    functions.logger.info("result4", { result4 })
 
-    const result5 = await db
-      .collection("users")
-      .doc(authId5)
-      .set({ name: "Julie", role: "Marketing", age: 21, phone: 55674532 });
-    functions.logger.info("result5", { result5 });
+    const result5 = await db.collection('users').doc(authId5).set({ name: "Julie", role: "Marketing", age: 21, phone: 55674532 })
+    functions.logger.info("result5", { result5 })
+    
+    const result6 = await db.collection('users').doc(authId6).set({ name: "Max", role: "Customer" ,age: 23, phone: 66985647 })
+    functions.logger.info("result6", { result6 })
 
-    const result6 = await db
-      .collection("users")
-      .doc(authId6)
-      .set({ name: "Max", role: "Customer", age: 23, phone: 66985647 });
-    functions.logger.info("result6", { result6 });
+    const { id: categoryId1 } = await db.collection('categories').add({ name: "Motion", description: "A motion detector is an electrical device that utilizes a sensor to detect nearby motion", image:"https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png", price:1500 })
+    functions.logger.info("categoryId1", { categoryId1 })
 
-    const { id: categoryId1 } = await db
-      .collection("categories")
-      .add({
-        name: "Motion",
-        description:
-          "A motion detector is an electrical device that utilizes a sensor to detect nearby motion",
-        image:
-          "https://zenaapps.com/wp-content/uploads/2015/06/motion-detector-video-recorder-for-android-510x512.png",
-        price: 1500,
-      });
-    functions.logger.info("categoryId1", { categoryId1 });
+    const { id: categoryId2 } = await db.collection('categories').add({ name: "Temperature" , description: "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes", image:"https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1", price:2000 })
+    functions.logger.info("categoryId2", { categoryId2 })
 
-    const { id: categoryId2 } = await db
-      .collection("categories")
-      .add({
-        name: "Temperature",
-        description:
-          "A temperature sensor is an electronic device that measures the temperature of its environment and converts the input data into electronic data to record, monitor, or signal temperature changes",
-        image:
-          "https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1",
-        price: 2000,
-      });
-    functions.logger.info("categoryId2", { categoryId2 });
+    const { id: categoryId3 } = await db.collection('categories').add({ name: "Sound" , description: "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.", image:"https://cordis.europa.eu/docs/news/images/2020-04/417988.jpg", price:1520 })
+    functions.logger.info("categoryId3", { categoryId3 })
 
-    const { id: categoryId3 } = await db
-      .collection("categories")
-      .add({
-        name: "Sound",
-        description:
-          "A sound sensor is defined as a module that detects sound waves through its intensity and converting it to electrical signals.",
-        image: "https://cordis.europa.eu/docs/news/images/2020-04/417988.jpg",
-        price: 1520,
-      });
-    functions.logger.info("categoryId3", { categoryId3 });
+    const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity" , description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image:"https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg" , price:4900})
 
-    const { id: categoryId4 } = await db
-      .collection("categories")
-      .add({
-        name: "Proximity",
-        description:
-          "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.",
-        image:
-          "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg",
-        price: 4900,
-      });
+    functions.logger.info("categoryId4", { categoryId4 })
 
-    functions.logger.info("categoryId4", { categoryId4 });
+    const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
+    functions.logger.info("sensorId1", { sensorId1 })
 
-    const { id: sensorId1 } = await db
-      .collection("sensors")
-      .add({
-        userid: authId1,
-        categoryid: categoryId1,
-        location: "front door",
-        motiondetected: false,
-      });
-    functions.logger.info("sensorId1", { sensorId1 });
+    const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
+    functions.logger.info("sensorId2", { sensorId2 })
 
-    const { id: sensorId2 } = await db
-      .collection("sensors")
-      .add({
-        userid: authId2,
-        categoryid: categoryId2,
-        location: "lab",
-        min: 0,
-        max: 100,
-        alert: false,
-      });
-    functions.logger.info("sensorId2", { sensorId2 });
+    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Kitchen", state: "close", latitude:25.354826, longitude:25.40000, presenceDetected: false , fill:"Empty"})
+    functions.logger.info("sensorId3", { sensorId3 })
 
-    const { id: sensorId3 } = await db
-      .collection("sensors")
-      .add({
-        userid: authId1,
-        categoryid: categoryId4,
-        location: "Kitchen",
-        state: "off",
-        latitude: 25.354826,
-        longitude: 25.4,
-        motiondetected: false,
-      });
-    functions.logger.info("sensorId3", { sensorId3 });
-
-    const { id: sensorId4 } = await db
-      .collection("sensors")
-      .add({
-        userid: authId2,
-        categoryid: categoryId3,
-        location: "Club-Hall",
-        minDB: 0,
-        maxDB: 100,
-        alert: false,
-      });
-    functions.logger.info("sensorId4", { sensorId4 });
-
+    const { id: sensorId4 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
+    functions.logger.info("sensorId4", { sensorId4 })
     //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
 
     const { id: faq1 } = await db
@@ -478,35 +377,32 @@ exports.onNewReading = functions.firestore
           .doc(sensor.id)
           .set({ motiondetected: base64_1 != base64_2 }, { merge: true });
       }
-    } else if (category.name === "Temperature") {
-      await db
-        .collection("sensors")
-        .doc(sensor.id)
-        .set(
-          {
-            alert: reading.current > sensor.max || reading.current < sensor.min,
-          },
-          { merge: true }
-        );
-      functions.logger.info("temp alert update", {
-        alert: reading.current > sensor.max || reading.current < sensor.min,
-      });
-    } else if (category.name === "Sound") {
-      await db
-        .collection("sensors")
-        .doc(sensor.id)
-        .set(
-          {
-            alert:
-              reading.current > sensor.maxDB || reading.current < sensor.minDB,
-          },
-          { merge: true }
-        );
-      functions.logger.info("sound alert update", {
-        alert: reading.current > sensor.maxDB || reading.current < sensor.minDB,
-      });
-    } //yeh msg kahin nazr aa rha hai udr? nahi
-    else {
+    }
+    else if (category.name === "Temperature")
+    {
+      await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
+      functions.logger.info("temp alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
+    }
+    else if (category.name === "Sound") 
+    {
+      await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.maxDB || reading.current < sensor.minDB }, { merge: true })
+      functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
+    } 
+    else if (category.name === "Proximity") 
+    {
+      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude }, { merge: true })
+      if(sensor.presenceDetected)
+      {
+        await db.collection('sensors').doc(sensor.id).update({state : "open"})
+      }
+      else if((!sensor.presenceDetected))
+      {
+        await db.collection('sensors').doc(sensor.id).update({state : "close"})
+      }
+      functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude  });
+    } 
+    else 
+    {
       functions.logger.info("No such category", { category });
     }
   });

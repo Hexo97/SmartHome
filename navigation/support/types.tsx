@@ -4,11 +4,13 @@ export type BottomTabParamList = {
   Faq:undefined;
   Settings: undefined;
   SensorRequest: undefined
+  SuggestionForSupport:undefined
 };
 
 export type TabOneParamList = {
   Home: undefined;
   SensorRequest: undefined;
+  SuggestionForSupport:undefined;
 };
 
 export type TabTwoParamList = {
