@@ -117,7 +117,7 @@ function TabOneNavigator() {
        <TabOneStack.Screen
         name="PaymentHistory"
         component={PaymentHistory}
-        options={{ headerTitle: 'PaymentHistory' }}
+        options={{ headerTitle: 'Payment History' }}
       />
     </TabOneStack.Navigator>
   );

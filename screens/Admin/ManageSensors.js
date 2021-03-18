@@ -10,7 +10,7 @@ import { Button} from 'react-native-elements'
 import MotionActions from './MotionActions'
 import { ListItem } from 'react-native-elements'
 import Colors from "../../constants/Colors";
-import SoundActions from "./SoundActions";
+import SoundActions from "../../DeveloperHanan/SoundActions";
 
 export default function ManageSensors() {
   const [category, setCategory] = useState(null);

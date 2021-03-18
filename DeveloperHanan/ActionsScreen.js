@@ -5,7 +5,7 @@ import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
 import CategoryAction from "./CategoryAction";
-import { Input, Card } from "react-native-elements";
+import { Input, Card, Icon } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, TextInput } from "react-native";
 
@@ -26,14 +26,14 @@ export default function ActionsScreen() {
     db.Categories.create({
       id: id,
       description: description,
-      image: image,
+      // image: image,
       name: name,
       price: price + "",
     });
 
     setDescription("");
     setImage("");
-    setName("");
+    // setName("");
     setPrice("");
 
     // automatically create ad with default values
@@ -51,7 +51,7 @@ export default function ActionsScreen() {
   const edit = (category) => {
     setId(category.id);
     setDescription(category.description);
-    setImage(category.image);
+    // setImage(category.image);
     setName(category.name);
     setPrice(category.price + "");
   };
@@ -60,13 +60,13 @@ export default function ActionsScreen() {
     db.Categories.update({
       id: id,
       description: description,
-      image: image,
+      // image: image,
       name: name,
       price: price,
     });
     setId("");
     setDescription("");
-    setImage("");
+    // setImage("");
     setName("");
     setPrice("");
   };
@@ -117,8 +117,6 @@ export default function ActionsScreen() {
             <Text style={styles.headingText}> Category User Actions</Text>
           </View>
           <View style={styles.catFormContainer}>
-        
-
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
@@ -139,7 +137,7 @@ export default function ActionsScreen() {
               />
             </View>
 
-            <View style={styles.inputView}>
+            {/* <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
                 placeholder="Image-Url"
@@ -147,7 +145,7 @@ export default function ActionsScreen() {
                 value={image}
                 onChangeText={(value) => setImage(value)}
               />
-            </View>
+            </View> */}
 
             <View style={styles.inputView}>
               <TextInput
@@ -166,6 +164,7 @@ export default function ActionsScreen() {
               <Text style={styles.btnText}>Save</Text>
             </TouchableOpacity>
           </View>
+
           <View style={styles.catContainer}>
             {category.map((category) => (
               <CategoryAction
@@ -177,6 +176,7 @@ export default function ActionsScreen() {
               />
             ))}
           </View>
+
           <Card>
             <View style={styles.rolesContainer}>
               <Text style={styles.title}>All customer roles</Text>
@@ -222,6 +222,8 @@ export default function ActionsScreen() {
               </View>
             </View>
           </Card>
+{/*imean, from where u call this page you mean where i am dispaying? yes */}
+
           {/* <View style={styles.catContainer}>
             {category.map((category) => (
               <CategoryAction
@@ -260,21 +262,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: 400,
     width: 300,
-    margin: 20,
+    // margin: 20,
     // flex: 1,
     alignItems: "center",
     justifyContent: "center",
     // backgroundColor: "#EEFBFB",
   },
   catContainer: {
-    height: 2100,
+    // height: 3500,
     width: 365,
-    margin: 20,
-    marginTop: 30, // equal to roles Container height
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 30,
-    // backgroundColor: "#EEFBFB",
+    marginLeft: "4%",
+    // marginTop: 0, // equal to roles Container height
+    // alignItems: "center",
+    // justifyContent: "center",
+    // marginBottom: 30,
+    // backgroundColor: "red",
   },
 
   container: {
@@ -283,6 +285,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#EEFBFB",
+    marginTop: "0%",
   },
   catFormContainer: {
     height: 400,
@@ -292,6 +295,7 @@ const styles = StyleSheet.create({
     // paddingTop:20,
     alignItems: "center",
     justifyContent: "center",
+    marginLeft: "0%",
   },
 
   inputView: {
@@ -401,7 +405,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   headingText: {
-    top: "9%",
+    // top: "9%",
     fontSize: 30,
     textAlign: "center",
     // marginLeft: "32%",

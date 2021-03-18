@@ -1,111 +1,127 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, TouchableOpacity ,ScrollView} from 'react-native';
-import { View, Text } from '../../components/Themed';
-import MotionInfo from './MotionInfo'
-import TemperatureInfo from './TemperatureInfo'
-import SoundInfo from './SoundInfo'
-import CategoryByUserPicker from '../pickers/CategoryByUserPicker';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import SensorByUserAndCategoryPicker from '../pickers/SensorByUserAndCategoryPicker';
+import React, { useState, useEffect, useContext } from "react";
+import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text } from "../../components/Themed";
+import MotionInfo from "./MotionInfo";
+import TemperatureInfo from "./TemperatureInfo";
+import SoundInfo from "../../DeveloperHanan/SoundInfo";
+import CategoryByUserPicker from "../pickers/CategoryByUserPicker";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPicker";
 import Colors from "../../constants/Colors";
-import UserContext from '../../UserContext'
-import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
-import { Button} from 'react-native-elements'
+import UserContext from "../../UserContext";
+import Dialog, {
+  DialogFooter,
+  DialogButton,
+  DialogContent,
+} from "react-native-popup-dialog";
+import { Button } from "react-native-elements";
 import { TextInput } from "react-native";
-import db from '../../db'
+import db from "../../db";
+import { Icon } from "react-native-elements";
 
-
-export default function SensorsScreen({navigation}) {
-
-  const { user } = useContext(UserContext)
-  useEffect(() => setCategory(null), [user])
-  const [category, setCategory] = useState(null)
-  useEffect(() => setSensor(null), [category])
-  const [sensor, setSensor] = useState(null)
-
+export default function SensorsScreen({ navigation }) {
+  const { user } = useContext(UserContext);
+  useEffect(() => setCategory(null), [user]);
+  const [category, setCategory] = useState(null);
+  useEffect(() => setSensor(null), [category]);
+  const [sensor, setSensor] = useState(null);
 
   const createRequest = async (sensor) => {
     if (!message) {
-      setAlert(true)
-    }
-    else {
+      setAlert(true);
+    } else {
       await db.Reports.create({
         sensorId: sensor.sensor.id,
         userId: user.id,
         message: message,
         dateCreated: new Date(),
-        status: "Pending"
+        status: "Pending",
       });
-      setVisible(false)
+      setVisible(false);
     }
   };
 
-  const [visible, setVisible] = useState(false)
-  const [alert, setAlert] = useState(false)
-  const [message, setMessage] = useState("")
-
+  const [visible, setVisible] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState("");
 
   // console.log(user, category, sensor)
 
   return (
     <SafeAreaProvider style={styles.container}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-    <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
-        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Control Sensors</Text>
-    </View>
-            <Button
-              title="View All Sensors"
-              type="outline"
-              onPress={() => navigation.navigate('AllUserSensors')}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View
+          style={{
+            backgroundColor: "#4DA8DA",
+            height: 50,
+            margin: 5,
+            marginBottom: 10,
+          }}
+        >
+          <Text
+            style={{
+              color: "black",
+              textAlign: "center",
+              marginTop: 10,
+              fontSize: 20,
+              fontWeight: "bold",
+              fontStyle: "italic",
+            }}
+          >
+            Control Sensors
+          </Text>
+        </View>
+        <Button
+          title="View All Sensors"
+          type="outline"
+          onPress={() => navigation.navigate("AllUserSensors")}
+        />
+        {user && (
+          <View style={styles.getStartedContainer}>
+            <CategoryByUserPicker set={setCategory} />
+          </View>
+        )}
+        {user && category && (
+          <View style={styles.getStartedContainer}>
+            <SensorByUserAndCategoryPicker
+              category={category}
+              set={setSensor}
             />
-        {
-          user
-          &&
-          <View style={styles.getStartedContainer}>
-          <CategoryByUserPicker set={setCategory} />
           </View>
-        }
-        {
-          user
-          &&
-          category
-          &&
-          <View style={styles.getStartedContainer}>
-          <SensorByUserAndCategoryPicker category={category} set={setSensor} />
-          </View>
-        }
-        {
-          user
-          &&
-          category
-          &&
-          sensor
-          &&
+        )}
+        {user && category && sensor && (
           <>
-            {
-              category.name === "Motion"
-              &&
+            {category.name === "Motion" && (
               <MotionInfo user={user} category={category} sensor={sensor} />
-            }
-            {
-              category.name === "Temperature"
-              &&
-              <TemperatureInfo user={user} category={category} sensor={sensor} />
-            }
-            {
-              category.name === "Sound"
-              &&
+            )}
+            {category.name === "Temperature" && (
+              <TemperatureInfo
+                user={user}
+                category={category}
+                sensor={sensor}
+              />
+            )}
+            {category.name === "Sound" && (
               <SoundInfo user={user} category={category} sensor={sensor} />
-            }
+            )}
 
-
-            <View>
-              <Button
-                title="Report Sensor"
+            <View style={{backgroundColor:"#12232E" , alignItems:"center", marginTop:10}} >
+              <Icon
+                raised
+                name="bug"
+                type="font-awesome"
+                color="#4DA8DA"
+  
                 onPress={() => {
-                  setVisible(true)
+                  setVisible(true);
                 }}
               />
+              {/* <Button
+                title="Report Sensor"
+                onPress={() => {
+                  setVisible(true);
+                }}
+              /> */}
               <Dialog
                 style={{ width: "80%" }}
                 visible={visible}
@@ -114,19 +130,14 @@ export default function SensorsScreen({navigation}) {
                     <DialogButton
                       text="CANCEL"
                       onPress={() => {
-                        setVisible(false),
-                          setMessage(""),
-                          setAlert(false)
-                      }
-                      }
+                        setVisible(false), setMessage(""), setAlert(false);
+                      }}
                     />
                     <DialogButton
                       text="OK"
                       onPress={() => {
-                          createRequest({ sensor }),
-                          setMessage("")
-                      }
-                      }
+                        createRequest({ sensor }), setMessage("");
+                      }}
                     />
                   </DialogFooter>
                 }
@@ -142,20 +153,16 @@ export default function SensorsScreen({navigation}) {
                     value={message}
                     onChangeText={(value) => setMessage(value)}
                   />
-                  {
-                    alert
-                    &&
+                  {alert && (
                     <Text style={styles.alert}>Please enter a message</Text>
-                  }
-
+                  )}
                 </DialogContent>
               </Dialog>
             </View>
-
           </>
-        }
-                  </ScrollView>
-        </SafeAreaProvider>
+        )}
+      </ScrollView>
+    </SafeAreaProvider>
   );
 }
 
@@ -167,23 +174,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor:"#12232E"
-},
-getStartedContainer: {
-  alignItems: "center",
-  marginHorizontal:30,
-  marginTop:5,
-  marginBottom:5,
-  backgroundColor:"#EEFBFB",
-  borderRadius: 10,
-  borderBottomColor: "black",
-  borderWidth: 2
-},
+    backgroundColor: "#12232E",
+  },
+  getStartedContainer: {
+    alignItems: "center",
+    marginHorizontal: 30,
+    marginTop: 5,
+    marginBottom: 5,
+    backgroundColor: "#EEFBFB",
+    borderRadius: 10,
+    borderBottomColor: "black",
+    borderWidth: 2,
+  },
   developmentModeText: {
     marginBottom: 20,
     fontSize: 14,
     lineHeight: 19,
-    textAlign: 'center',
+    textAlign: "center",
   },
   contentContainer: {
     paddingTop: 30,
@@ -196,14 +203,14 @@ getStartedContainer: {
     color: "#12232E",
   },
   welcomeContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
     marginBottom: 20,
   },
   welcomeImage: {
     width: 100,
     height: 80,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     marginTop: 3,
     marginLeft: -10,
   },
@@ -211,7 +218,7 @@ getStartedContainer: {
     marginVertical: 7,
   },
   codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
+    color: "rgba(96,100,109, 0.8)",
   },
   codeHighlightContainer: {
     borderRadius: 3,
@@ -220,30 +227,30 @@ getStartedContainer: {
   getStartedText: {
     fontSize: 17,
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   helpContainer: {
     marginTop: 15,
     marginHorizontal: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   helpLink: {
     paddingVertical: 15,
   },
   helpLinkText: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   alert: {
     color: "red",
-    textAlign: "center"
+    textAlign: "center",
   },
 });

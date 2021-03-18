@@ -37,7 +37,7 @@ export default function ShopItem({ category, edit, remove }) {
     setUser("");
     setDate("");
     setCategory("");
-    alert("Item in process, Sensor will be avaibale in some time");
+    alert("Payment successfully done, Sensor will be avaibale in some time");
   };
 
 

@@ -61,7 +61,7 @@ export default function Advertisments({ navigation }) {
         <View style={styles.imgContainer}>
           <Image
             style={styles.image}
-            source={require("../assets/images/s.jpg")}
+            source={require("../assets/images/ads.gif")}
           ></Image>
         </View>
       </View>
