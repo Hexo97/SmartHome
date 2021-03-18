@@ -359,6 +359,13 @@ class Logs extends DB {
   constructor() {
     super("logs");
   }
+
+  listen2OrderByWhen = (set) =>
+    db.collection(this.collection).orderBy("date").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  // listenBySensor = (set, sensorid) =>
+  //   db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+
 }
 
 export default {

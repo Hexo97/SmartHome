@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { View, Text } from "../components/Themed";
@@ -11,9 +9,6 @@ import db from '../db'
 
 export default function ReportButton({ user, category, sensor }) {
 
-    // const { user } = useContext(UserContext)
-    // const [category, setCategory] = useState(null)
-    // const [sensor, setSensor] = useState(null)
     const [reviewVisible, setReviewVisible] = useState(false)
     const [visible, setVisible] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -33,6 +28,14 @@ export default function ReportButton({ user, category, sensor }) {
                 dateCreated: new Date(),
                 status: "Pending",
             });
+            await db.Logs.create(
+                {
+                    sensorId: sensor.sensor.id,
+                    categoryId: category.id,
+                    date: new Date(),
+                    logMessage: ` Sensor Reported`
+                }
+            )
             setVisible(false);
         }
     };
@@ -42,145 +45,149 @@ export default function ReportButton({ user, category, sensor }) {
             setReviewAlert(true)
         }
         else {
+            console.log("else:", sensor.id);
             const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
-            // console.log("review:",review);
             await db.Categories.Reviews.createReview(category.id, review);
-            console.log("here");
+            await db.Logs.create(
+                {
+                    sensorId: sensor.id,
+                    categoryId: category.id,
+                    date: new Date(),
+                    logMessage: ` Review`
+                }
+            )
             setReviewVisible(false)
             setReviewMessage("")
         }
     };
 
-    // useEffect(() => setCategory(null), [user])
-    // useEffect(() => setSensor(null), [category])
-
     return (
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
-            <View>
-                <Icon
-                    name="report"
-                    type="material-icons"
-                    size={20}
-                    reverse
-                    containerStyle={{
-                        left: "42.5%"
-                    }}
-                    color="#f50"
+                <View>
+                    <Icon
+                        name="report"
+                        type="material-icons"
+                        size={20}
+                        reverse
+                        containerStyle={{
+                            left: "42.5%"
+                        }}
+                        color="#f50"
 
-                    onPress={() => {
-                        setVisible(true)
-                    }}
-                />
-                <Dialog
-                    style={{ width: "80%" }}
-                    visible={visible}
-                    footer={
-                        <DialogFooter>
-                            <DialogButton
-                                text="CANCEL"
-                                onPress={() => {
-                                    setVisible(false),
-                                        setMessage(""),
-                                        setAlert(false)
-                                }
-                                }
-                            />
-                            <DialogButton
-                                text="OK"
-                                onPress={() => {
-                                    createRequest({ sensor }),
-                                        setMessage("")
-                                }
-                                }
-                            />
-                        </DialogFooter>
-                    }
-                    onTouchOutside={() => {
-                        setVisible(false);
-                    }}
-                >
-                    <DialogContent>
-                        <TextInput
-                            style={{ fontSize: 15, alignItems: "center" }}
-                            style={styles.TextInput}
-                            placeholder="Report Message"
-                            value={message}
-                            onChangeText={(value) => setMessage(value)}
-                        />
-                    </DialogContent>
-                </Dialog>
-            </View>
-
-            <View>
-                <Icon
-                    name="star"
-                    type="ant-design"
-                    size={20}
-                    reverse
-                    containerStyle={{
-                        left: "42.5%"
-                    }}
-                    color="#f50"
-
-                    onPress={() => {
-                        setReviewVisible(true)
-                    }}
-                />
-                <Dialog
-                    style={{ width: "80%" }}
-                    visible={reviewVisible}
-                    footer={
-                        <DialogFooter>
-                            <DialogButton
-                                text="CANCEL"
-                                onPress={() => {
-                                    setReviewVisible(false),
-                                        setReviewMessage(""),
-                                        setReviewAlert(false)
-                                }
-                                }
-                            />
-                            <DialogButton
-                                text="OK"
-                                onPress={() => {
-                                    createReview(category, reviewMessage)
-                                }
-                                }
-                            />
-                        </DialogFooter>
-                    }
-                    onTouchOutside={() => {
-                        setReviewVisible(false);
-                    }}
-                >
-                    <DialogContent>
-                        <TextInput
-                            style={{ fontSize: 15, alignItems: "center" }}
-                            style={styles.TextInput}
-                            placeholder="Leave your review here ..."
-                            value={reviewMessage}
-                            onChangeText={(value) => setReviewMessage(value)}
-                        />
-                        <AirbnbRating
-                            count={5}
-                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                            defaultRating={1}
-                            size={20}
-                            onPress={setRating}
-                            onFinishRating={rating => setRating(rating)}
-                        />
-                        {
-                            reviewAlert
-                            &&
-                            <Text style={styles.alert}>Please enter a review</Text>
+                        onPress={() => {
+                            setVisible(true)
+                        }}
+                    />
+                    <Dialog
+                        style={{ width: "80%" }}
+                        visible={visible}
+                        footer={
+                            <DialogFooter>
+                                <DialogButton
+                                    text="CANCEL"
+                                    onPress={() => {
+                                        setVisible(false),
+                                            setMessage(""),
+                                            setAlert(false)
+                                    }
+                                    }
+                                />
+                                <DialogButton
+                                    text="OK"
+                                    onPress={() => {
+                                        createRequest({ sensor }),
+                                            setMessage("")
+                                    }
+                                    }
+                                />
+                            </DialogFooter>
                         }
-                    </DialogContent>
-                </Dialog>
-            </View>
-</ScrollView>
-    </SafeAreaProvider >
-  );
+                        onTouchOutside={() => {
+                            setVisible(false);
+                        }}
+                    >
+                        <DialogContent>
+                            <TextInput
+                                style={{ fontSize: 15, alignItems: "center" }}
+                                style={styles.TextInput}
+                                placeholder="Report Message"
+                                value={message}
+                                onChangeText={(value) => setMessage(value)}
+                            />
+                        </DialogContent>
+                    </Dialog>
+                </View>
+
+                <View>
+                    <Icon
+                        name="star"
+                        type="ant-design"
+                        size={20}
+                        reverse
+                        containerStyle={{
+                            left: "42.5%"
+                        }}
+                        color="#f50"
+
+                        onPress={() => {
+                            setReviewVisible(true)
+                        }}
+                    />
+                    <Dialog
+                        style={{ width: "80%" }}
+                        visible={reviewVisible}
+                        footer={
+                            <DialogFooter>
+                                <DialogButton
+                                    text="CANCEL"
+                                    onPress={() => {
+                                        setReviewVisible(false),
+                                            setReviewMessage(""),
+                                            setReviewAlert(false)
+                                    }
+                                    }
+                                />
+                                <DialogButton
+                                    text="OK"
+                                    onPress={() => {
+                                        createReview(category, reviewMessage)
+                                    }
+                                    }
+                                />
+                            </DialogFooter>
+                        }
+                        onTouchOutside={() => {
+                            setReviewVisible(false);
+                        }}
+                    >
+                        <DialogContent>
+                            <TextInput
+                                style={{ fontSize: 15, alignItems: "center" }}
+                                style={styles.TextInput}
+                                placeholder="Leave your review here ..."
+                                value={reviewMessage}
+                                onChangeText={(value) => setReviewMessage(value)}
+                            />
+                            <AirbnbRating
+                                count={5}
+                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
+                                defaultRating={1}
+                                size={20}
+                                onPress={setRating}
+                                onFinishRating={rating => setRating(rating)}
+                            />
+                            {
+                                reviewAlert
+                                &&
+                                <Text style={styles.alert}>Please enter a review</Text>
+                            }
+                        </DialogContent>
+                    </Dialog>
+                </View>
+            </ScrollView>
+        </SafeAreaProvider >
+    );
 }
 
 const styles = StyleSheet.create({
