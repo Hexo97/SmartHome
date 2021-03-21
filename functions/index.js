@@ -56,7 +56,7 @@ exports.createSampleData = functions.https.onCall(
     await Promise.all(
       categories.map(
         async (category) => {
-          const suggestionlist = await findOneSubAll(
+          const reviews = await findOneSubAll(
             "categories",
             category.id,
             "reviews"
@@ -179,17 +179,27 @@ exports.createSampleData = functions.https.onCall(
     const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity", description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", price: 4900 })
     functions.logger.info("categoryId4", { categoryId4 })
 
+    const { id: categoryId5 } = await db.collection('categories').add({ name: "Smoke detector", description: "A smoke detector is an electronic fire-protection device that automatically senses the presence of smoke", image: "https://5.imimg.com/data5/SD/PM/MY-31926460/fire-alarm-smoke-detector-500x500.jpg", price: 18000 })
+    functions.logger.info("categoryId5", { categoryId5 })
+
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
     functions.logger.info("sensorId1", { sensorId1 })
 
     const { id: sensorId2 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId2, location: "lab", min: 0, max: 100, alert: false })
     functions.logger.info("sensorId2", { sensorId2 })
 
-    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Kitchen", state: "close", latitude: 25.354826, longitude: 25.40000, presenceDetected: false, fill: "Empty" })
+    const { id: sensorId3 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Kitchen", latitude: 30, longitude: 40, presenceDetected: false, fill: "Empty" })
     functions.logger.info("sensorId3", { sensorId3 })
+
+    const { id: sensorId6 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId5, location: "Bio-Lab", min: 25, max: 75, alert: false })
+    functions.logger.info("sensorId6", { sensorId6 })
 
     const { id: sensorId4 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
     functions.logger.info("sensorId4", { sensorId4 })
+
+    
+    const { id: sensorId5 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Toilet", latitude: 20, longitude: 26, presenceDetected: false, fill: "Empty" })
+    functions.logger.info("sensorId5", { sensorId5 })
     //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
 
     const { id: faq1 } = await db.collection('faqs').add({ question: "What is the price of sensors package?", answer: "It is 10,000 QR yearly based" })
@@ -207,11 +217,14 @@ exports.createSampleData = functions.https.onCall(
     const { id: adId3 } = await db.collection('ads').add({ desc: "A sound sensor is defined as a module that detects sound waves", categoryid: categoryId3, image: "https://image.winudf.com/v2/image/Y29tLm1hay5mZXZlcnRoZXJtb21ldGVyX2ljb25fNm41aW1ta2o/icon.png?w=170&fakeurl=1", date: "5th march 2021" })
     functions.logger.info("adId3", { adId3 })
 
-    const { id: adId4 } = await db.collection('ads').add({ desc: "Proximity Sensors ", categoryid: categoryId3, image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", date: "7th march 2021" })
+    const { id: adId4 } = await db.collection('ads').add({ desc: "Proximity Sensors ", categoryid: categoryId4, image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", date: "7th march 2021" })
     functions.logger.info("adId4", { adId4 })
 
-    const { id: adId5 } = await db.collection('ads').add({ desc: "This is light sensor ad3", categoryid: categoryId3, image: "https://play-lh.googleusercontent.com/oVW9zzp7qFlY-8FDxcJgGMRy6x5OWEm_n-vhFXVa_mKvKECukqNI9fVYlNRK8BwUUVY=w412-h220-rw", date: "6th march 2021" })
+    const { id: adId5 } = await db.collection('ads').add({ desc: "This is light detector sensor", categoryid: categoryId4, image: "https://play-lh.googleusercontent.com/oVW9zzp7qFlY-8FDxcJgGMRy6x5OWEm_n-vhFXVa_mKvKECukqNI9fVYlNRK8BwUUVY=w412-h220-rw", date: "6th march 2021" })
     functions.logger.info("adId5", { adId5 })
+
+    const { id: adId6 } = await db.collection('ads').add({ desc: "This is Smoke detector sensor ", categoryid: categoryId5, image: "https://5.imimg.com/data5/SD/PM/MY-31926460/fire-alarm-smoke-detector-500x500.jpg", date: "21st march 2021" })
+    functions.logger.info("adId6", { adId6 })
 
     const { id: popular1 } = await db.collection('popularsensor').add({ name: "Garage", dateSearched: new Date(), sensorid: sensorId1, rating: 5 })
     functions.logger.info("popular1", { popular1 })
@@ -252,9 +265,9 @@ exports.onNewReading = functions.firestore
     const category = { id: categoryDoc.id, ...categoryDoc.data() };
     functions.logger.info("category", { category });
 
-    const adDoc = await db.collection("ads").doc(sensorid).get();
-    const ad = { id: adDoc.id, ...adDoc.data() };
-    functions.logger.info("ad", { ad });
+    // const adDoc = await db.collection("ads").doc(sensorid).get();
+    // const ad = { id: adDoc.id, ...adDoc.data() };
+    // functions.logger.info("ad", { ad });
 
     //-----------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -304,17 +317,34 @@ exports.onNewReading = functions.firestore
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
       functions.logger.info("temp alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
     }
+    else if (category.name === "Smoke detector") {
+      await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.max || reading.current < sensor.min }, { merge: true })
+      functions.logger.info("smoke alert update", { alert: reading.current > sensor.max || reading.current < sensor.min });
+    }
     else if (category.name === "Sound") {
       await db.collection('sensors').doc(sensor.id).set({ alert: reading.current > sensor.maxDB || reading.current < sensor.minDB }, { merge: true })
       functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
     }
     else if (category.name === "Proximity") {
-      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude }, { merge: true })
-      if (sensor.presenceDetected) {
-        await db.collection('sensors').doc(sensor.id).update({ state: "open" })
+      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance < sensor.latitude && reading.distance > sensor.longitude }, { merge: true })
+      
+      // if (sensor.presenceDetected) {
+      //   await db.collection('sensors').doc(sensor.id).update({ state: "open" })
+      // }
+      // if ((!sensor.presenceDetected)) {
+      //   await db.collection('sensors').doc(sensor.id).update({ state: "close" })
+      // }
+      if(reading.capacity > 50)
+      {
+        await db.collection('sensors').doc(sensor.id).update({ fill: "Full" })
       }
-      else if ((!sensor.presenceDetected)) {
-        await db.collection('sensors').doc(sensor.id).update({ state: "close" })
+      else if(reading.capacity > 40 && reading.capacity < 50)
+      {
+        await db.collection('sensors').doc(sensor.id).update({ fill: "Half" })
+      }
+      else if(reading.capacity < 10)
+      {
+        await db.collection('sensors').doc(sensor.id).update({ fill: "Empty" })
       }
       functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude });
     }

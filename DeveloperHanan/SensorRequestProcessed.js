@@ -91,6 +91,18 @@ export default function SensorRequestProcessed({ payment }) {
         }
       )
     }
+    if(category && category.name === "Smoke detector")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      alert: false,
+      location: "Default",
+      min: 25,
+      max: 70
+    });
+    setAddd(true)
+    }
     alert("Sensor created");
   }
   return (

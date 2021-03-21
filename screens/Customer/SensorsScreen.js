@@ -13,6 +13,7 @@ import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPic
 import ProximityInfo from '../../DeveloperAisha/ProximityInfo'
 import SoundInfo from "../../DeveloperHanan/SoundInfo";
 import TemperatureInfo from './TemperatureInfo'
+import SmokeInfo from '../../DeveloperHanan/SmokeInfo'
 import ReportButton from "../../DeveloperAahmad/ReportButton";
 
 
@@ -103,6 +104,10 @@ export default function SensorsScreen({ navigation }) {
             {category.name === "Motion"
               &&
               <MotionInfo user={user} category={category} sensor={sensor} />
+            }
+              {category.name === "Smoke detector"
+              &&
+              <SmokeInfo user={user} category={category} sensor={sensor} />
             }
             {
               category.name === "Temperature" && (
