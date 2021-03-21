@@ -47,6 +47,7 @@ export default function Shop({navigation}) {
               <ShopItem
                 key={category.id}
                 category={category}
+                navigation={navigation}
                 {...category}
               />
             ))}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet,TextInput } from "react-native";
 import { Text, View } from "../../components/Themed";
+import { Icon } from "react-native-elements";
 import db from "../../db";
 
 // all picker values should be non-object (number, string, etc.)
@@ -15,7 +16,67 @@ export default function TemperatureInfo({ user, category, sensor }) {
     [sensor]
   );
 
+  const [location, setLocation] = useState("");
+
+  const updateLoc = async () => {
+    await db.Sensors.update({
+      id: sensor.id,
+      alert: sensor.alert,
+      categoryid: sensor.categoryid,
+      location: location,
+      max: sensor.max,
+      min: sensor.min,
+      userid: sensor.userid,
+    });
+    setLocation("");
+  };
+
+  const EditUserRole = (location) => {
+    setLocation(location);
+  };
   return (
+
+    <>
+    <View style={styles.rolesContainer}>
+    <Text style={styles.title}>Update Location</Text>
+    <View style={styles.inputView}>
+      <TextInput
+        style={styles.TextInput}
+        placeholder="Change location name"
+        placeholderTextColor="#12232E"
+        value={location}
+        onChangeText={(value) => setLocation(value)}
+      />
+    </View>
+
+    <View
+      style={{
+        width: "60%",
+        marginLeft: "22%",
+        marginTop: "3%",
+        flexDirection: "row",
+      }}
+    >
+      <Icon
+        reverse
+        name="save"
+        type="font-awesome"
+        color="#4DA8DA"
+        size={20}
+        onPress={updateLoc}
+      />
+
+      <Icon
+        reverse
+        name="edit"
+        type="font-awesome"
+        color="#4DA8DA"
+        size={20}
+        onPress={() => EditUserRole(sensor.location)}
+      />
+    </View>
+  </View>
+
     <View
       style={{
         backgroundColor: "#4DA8DA",
@@ -55,6 +116,7 @@ export default function TemperatureInfo({ user, category, sensor }) {
         Alert: {sensor.alert ? "True" : "False"}
       </Text>
     </View>
+    </>
   );
 }
 
@@ -143,5 +205,35 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  rolesContainer: {
+    borderRadius: 20,
+    height: 200,
+    width: 330,
+    marginLeft: "7%",
+    // margin: 20,
+    // flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "#12232E",
+  },
+  inputView: {
+    borderColor: "#4DA8DA",
+    borderWidth: 2,
+    borderRadius: 15,
+    width: "75%",
+    paddingLeft: 30,
+    marginTop: 20,
+    height: 50,
+    fontSize: 15,
+    color: "#12232E",
+  },
+  TextInput: {
+    width: "80%",
+    height: 10,
+    flex: 1,
+    fontSize: 15,
+    // padding: 10,
+    color: "#12232E",
   },
 });

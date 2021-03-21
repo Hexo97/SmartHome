@@ -60,13 +60,28 @@ export default function SensorRequestProcessed({ payment }) {
       )
       setAddd(true)
     }
-    if (category && category.name === "Motion") {
-      const { id: sensorid } = await db.Sensors.create({
-        categoryid: categoryid,
-        userid: userid,
+    if(category && category.name === "Proximity")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      location: "Kitchen",
+        state: "off",
+        latitude: 25.354826,
+        longitude: 25.4,
         motiondetected: false,
-        location: "Default",
-      });
+    });
+    setAddd(true)
+    }
+    if(category && category.name === "Motion")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      motiondetected:false,
+      location:"Default",
+    });
+    setAddd(true)
       await db.Logs.create(
         {
           sensorId: sensorid,
@@ -75,7 +90,18 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
-      setAddd(true)
+    }
+    if(category && category.name === "Smoke detector")
+    {
+      db.Sensors.create({
+      categoryid: categoryid,
+      userid: userid,
+      alert: false,
+      location: "Default",
+      min: 25,
+      max: 70
+    });
+    setAddd(true)
     }
     alert("Sensor created");
   }

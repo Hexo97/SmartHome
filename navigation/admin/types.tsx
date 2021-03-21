@@ -7,7 +7,6 @@ export type BottomTabParamList = {
   Settings: undefined;
   UserTrack: undefined;
   ManageSensors:undefined;
-  SimulatorActions:undefined;
 };
 
 export type TabOneParamList = {
@@ -15,7 +14,6 @@ export type TabOneParamList = {
   Dashboard:undefined;
   RealTimeMonitoring: undefined;
   Logs: undefined;
-  SimulatorActions:undefined;
 };
 export type TabTwoParamList = {
   Actions: undefined;

@@ -157,6 +157,19 @@ export default function MarketingHomeScreen({navigation}) {
                 <Text style={[styles.text, styles.subText],{textAlign:"right", color:"white"}}>{dt}</Text>
                 </View>
 
+                <Image
+                  source={require("../assets/images/AAHM-logos.jpeg")}
+                  style={{ width: 200, height: 200, alignSelf:"center" }}
+                />
+                <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+                AAHM is committed to offering only the highest quality products backed with responsive customer support.
+                </Text>
+                <Text style={{color:"white" , fontStyle:"italic" , margin:20}}>
+                We are: {"\n"}
+                Integrators of Control4 Smart Home Automation solutions.
+                Distributors of Sensibo products in Qatar
+                Dealers of Bluesound high definition multi-room audio products.
+                </Text>
                     <View style={styles.space} />
                 </ScrollView>
         </SafeAreaProvider>

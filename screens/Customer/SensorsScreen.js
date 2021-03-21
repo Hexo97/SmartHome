@@ -11,8 +11,10 @@ import db from '../../db'
 import CategoryByUserPicker from "../pickers/CategoryByUserPicker";
 import SensorByUserAndCategoryPicker from "../pickers/SensorByUserAndCategoryPicker";
 import ProximityInfo from '../../DeveloperAisha/ProximityInfo'
+import PressureInfo from '../../DeveloperAisha/PressureInfo'
 import SoundInfo from "../../DeveloperHanan/SoundInfo";
 import TemperatureInfo from './TemperatureInfo'
+import SmokeInfo from '../../DeveloperHanan/SmokeInfo'
 import ReportButton from "../../DeveloperAahmad/ReportButton";
 
 
@@ -21,40 +23,6 @@ export default function SensorsScreen({ navigation }) {
   const { user } = useContext(UserContext)
   const [category, setCategory] = useState(null)
   const [sensor, setSensor] = useState(null)
-  const [reviewVisible, setReviewVisible] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [alert, setAlert] = useState(false)
-  const [reviewAlert, setReviewAlert] = useState(false)
-  const [message, setMessage] = useState("")
-  const [reviewMessage, setReviewMessage] = useState("")
-  const [rating, setRating] = useState(0)
-
-  const createRequest = async (sensor) => {
-    if (!message) {
-      setAlert(true);
-    } else {
-      await db.Reports.create({
-        sensorId: sensor.sensor.id,
-        userId: user.id,
-        message: message,
-        dateCreated: new Date(),
-        status: "Pending",
-      });
-      setVisible(false)
-    }
-  };
-
-  const createReview = async (category, reviewMsg) => {
-    if (!reviewMsg) {
-      setReviewAlert(true)
-    }
-    else {
-      const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
-      await db.Categories.Reviews.createReview(category.id, review);
-      setReviewVisible(false)
-      setReviewMessage("")
-    }
-  };
 
   useEffect(() => setCategory(null), [user])
   useEffect(() => setSensor(null), [category])
@@ -104,6 +72,10 @@ export default function SensorsScreen({ navigation }) {
               &&
               <MotionInfo user={user} category={category} sensor={sensor} />
             }
+              {category.name === "Smoke detector"
+              &&
+              <SmokeInfo user={user} category={category} sensor={sensor} />
+            }
             {
               category.name === "Temperature" && (
                 <TemperatureInfo
@@ -118,7 +90,12 @@ export default function SensorsScreen({ navigation }) {
             {
               category.name === "Proximity"
               &&
-              <ProximityInfo user={user} category={category} sensor={sensor} />
+              <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation}/>
+            }
+             {
+              category.name === "Capacitive Pressure"
+              &&
+              <PressureInfo sensor={sensor}/>
             }
             <ReportButton user={user} category={category} sensor={sensor} />
           </>

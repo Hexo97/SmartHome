@@ -4,37 +4,22 @@ import { View ,Text} from '../components/Themed';
 import db from '../db'
 import { Avatar } from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Button} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome';
+export default function PressureInfo({ sensor }) {
 
-// all picker values should be non-object (number, string, etc.)
-
-export default function ProximityInfo({ user, category, sensor, navigation }) {
-
-    
-
+    const StopTheAlarm = async () =>
+    {
+        await db.Sensors.update({ ...sensor, alarm: "off" })
+    }
+    const RingTheAlarm = async () =>
+    {
+        await db.Sensors.update({ ...sensor, alarm: "Running" })
+    }
     return (
         <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
 
-        <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30}}>
-            <Button
-                    title="Show All TrashCans"
-                    type="outline"
-                    onPress={() => navigation.navigate('AllUserTrashCans')}
-                    icon={
-                        <Icon
-                        name="eye"
-                        size={30}
-                        color="lightblue"
-                        style={{marginRight:10}}
-                        />
-                    }
-            />
-        </View>
-
         <View style={{flexDirection:"row" , backgroundColor:"#12232E", marginBottom:10, marginTop:10}}>
-        <View style= {{ backgroundColor:"#BCE937", alignSelf:"center", height:150,marginHorizontal:40}}>
+        <View style= {{ backgroundColor:"#EAB9B9", alignSelf:"center", height:150,marginHorizontal:40}}>
         <Avatar
             size="xlarge"
             rounded
@@ -45,7 +30,7 @@ export default function ProximityInfo({ user, category, sensor, navigation }) {
         <Text style={{textAlign:"center", fontSize:20, color:"black", fontWeight:"bold", fontStyle:'italic'}}>{sensor?.location}</Text>
         </View>
 
-        <View style= {{ backgroundColor:"#9CE7F9", alignSelf:"center", height:150}}>
+        <View style= {{ backgroundColor:"#FFDB58", alignSelf:"center", height:150}}>
         <Avatar
             size="xlarge"
             rounded
@@ -54,65 +39,64 @@ export default function ProximityInfo({ user, category, sensor, navigation }) {
             activeOpacity={0.7}
             containerStyle={{flex: 5}}
             />
-             <Text style={sensor.presenceDetected ? styles.getStartedGreen : styles.getStartedRed}> {sensor.presenceDetected ? "True" : "False"}</Text>
+             <Text style={sensor.presenceDetected ? styles.getStartedGreen : styles.getStartedRed}> {sensor.pressureDetected ? "True" : "False"}</Text>
         </View>
         </View>
 
         <View style={{flexDirection:"row" , backgroundColor:"#12232E", marginBottom:10}}>
-        <View style= {{ backgroundColor:"#E599E2", alignSelf:"center", height:150,marginHorizontal:40}}>
+        <View style= {{ backgroundColor:"#B1DC88", alignSelf:"center", height:150,marginHorizontal:40}}>
         <Avatar
             size="xlarge"
             rounded
-            icon={{name: 'world-o', type: 'fontisto'}}
-            onPress={() => console.log("Works!")}
-            activeOpacity={0.7}
-            containerStyle={{flex: 5}}
-            />
-             <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>{sensor?.latitude}</Text>
-        </View>
-
-        <View style= {{ backgroundColor:"#758080", alignSelf:"center", height:150}}>
-        <Avatar
-            size="xlarge"
-            rounded
-            icon={{name: 'world-o', type: 'fontisto'}}
-            onPress={() => console.log("Works!")}
-            activeOpacity={0.7}
-            containerStyle={{flex: 5}}
-            />
-        <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>{sensor?.longitude}</Text>
-        </View>
-        </View>
-
-        <View style={{flexDirection:"row" , backgroundColor:"#12232E", marginBottom:10}}>
-        <View style= {{ backgroundColor:"#f6cd61", alignSelf:"center", height:150,marginHorizontal:40}}>
-        <Avatar
-            size="xlarge"
-            rounded
-            icon={{name: 'close', type: 'fontisto'}}
+            icon={{name: 'bed-patient', type: 'fontisto'}}
             onPress={() => console.log("Works!")}
             activeOpacity={0.7}
             containerStyle={{flex: 5}}
             />
             {
-                sensor.presenceDetected
+                sensor.pressureDetected
                 ?
-                <Text style={styles.getStartedGreen}>Open</Text>
+                <Text style={styles.getStartedGreen}>Awake</Text>
                 :
-                <Text style={styles.getStartedRed}>Close</Text>
+                <Text style={styles.getStartedRed}>Sleeping</Text>
             }
         </View>
 
-        <View style= {{ backgroundColor:"#e24437", alignSelf:"center", height:150}}>
+        <View style= {{ backgroundColor:"#7EDFDB", alignSelf:"center", height:150}}>
         <Avatar
             size="xlarge"
             rounded
-            icon={{name: 'trash', type: 'fontisto'}}
+            icon={{name: 'clock', type: 'fontisto'}}
             onPress={() => console.log("Works!")}
             activeOpacity={0.7}
             containerStyle={{flex: 5}}
             />
-        <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>{sensor?.fill}</Text>
+        <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>{sensor?.alarm}</Text>
+        </View>
+        </View>
+
+        <View style={{flexDirection:"row", backgroundColor:"#12232E", marginBottom:10}}>
+        <View style= {{ backgroundColor:"#ff2a26", alignSelf:"center", height:150,marginHorizontal:40}}>
+        <Avatar
+            size="xlarge"
+            rounded
+            icon={{name: 'volume-up', type: 'fontisto'}}
+            onPress={() =>  RingTheAlarm()}
+            activeOpacity={0.7}
+            containerStyle={{flex: 5}}
+            />
+            <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>Ring Alarm</Text>
+        </View>
+        <View style= {{ backgroundColor:"#ff2a26", alignSelf:"center", height:150}}>
+        <Avatar
+            size="xlarge"
+            rounded
+            icon={{name: 'volume-off', type: 'fontisto'}}
+            onPress={() =>  StopTheAlarm()}
+            activeOpacity={0.7}
+            containerStyle={{flex: 5}}
+            />
+            <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}>Stop Alarm</Text>
         </View>
         </View>
 
@@ -196,18 +180,20 @@ const styles = StyleSheet.create({
         width: 0, // or whatever size you need
         height: 5,
       },
-          getStartedGreen: {
+    getStartedGreen: {
         fontSize: 20,
         lineHeight: 24,
         textAlign: 'center',
         color: 'green',
-        fontWeight:"bold"
+        fontWeight:"bold",
+        fontStyle:'italic'
     },
     getStartedRed: {
         fontSize: 20,
         lineHeight: 24,
         textAlign: 'center',
         color: 'red',
-        fontWeight:"bold"
+        fontWeight:"bold",
+        fontStyle:'italic'
     },
 });

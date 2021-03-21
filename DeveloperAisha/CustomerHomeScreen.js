@@ -177,7 +177,11 @@ export default function CustomerHomeScreen({navigation}) {
                 <Text style={[styles.text, styles.subText]}>{email}</Text>
                 <Text style={[styles.text, styles.subText],{textAlign:"right", color:"white"}}>{dt}</Text>
                 </View>
-
+<View  style={{
+             backgroundColor:"#12232E",
+              flexDirection: "row",
+            }}
+            >
                 <Button
                       title="View Notifications"
                       type="outline"
@@ -188,24 +192,35 @@ export default function CustomerHomeScreen({navigation}) {
                 <Button
                       title="FAQs"
                       type="outline"
+                      buttonStyle = {styles.myButton}
                       onPress={() => navigation.navigate('Faq')}
                 />
+                </View>
+                <View  style={{
+             backgroundColor:"#12232E",
+              flexDirection: "row",
+            }}
+            >
                    <View style={styles.space} />
-                 <Button
-                      title="Reviews"
-                      type="outline"
-                      // onPress={() => navigation.navigate('Settings')}
-                />
-                   <View style={styles.space} />
+
+
                  <Button
                       title="Find Sensors"
                       type="outline"
+                      buttonStyle = {styles.myButton}
                       onPress={() => navigation.navigate('Search')}
                 />
+                </View>
 {/* ----------------------------------HANAN-------------------------------------------- */}
+<View  style={{
+             backgroundColor:"#12232E",
+              flexDirection: "row",
+            }}
+            >
                  <Button
                       title="Payment History"
                       type="outline"
+                      buttonStyle = {styles.myButton}
                       onPress={() => navigation.navigate('PaymentHistory')}
                 />  
 {/*--------------------------------------------------------------------------------------  */}
@@ -213,8 +228,10 @@ export default function CustomerHomeScreen({navigation}) {
                 <Button
                       title="My List"
                       type="outline"
+                      buttonStyle = {styles.myButton}
                       onPress={() => navigation.navigate('List')}
                 />
+                </View>
                  <View style={styles.container}>
       {/* <Button title="Play Sound" onPress={playSound} /> */}
     </View>
@@ -343,5 +360,11 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "flex-start",
       marginBottom: 16
+  },
+  myButton: {
+   marginLeft:"10%",
+    width: 155,
+    marginBottom:"3%"
+   
   },
 });
