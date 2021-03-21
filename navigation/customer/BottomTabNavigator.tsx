@@ -14,6 +14,8 @@ import SuggestionList from '../../DeveloperAisha/SuggestionList';
 // @ts-expect-error
 import AllUserSensors from '../../DeveloperAisha/AllUserSensors';
 // @ts-expect-error
+import AllUserTrashCans from '../../DeveloperAisha/AllUserTrashCans';
+// @ts-expect-error
 import SensorsScreen from '../../screens/Customer/SensorsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
@@ -126,6 +128,11 @@ function TabOneNavigator() {
         component={Reviews}
         options={{ headerTitle: 'Reviews' }}
       />
+       <TabOneStack.Screen
+        name="AllUserTrashCans"
+        component={AllUserTrashCans}
+        options={{ headerTitle: 'AllUserTrashCans' }}
+        />
     </TabOneStack.Navigator>
   );
 }
