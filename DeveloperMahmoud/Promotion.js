@@ -1,62 +1,37 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, TouchableNativeFeedback, ScrollView } from "react-native";
+import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Colors from "../constants/Colors";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
-import ShopItem from "./ShopItem";
 import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Button } from "react-native-elements";
 
-export default function Shop({navigation}) {
+export default function Shop() {
 
-  const [category, setCategory] = useState([]);
-  useEffect(() => db.Categories.listenAll(setCategory), []);
-
+  const [promotions, setPromotions] = useState([]);
+  useEffect(() => db.Promotions.listenAll(setPromotions), []);
   const { user } = useContext(UserContext);
-  const [userSensors, setUserSensors] = useState([])
-
-  useEffect(() => db.Sensors.listenByUser(setUserSensors, user.id), [user])
 
   return (
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>BUY Smart Home Sensors </Text>
+          <Text style={styles.title}>Available Free Services for you: </Text>
           <View style={styles.container}>
-            <Button
-              title="FREE SERVICES"
-              type="outline"
-              onPress={() => navigation.navigate('Promotion')}
-            />
-            {
-              userSensors.length >= 2
-              &&
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Promotion')}
-                style={styles.TouchPromotion}
-              >
-                <Text style={styles.TextPromotion}>
-                  FREE SERVICES
-              </Text>
-              </TouchableOpacity>
-              
-            }
-            {category.map((category) => (
-              <ShopItem
-                key={category.id}
-                category={category}
-                {...category}
+            {/* {promotions.map((promotion) => (
+              <Service
+                key={promotion.id}
+                promotion={promotion}
+                {...promotion}
               />
-            ))}
+            ))} */}
           </View>
         </ScrollView>
       </SafeAreaProvider>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   TextPromotion: {
     fontSize: 17,

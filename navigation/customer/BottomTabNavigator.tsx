@@ -22,6 +22,8 @@ import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
 import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
+import Promotion from '../../DeveloperMahmoud/Promotion';
+// @ts-expect-error
 import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
 // @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
@@ -146,6 +148,11 @@ function TabThreeNavigator() {
         name="Shop"
         component={Shop}
         options={{ headerTitle: 'Shop' }}
+      />
+      <TabThreeStack.Screen
+        name="Promotion"
+        component={Promotion}
+        options={{ headerTitle: 'Promotion' }}
       />
     </TabThreeStack.Navigator>
   );

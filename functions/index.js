@@ -47,10 +47,12 @@ exports.createSampleData = functions.https.onCall(
                 reading.id
               )
           )
-        );
+        ).catch(console.log("error", e));
         await removeOne("sensors", sensor.id);
       })
-    );
+    ).catch(function (err) {
+      console.log(err.message);
+    });
 
     const categories = await findAll("categories");
     await Promise.all(
@@ -66,29 +68,45 @@ exports.createSampleData = functions.https.onCall(
               async (list) =>
                 await removeOneSubOne("categories", category.id, "reviews", list.id)
             )
-          );
+          ).catch(function (err) {
+            console.log(err.message);
+          });
           await removeOne("categories", category.id)
         })
-    );
+    ).catch(function (err) {
+      console.log(err.message);
+    });
 
-
-    //----------------------------------HANAN-----------------------------------------------//
 
     const ads = await findAll("ads");
-    await Promise.all(ads.map(async (ad) => await removeOne("ads", ad.id)));
+    await Promise.all(ads.map(async (ad) => await removeOne("ads", ad.id))).catch(function (err) {
+      console.log(err.message);
+    });
 
     const faqs = await findAll("faqs");
-    await Promise.all(faqs.map(async (faq) => await removeOne("faqs", faq.id)));
+    await Promise.all(faqs.map(async (faq) => await removeOne("faqs", faq.id))).catch(function (err) {
+      console.log(err.message);
+    });
 
     const payments = await findAll("payments");
-    await Promise.all(payments.map(async (payment) => await removeOne("payments", payment.id)));
-    //-----------------------------------------------------------------------------------------------//
+    await Promise.all(payments.map(async (payment) => await removeOne("payments", payment.id))).catch(function (err) {
+      console.log(err.message);
+    });
 
     const logs = await findAll("logs");
-    await Promise.all(logs.map(async (log) => await removeOne("logs", log.id)));
+    await Promise.all(logs.map(async (log) => await removeOne("logs", log.id))).catch(function (err) {
+      console.log(err.message);
+    });
+
+    const promotions = await findAll("promotions");
+    await Promise.all(promotions.map(async (promotion) => await removeOne("promotions", promotion.id))).catch(function (err) {
+      console.log(err.message);
+    });
 
     const reports = await findAll("reports");
-    await Promise.all(reports.map(async (report) => await removeOne("reports", report.id)));
+    await Promise.all(reports.map(async (report) => await removeOne("reports", report.id))).catch(function (err) {
+      console.log(err.message);
+    });
 
     const popularsensor = await findAll("popularsensor");
     await Promise.all(
@@ -96,7 +114,9 @@ exports.createSampleData = functions.https.onCall(
         async (popularsensor) =>
           await removeOne("popularsensor", popularsensor.id)
       )
-    );
+    ).catch(function (err) {
+      console.log(err.message);
+    });
 
     const realtimemonitoring = await findAll("realtimemonitoring");
     await Promise.all(
@@ -104,7 +124,9 @@ exports.createSampleData = functions.https.onCall(
         async (realtimemonitoring) =>
           await removeOne("realtimemonitoring", realtimemonitoring.id)
       )
-    );
+    ).catch(function (err) {
+      console.log(err.message);
+    });
 
     const users = await findAll("users");
     await Promise.all(
@@ -113,13 +135,17 @@ exports.createSampleData = functions.https.onCall(
           "users",
           user.id,
           "suggestionlist"
-        );
+        ).catch(function (err) {
+          console.log(err.message);
+        });
         await Promise.all(
           suggestionlist.map(
             async (list) =>
               await removeOneSubOne("users", user.id, "suggestionlist", list.id)
           )
-        );
+        ).catch(function (err) {
+          console.log(err.message);
+        });
         await removeOne("users", user.id);
       })
     );
@@ -127,7 +153,9 @@ exports.createSampleData = functions.https.onCall(
     const authUsers = (await admin.auth().listUsers()).users;
     await Promise.all(
       authUsers.map(async (user) => await admin.auth().deleteUser(user.uid))
-    );
+    ).catch(function (err) {
+      console.log(err.message);
+    });
 
     // auth and db should be completely empty now
 
@@ -227,6 +255,14 @@ exports.createSampleData = functions.https.onCall(
 
     const { id: logId2 } = await db.collection('logs').add({ sensorId: sensorId2, categoryId: categoryId2, date: new Date(), logMessage: ` Sensor Created` })
     functions.logger.info("logId2", { logId2 })
+
+    const { id: promotionId1 } = await db.collection('promotions').add({ categoryId: categoryId2, startdate: new Date(), OfferedServices: ` Free Maintenance` })
+    functions.logger.info("logId2", { logId2 })
+
+
+    // const { id: promotionId2 } = await db.collection('promotions').add({ OfferedServices: ` Free Maintenance` })
+    // functions.logger.info("logId2", { logId2 })
+
   }
   //-----------------------------------------------------------------------------------------------------------------------------------------------------------------//
 );

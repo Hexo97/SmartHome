@@ -25,6 +25,7 @@ export default {
           TabThree: {
             screens: {
               Shop: 'two',
+              Promotion: 'three',
             },
           },
           TabFour: {

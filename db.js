@@ -356,8 +356,12 @@ class Logs extends DB {
   listen2OrderByWhen = (set) =>
     db.collection(this.collection).orderBy("date").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-  // listenBySensor = (set, sensorid) =>
-  //   db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
+}
+
+class Promotions extends DB {
+  constructor() {
+    super("promotions");
+  }
 
 }
 
@@ -375,8 +379,8 @@ export default {
   Faq: new Faq(),
   Payment: new Payment(),
 
-  //AISHA
   Logs: new Logs(),
+  Promotions: new Promotions(),
 
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),
