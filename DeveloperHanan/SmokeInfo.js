@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView,TextInput } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
-import { Button, Card } from "react-native-elements";
-import { Slider, Icon } from "react-native-elements";
-
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import Colors from "../constants/Colors";
+import { Card, Image, Icon } from "react-native-elements";
 
 // all picker values should be non-object (number, string, etc.)
 
-export default function SoundInfo({ sensor }) {
+export default function SmokeInfo({ user, category, sensor }) {
   const [reading, setReading] = useState(null);
   useEffect(
     () =>
@@ -18,29 +16,6 @@ export default function SoundInfo({ sensor }) {
         : undefined,
     [sensor]
   );
-   // console.log("Reading here", reading)
-    
-  const updateMinMax = async (minmax, amount) =>
-    await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount });
-
-  const [value, setValue] = useState(sensor.minDB);
-  const saveMin = async (value) => {
-    if(reading) {
-      await db.Sensors.update({ ...sensor, minDB: value, alert: reading.current < value ? true : false });
-    } else { 
-      await db.Sensors.update({ ...sensor, minDB: value });
-    }
-  };
-
-  const [valuemax, setValuemax] = useState(sensor.maxDB);
-  const saveMax = async (value) => {
-    if(reading) {
-      await db.Sensors.update({ ...sensor, maxDB: value, alert: reading.current > valuemax ? true : false });
-    } else { 
-      await db.Sensors.update({ ...sensor, maxDB: value });
-    }
-  };
-
 
   const [location, setLocation] = useState("");
 
@@ -61,10 +36,10 @@ export default function SoundInfo({ sensor }) {
     setLocation(location);
   };
 
-
   return (
     <>
-    <View style={styles.rolesContainer}>
+      
+        <View style={styles.rolesContainer}>
           <Text style={styles.title}>Update Location</Text>
           <View style={styles.inputView}>
             <TextInput
@@ -103,9 +78,11 @@ export default function SoundInfo({ sensor }) {
             />
           </View>
         </View>
+  
+
       <View
         style={{
-          backgroundColor: "#4DA8DA",
+          backgroundColor: "#12232E",
           width: "90%",
           marginLeft: "5%",
           marginTop: "5%",
@@ -116,14 +93,14 @@ export default function SoundInfo({ sensor }) {
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)"
         >
-          Max Volume: {sensor.maxDB}
+          Standard Humdity Level: {sensor.max}
         </Text>
         <Text
           style={styles.getStartedText}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)"
         >
-          Min Volume: {sensor.minDB}
+          Min Humidty Level: {sensor.min}
         </Text>
         {reading && (
           <Text
@@ -131,7 +108,7 @@ export default function SoundInfo({ sensor }) {
             lightColor="rgba(0,0,0,0.8)"
             darkColor="rgba(255,255,255,0.8)"
           >
-            Current: {reading.current}
+            Live Humidity Level: {reading.current}
           </Text>
         )}
         <Text
@@ -139,87 +116,27 @@ export default function SoundInfo({ sensor }) {
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)"
         >
-          Alert: {sensor.alert ? "True" : "False"}
+          Smoke alert: {sensor.alert ? "True" : "False"}
         </Text>
-        {/* <Button
-        title=" Decrement minDB by 10"
-        type="outline"
-        onPress={() => updateMinMax("minDB", -10)}
-      />
-      <Button
-        title=" Decrement max by 10"
-        type="outline"
-        onPress={() => updateMinMax("maxDB", -10)}
-      />
-      <Button
-        title=" Increment max by 10"
-        type="outline"
-        onPress={() => updateMinMax("maxDB", 10)}
-      /> */}
-  
-        <View
-          style={{
-         paddingLeft:15,
-         paddingRight:5,
-         paddingTop:10,
-         marginTop:5,
-         paddingBottom:15,
+      </View>
+
+      <View
+        style={{
+          backgroundColor: "#12232E",
+          width: "99%",
+          marginLeft: "7%",
+          marginBottom: "50%",
+          marginTop: "4%",
+          marginRight: "10%",
+        }}
+      >
+        <Image
+          style={styles.tinyLogo}
+          source={{
+            uri:
+              "https://www.airthings.com/hs-fs/hubfs/Website/Images/Newsletter/Blog/Blog%20body%20images%20compressed%20-illustration/Humidity%20level%20chart%20(1).jpg?width=1754&name=Humidity%20level%20chart%20(1).jpg",
           }}
-        >
-          <Slider
-            value={sensor.minDB}
-            onValueChange={saveMin}
-            maximumValue={50}
-            minimumValue={0}
-            step={1}
-            trackStyle={{ height: 10, backgroundColor: "transparent" }}
-            thumbStyle={{
-              height: 20,
-              width: 20,
-              backgroundColor: "transparent",
-            }}
-            thumbProps={{
-              children: (
-                <Icon
-                  name="minus"
-                  type="font-awesome"
-                  size={15}
-                  reverse
-                  containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
-                />
-              ),
-            }}
-          />
-          <Text>MinDb: {sensor.minDB}</Text>
-        
-          <Slider
-            value={sensor.maxDB}
-            onValueChange={saveMax}
-            maximumValue={100}
-            minimumValue={0}
-            step={1}
-            trackStyle={{ height: 10, backgroundColor: "transparent" }}
-            thumbStyle={{
-              height: 20,
-              width: 20,
-              backgroundColor: "transparent",
-            }}
-            thumbProps={{
-              children: (
-                <Icon
-                  name="plus"
-                  type="font-awesome"
-                  size={15}
-                  reverse
-                  containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
-                />
-              ),
-            }}
-          />
-          <Text>MaxDb: {sensor.maxDB}</Text>
-        </View>
+        />
       </View>
     </>
   );
@@ -227,8 +144,8 @@ export default function SoundInfo({ sensor }) {
 
 const styles = StyleSheet.create({
   tinyLogo: {
-    width: 150,
-    height: 150,
+    width: "90%",
+    height: "75%",
   },
   container: {
     flex: 1,
@@ -240,6 +157,17 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: "center",
   },
+  rolesContainer: {
+    borderRadius: 20,
+    height: 200,
+    width: 330,
+    marginLeft: "7%",
+    // margin: 20,
+    // flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "#12232E",
+  },
   contentContainer: {
     paddingTop: 30,
   },
@@ -248,9 +176,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
-  slider: {
-    height: 30,
-    marginLeft: 7,
+  btn: {
+    width: "80%",
+    borderRadius: 15,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    backgroundColor: "#007CC7",
   },
   welcomeImage: {
     width: 100,
@@ -277,18 +210,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 24,
     textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
   },
   getStartedGreen: {
-    fontSize: 17,
+    fontSize: 20,
     lineHeight: 24,
     textAlign: "center",
     color: "green",
+    fontWeight: "bold",
   },
   getStartedRed: {
-    fontSize: 17,
+    fontSize: 20,
     lineHeight: 24,
     textAlign: "center",
     color: "red",
+    fontWeight: "bold",
+    fontStyle: "italic",
   },
   helpContainer: {
     marginTop: 15,
@@ -310,23 +248,6 @@ const styles = StyleSheet.create({
     height: 1,
     width: "80%",
   },
-  imagebg: {
-    flex: 1,
-    alignItems: "center",
-    backgroundColor: "#EEFBFB",
-    width: "50%",
-  },
-  rolesContainer: {
-    borderRadius: 20,
-    height: 200,
-    width: 330,
-    marginLeft: "7%",
-    // margin: 20,
-    // flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    // backgroundColor: "#12232E",
-  },
   inputView: {
     borderColor: "#4DA8DA",
     borderWidth: 2,
@@ -338,6 +259,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#12232E",
   },
+
   TextInput: {
     width: "80%",
     height: 10,

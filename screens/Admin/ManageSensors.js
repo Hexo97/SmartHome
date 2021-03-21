@@ -13,6 +13,7 @@ import Colors from "../../constants/Colors";
 import ProximityActions from "../../DeveloperAisha/ProximityActions"
 import PressureActions from "../../DeveloperAisha/PressureActions"
 import SoundActions from "../../DeveloperHanan/SoundActions";
+import SmokeActions from "../../DeveloperHanan/SmokeActions";
 
 export default function ManageSensors() {
   const [category, setCategory] = useState(null);
@@ -137,6 +138,9 @@ export default function ManageSensors() {
 
         {category && sensor && category.name === "Sound" && (
           <SoundActions sensor={sensor} />
+        )}
+        {category && sensor && category.name === "Smoke detector" && (
+          <SmokeActions sensor={sensor} />
         )}
         {category && sensor && category.name === "Proximity" && (
           <ProximityActions sensor={sensor} />

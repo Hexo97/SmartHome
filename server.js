@@ -99,6 +99,18 @@ const simulateReading = async (sensor) => {
         when: new Date(),
         current: current + Math.floor(Math.random() * 20) - 10,
       });
+
+  }
+  if (isCategory(sensor, "Smoke detector")) {
+    const current = readings.length > 0 ? readings[0].current : 35;
+    await db
+      .collection("sensors")
+      .doc(sensor.id)
+      .collection("readings")
+      .add({
+        when: new Date(),
+        current: current + Math.floor(Math.random() * 15) - 10,
+      });
   } 
   if (isCategory(sensor, "Proximity")) {
     const distance = readings.length > 0 ? readings[0].distance : 45;
@@ -143,13 +155,15 @@ const simulateReading = async (sensor) => {
       .collection("readings")
       .add({
         when: new Date(),
-        url
+               url
       });
   }
   else {
     console.log("other type of sensor not simulated yet");
   }
 };
+
+
 
 const simulate = () => {
   sensors.map(simulateReading);
