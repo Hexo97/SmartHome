@@ -333,6 +333,7 @@ exports.onNewReading = functions.firestore
     }
     else if (category.name === "Proximity") {
       await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance < sensor.latitude && reading.distance > sensor.longitude }, { merge: true })
+
       if(reading.capacity > 50)
       {
         await db.collection('sensors').doc(sensor.id).update({ fill: "Full" })

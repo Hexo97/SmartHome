@@ -202,6 +202,8 @@ export default function CustomerHomeScreen({navigation}) {
             }}
             >
                    <View style={styles.space} />
+
+
                  <Button
                       title="Find Sensors"
                       type="outline"

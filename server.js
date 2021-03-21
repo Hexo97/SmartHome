@@ -99,6 +99,7 @@ const simulateReading = async (sensor) => {
         when: new Date(),
         current: current + Math.floor(Math.random() * 20) - 10,
       });
+
   }
   if (isCategory(sensor, "Smoke detector")) {
     const current = readings.length > 0 ? readings[0].current : 35;
