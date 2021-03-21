@@ -23,7 +23,7 @@ export default function Reviews({ route }) {
                 {reviews.length !== 0 ? (
                     <>
                         {reviews.map((c) => (
-                            <Review review={c}/>
+                            <Review key={c.id} review={c}/>
                         ))}
                     </>
                 ) : (

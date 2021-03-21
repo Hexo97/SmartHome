@@ -28,6 +28,7 @@ export function Home({ navigation }) {
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
+        
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
             source={require("../assets/images/icon2.png")}
@@ -42,12 +43,15 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-      <View style={{alignSelf:"center", margin:50}}>
-      <Tile
-          imageSrc={require('../assets/images/home.gif')}
-          featured
-          onPress ={() => console.log("HELLO")}        />
-      </View>
+       <Image
+          source={require("../assets/images/home.gif")}
+          style={{ width: 280, height: 250, alignSelf:"center" }}
+      />
+      <View style={styles.space} />
+        <Image
+          source={require("../assets/images/AAHM-logos.jpeg")}
+          style={{ width: 280, height: 200, alignSelf:"center" }}
+      />
     </View>
   
   );

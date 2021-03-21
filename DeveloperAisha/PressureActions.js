@@ -15,32 +15,28 @@ export default function ProximityActions({ sensor }) {
   const { user } = useContext(UserContext)
   useEffect(() => handleStopSimulator(), [user])
 
-  // return "stop simulator function", to be called on component unmount, stopping the timer
   useEffect(() => handleStopSimulator, [])
 
-  const [reading, setReading] = useState(null)
-  useEffect(() => db.Sensors.Readings.listenLatestOne(setReading, sensor.id), [sensor])
 
+  const uploadReading= async () => 
+      await db.Sensors.Readings.createReading(sensor.id, {
+        when: new Date(),
+        force: Math.floor(Math.random() * 10) + 0,
+      })
 
-  const setProximity = async () => await db.Sensors.Readings.createReading(sensor.id, {
-    when: new Date(),
-    distance: (reading?.distance || 50) + Math.floor(Math.random() * 20) - 10,
-    capacity:  (reading?.distance || 50) + Math.floor(Math.random() * 20) - 10
-  })
-
-  // const fillTrash = async(capacity, amount) =>
-  //    await db.Sensors.update({...sensor , [capacity]: sensor[capacity] + amount }, sensor.id)
+  const determineArea = async () =>
+  {
+    await db.Sensors.update({ ...sensor, area: Math.floor(Math.random() * 10) + 0 })
+  }
 
   const handleToggleAlert = async () => await db.Sensors.togglePresence(sensor)
-
-  const setPosition = async (latitudelongitude, amount) => await db.Sensors.update({ ...sensor, [latitudelongitude]: sensor[latitudelongitude] + amount })
 
   const [delay, setDelay] = useState(5)
   const [intervalId, setIntervalId] = useState(0)
 
   // start uploading random readings every 5 seconds
   const handleStartSimulator = () => {
-  setIntervalId(setInterval(setProximity, delay * 1000)),
+  setIntervalId(setInterval(uploadReading, delay * 1000)),
   setStart(true)
   }
 
@@ -55,33 +51,32 @@ export default function ProximityActions({ sensor }) {
     <ScrollView showsVerticalScrollIndicator={false}>
     <View style={styles.space} />
 
-
     <View style={{flexDirection:"row" , backgroundColor: '#12232E', marginBottom:10,marginTop:10}}>
 
     <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30}}>
     <Button
-            title="Toggle Alert"
+            title="Set Sensor Area"
             type="outline"
-            onPress={handleToggleAlert} 
+            onPress={determineArea} 
             icon={
                 <Icon
-                  name="exclamation"
+                  name="edit"
                   size={30}
-                  color="red"
+                  color="orange"
                   style={{marginRight:10}}
                 />
               }
         />
       </View>
 
-    <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:50}}>
+    <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:10}}>
         <Button
-            title="Set Proximity"
+            title="Set  Reading"
             type="outline"
-            onPress={setProximity} 
+            onPress={uploadReading} 
             icon={
                 <Icon
-                  name="male"
+                  name="upload"
                   size={30}
                   color="#00aedb"
                   style={{marginRight:10}}
@@ -109,7 +104,7 @@ export default function ProximityActions({ sensor }) {
               }
       />
       </View>
-      <View style= {{ backgroundColor:"#12232E",marginHorizontal:20}}>
+      <View style= {{ backgroundColor:"#12232E",marginHorizontal:10}}>
       <Button
             title="Stop simulator"
             type="outline"
@@ -131,7 +126,7 @@ export default function ProximityActions({ sensor }) {
     <View style={{flexDirection:"row" , backgroundColor: '#12232E', marginBottom:10,marginTop:10}}>
     <View style= {{ backgroundColor:"#12232E",marginHorizontal:30}}>
     <Button
-            title="Set Delay + 1"
+            title="  Delay add +1"
             type="outline"
             onPress={() => setDelay(delay + 1)}
             icon={
@@ -145,9 +140,9 @@ export default function ProximityActions({ sensor }) {
       />
     </View>
 
-    <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30}}>
+    <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:10}}>
     <Button
-            title="Set Delay - 1"
+            title="  Delay sub -1"
             type="outline"
             onPress={() => setDelay(delay- 1)}
             icon={
@@ -161,6 +156,21 @@ export default function ProximityActions({ sensor }) {
       />
     </View>
     </View>
+    <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30, marginTop:10}}>
+    <Button
+            title="Toggle Alert"
+            type="outline"
+            onPress={handleToggleAlert} 
+            icon={
+                <Icon
+                  name="exclamation"
+                  size={30}
+                  color="red"
+                  style={{marginRight:10}}
+                />
+              }
+        />
+      </View>
 
     <View style={styles.space} />
       <View style={{backgroundColor:"#EEFBFB",marginHorizontal:40,marginBottom:20,alignSelf:"center",alignItems:"center", height:100, width:200}}>
