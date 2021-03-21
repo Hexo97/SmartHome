@@ -20,8 +20,6 @@ import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
 import AdminSensorsLogs from '../../DeveloperMahmoud/AdminSensorsLogs';
 // @ts-expect-error
 import ManageSensors from '../../screens/Admin/ManageSensors';
-// @ts-expect-error
-import SimulatorActions from '../../screens/Admin/SimulatorActions';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList} from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -101,11 +99,6 @@ function TabOneNavigator() {
         name="RealTimeMonitoring"
         component={RealTimeMonitoring}
         options={{ headerTitle: 'RealTimeMonitoring' }}
-      />
-        <TabOneStack.Screen
-        name="SimulatorActions"
-        component={SimulatorActions}
-        options={{ headerTitle: 'SimulatorActions' }}
       />
     </TabOneStack.Navigator>
   );

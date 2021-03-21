@@ -14,7 +14,8 @@ export default {
               Search:'four',
               List:'five',
               AllUserSensors:'six',
-              PaymentHistory:'seven'
+              PaymentHistory:'seven',
+              AllUserTrashCans:'eight'
             },
           },
           TabTwo: {

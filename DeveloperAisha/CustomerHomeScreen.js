@@ -203,13 +203,6 @@ export default function CustomerHomeScreen({navigation}) {
             >
                    <View style={styles.space} />
                  <Button
-                      title="Reviews"
-                      type="outline"
-                      buttonStyle = {styles.myButton}
-                      // onPress={() => navigation.navigate('Settings')}
-                />
-                   <View style={styles.space} />
-                 <Button
                       title="Find Sensors"
                       type="outline"
                       buttonStyle = {styles.myButton}

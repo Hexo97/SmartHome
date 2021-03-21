@@ -11,6 +11,7 @@ import MotionActions from './MotionActions'
 import { ListItem } from 'react-native-elements'
 import Colors from "../../constants/Colors";
 import ProximityActions from "../../DeveloperAisha/ProximityActions"
+import PressureActions from "../../DeveloperAisha/PressureActions"
 import SoundActions from "../../DeveloperHanan/SoundActions";
 import SmokeActions from "../../DeveloperHanan/SmokeActions";
 
@@ -41,6 +42,11 @@ export default function ManageSensors() {
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
+
+      <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:5, marginBottom:10}}>
+        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:18 }}>MANAGE THE SENSORS</Text>
+        </View>
+
         <View
           style={{
             backgroundColor: "#4DA8DA",
@@ -138,6 +144,9 @@ export default function ManageSensors() {
         )}
         {category && sensor && category.name === "Proximity" && (
           <ProximityActions sensor={sensor} />
+        )}
+        {category && sensor && category.name === "Capacitive Pressure" && (
+          <PressureActions sensor={sensor} />
         )}
       </ScrollView>
     </SafeAreaProvider>
