@@ -12,7 +12,6 @@ export default {
               Dashboard:'two',
               RealTimeMonitoring:'three',
               Logs:'four',
-              SimulatorActions:'five'
             },
           },
           TabTwo: {

@@ -155,6 +155,7 @@ class Readings extends DB {
       .orderBy("when", "desc")
       .limit(1)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
+
 }
 
 class Reviews extends DB {
@@ -174,6 +175,13 @@ class Reviews extends DB {
       .collection(this.collection)
       .add(rest);
   }
+
+  listenToAll = (set, categoryId) =>
+    db
+      .collection(this.containing)
+      .doc(categoryId)
+      .collection(this.collection)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 
@@ -236,6 +244,12 @@ class Categories extends DB {
       .collection(this.collection)
       .where(db.FieldPath.documentId(), "in", ids)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+    listenByName = (set, name) =>
+    db
+      .collection(this.collection)
+      .where("name", "==", name)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)[0]));
 }
 
 class Request extends DB {
@@ -365,17 +379,19 @@ export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
   Users: new Users(),
+  Simulator: new Simulator(),
+
+  
   Request: new Request(),
   Reports: new Reports(),
   Reviews: new Reviews(),
-  Simulator: new Simulator(),
 
   //HANAN
   Ads: new Ads(),
   Faq: new Faq(),
   Payment: new Payment(),
 
-  //AISHA
+
   Logs: new Logs(),
 
   RealTimeMonitoring: new RealTimeMonitoring(),

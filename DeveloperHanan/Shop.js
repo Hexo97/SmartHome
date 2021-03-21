@@ -8,7 +8,7 @@ import ShopItem from "./ShopItem";
 import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function Shop() {
+export default function Shop({navigation}) {
 
   const [category, setCategory] = useState([]);
   useEffect(() => db.Categories.listenAll(setCategory), []);
@@ -23,6 +23,7 @@ export default function Shop() {
               <ShopItem
                 key={category.id}
                 category={category}
+                navigation={navigation}
                 {...category}
               />
             ))}

@@ -8,6 +8,8 @@ export type BottomTabParamList = {
   List:undefined;
   AllUserSensors:undefined;
   PaymentHistory: undefined;
+  Reviews: undefined;
+  AllUserTrashCans:undefined;
 };
 export type TabOneParamList ={
   Home: undefined;
@@ -17,6 +19,7 @@ export type TabOneParamList ={
   List:undefined;
   AllUserSensors:undefined;
   PaymentHistory: undefined;
+  AllUserTrashCans:undefined;
 }
 
 export type TabTwoParamList = {

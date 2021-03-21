@@ -179,8 +179,13 @@ exports.createSampleData = functions.https.onCall(
     const { id: categoryId4 } = await db.collection('categories').add({ name: "Proximity", description: "Proximity sensors are suitable for damp conditions and wide temperature range usage, unlike your traditional optical detection.", image: "https://www.thegreenhead.com/imgs/xl/simplehuman-sensor-can-xl.jpg", price: 4900 })
     functions.logger.info("categoryId4", { categoryId4 })
 
+
     const { id: categoryId5 } = await db.collection('categories').add({ name: "Smoke detector", description: "A smoke detector is an electronic fire-protection device that automatically senses the presence of smoke", image: "https://5.imimg.com/data5/SD/PM/MY-31926460/fire-alarm-smoke-detector-500x500.jpg", price: 18000 })
     functions.logger.info("categoryId5", { categoryId5 })
+
+    const { id: categoryId6 } = await db.collection('categories').add({ name: "Capacitive Pressure", description: "Capacitive pressure sensors measure pressure by detecting changes in electrical capacitance caused by the movement of a diaphragm.", image: "https://cdn.shopify.com/s/files/1/0953/3946/files/BedMatDiagram_2_grande.jpg?v=1510244844", price: 1800 })
+    functions.logger.info("categoryId6", { categoryId6 })
+
 
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
     functions.logger.info("sensorId1", { sensorId1 })
@@ -197,9 +202,10 @@ exports.createSampleData = functions.https.onCall(
     const { id: sensorId4 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
     functions.logger.info("sensorId4", { sensorId4 })
 
-    
     const { id: sensorId5 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Toilet", latitude: 20, longitude: 26, presenceDetected: false, fill: "Empty" })
-    functions.logger.info("sensorId5", { sensorId5 })
+
+    const { id: sensorId7 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId6, location: "Bedroom", area: 4, pressureDetected: false, status: "Sleeping" , alarm:"off" })
+
     //-------------------------------------------------------HANAN-----------------------------------------------------------------------------------------------//
 
     const { id: faq1 } = await db.collection('faqs').add({ question: "What is the price of sensors package?", answer: "It is 10,000 QR yearly based" })
@@ -232,7 +238,7 @@ exports.createSampleData = functions.https.onCall(
     const { id: popular2 } = await db.collection('popularsensor').add({ name: "Back Door", dateSearched: new Date(), sensorid: sensorId2, rating: 4 })
     functions.logger.info("popular2", { popular2 })
 
-    const { id: popular3 } = await db.collection('popularsensor').add({ name: "Front Door", dateSearched: new Date(), sensorid: sensorId2, rating: 3 })
+    const { id: popular3 } = await db.collection('popularsensor').add({ name: "Bedroom", dateSearched: new Date(), sensorid: sensorId7, rating: 3 })
     functions.logger.info("popular3", { popular3 })
 
     const { id: logId1 } = await db.collection('logs').add({ sensorId: sensorId1, categoryId: categoryId1, date: new Date(), logMessage: ` Sensor Created` })
@@ -327,13 +333,7 @@ exports.onNewReading = functions.firestore
     }
     else if (category.name === "Proximity") {
       await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance < sensor.latitude && reading.distance > sensor.longitude }, { merge: true })
-      
-      // if (sensor.presenceDetected) {
-      //   await db.collection('sensors').doc(sensor.id).update({ state: "open" })
-      // }
-      // if ((!sensor.presenceDetected)) {
-      //   await db.collection('sensors').doc(sensor.id).update({ state: "close" })
-      // }
+
       if(reading.capacity > 50)
       {
         await db.collection('sensors').doc(sensor.id).update({ fill: "Full" })
@@ -347,6 +347,18 @@ exports.onNewReading = functions.firestore
         await db.collection('sensors').doc(sensor.id).update({ fill: "Empty" })
       }
       functions.logger.info("Presence Detected", { presenceDetected: reading.distance > sensor.latitude || reading.distance < sensor.longitude });
+    }
+    else if (category.name === "Capacitive Pressure") {
+      await db.collection('sensors').doc(sensor.id).set({ pressureDetected: reading.force / sensor.area > 0 }, { merge: true })
+
+      if(reading.force / sensor.area > 0)
+      {
+        await db.collection('sensors').doc(sensor.id).update({ status: "Awake" , alarm:"Running" })
+      }
+      else
+      {
+        await db.collection('sensors').doc(sensor.id).update({ status: "Sleeping" , alarm:"off" })
+      }
     }
     else {
       functions.logger.info("No such category", { category });

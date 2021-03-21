@@ -183,11 +183,6 @@ export default function AdminHomeScreen({navigation}) {
                       type="outline"
                       onPress={() => navigation.navigate('RealTimeMonitoring')}
                     />
-                     <Button
-                      title="Handle Simulator"
-                      type="outline"
-                      onPress={() => navigation.navigate('SimulatorActions')}
-                    />
                 </ScrollView>
         </SafeAreaProvider>
   );

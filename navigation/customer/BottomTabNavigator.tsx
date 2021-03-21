@@ -14,6 +14,8 @@ import SuggestionList from '../../DeveloperAisha/SuggestionList';
 // @ts-expect-error
 import AllUserSensors from '../../DeveloperAisha/AllUserSensors';
 // @ts-expect-error
+import AllUserTrashCans from '../../DeveloperAisha/AllUserTrashCans';
+// @ts-expect-error
 import SensorsScreen from '../../screens/Customer/SensorsScreen';
 // @ts-expect-error
 import SettingsScreen from '../../DeveloperHanan/SettingsScreen';
@@ -23,6 +25,8 @@ import Faq from '../../DeveloperHanan/Faq';
 import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
 import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
+// @ts-expect-error
+import Reviews from '../../DeveloperAahmad/Reviews';
 // @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList} from './types';
@@ -94,11 +98,11 @@ function TabOneNavigator() {
         component={Faq}
         options={{ headerTitle: 'Faq' }}
       />
-      <TabOneStack.Screen
+      {/* <TabOneStack.Screen
         name="Reviews"
         component={Faq}
         options={{ headerTitle: 'Reviews' }}
-      />
+      /> */}
       <TabOneStack.Screen
         name="Search"
         component={SearchSensors}
@@ -119,6 +123,16 @@ function TabOneNavigator() {
         component={PaymentHistory}
         options={{ headerTitle: 'Payment History' }}
       />
+       <TabOneStack.Screen
+        name="Reviews"
+        component={Reviews}
+        options={{ headerTitle: 'Reviews' }}
+      />
+       <TabOneStack.Screen
+        name="AllUserTrashCans"
+        component={AllUserTrashCans}
+        options={{ headerTitle: 'AllUserTrashCans' }}
+        />
     </TabOneStack.Navigator>
   );
 }
