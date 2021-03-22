@@ -68,6 +68,7 @@ class Sensors extends DB {
   constructor() {
     super("sensors");
     this.Readings = new Readings(this.collection);
+    this.Maintenance = new Maintenance(this.collection);
   }
 
   listenByCategory = (set, categoryid) =>
@@ -115,7 +116,7 @@ class Sensors extends DB {
 
   togglePresence = (sensor) =>
     db.collection(this.collection).doc(sensor.id).set({ presenceDetected: !sensor.presenceDetected }, { merge: true });
-  }
+}
 
 class Readings extends DB {
   constructor(containing) {
@@ -164,11 +165,11 @@ class Reviews extends DB {
     this.containing = containing;
   }
 
-  createReview = (categoryId,review) => {
+  createReview = (categoryId, review) => {
     const { ...rest } = review;
-    console.log("review?:",review);
-    console.log("rest?:",rest);
-    console.log("categoryId?:",categoryId);
+    console.log("review?:", review);
+    console.log("rest?:", rest);
+    console.log("categoryId?:", categoryId);
     db
       .collection(this.containing)
       .doc(categoryId)
@@ -215,14 +216,14 @@ class SuggestionList extends DB {
       .collection(this.collection)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-  listenToProductSuggestion= (set, userid) =>
-    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Products").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
-  
-  listenToAppSuggestion= (set, userid) =>
-    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Application").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+  listenToProductSuggestion = (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type", "==", "Products").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  listenToAppSuggestion = (set, userid) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type", "==", "Application").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
   listenToStaffSuggestion = (set, userid) =>
-    db.collection(this.containing).doc(userid).collection(this.collection).where("type","==","Staff").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+    db.collection(this.containing).doc(userid).collection(this.collection).where("type", "==", "Staff").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
   removeUserSuggestList = (userid, listid) =>
     db
       .collection(this.containing)
@@ -245,7 +246,7 @@ class Categories extends DB {
       .where(db.FieldPath.documentId(), "in", ids)
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-    listenByName = (set, name) =>
+  listenByName = (set, name) =>
     db
       .collection(this.collection)
       .where("name", "==", name)
@@ -256,6 +257,43 @@ class Request extends DB {
   constructor() {
     super("requests");
   }
+}
+
+class Maintenance extends DB {
+  constructor(containing) {
+    super("maintenance");
+    this.containing = containing;
+  }
+
+  createMaintenance = (sensorId, maintenance) => {
+    const { ...rest } = maintenance;
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .add(rest);
+  }
+
+  updateMaintenance = (sensorId, maintenance, maintenanceId) => {
+    const { ...rest } = maintenance;
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .doc(maintenanceId)
+      .set(rest);
+  }
+
+  reformat(doc) {
+    return {
+      ...super.reformat(doc),
+      dateScheduled: doc.data().dateScheduled.toDate(),
+    };
+  }
+
+  listenToAll = (set) =>
+    db
+      .collectionGroup(this.collection).onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
 class Reports extends DB {
@@ -381,10 +419,11 @@ export default {
   Users: new Users(),
   Simulator: new Simulator(),
 
-  
+
   Request: new Request(),
   Reports: new Reports(),
   Reviews: new Reviews(),
+  Maintenance: new Maintenance(),
 
   //HANAN
   Ads: new Ads(),

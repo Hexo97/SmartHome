@@ -18,7 +18,7 @@ export default function Reports() {
 
   const [report, setReport] = useState([]);
   // useEffect(() => db.Reports.listenAll(setReports), [setReport]);
-  console.log(reports);
+  // console.log(reports);
   const [status, setStatus] = useState("");
 
   const { user } = useContext(UserContext);
@@ -53,105 +53,114 @@ export default function Reports() {
   useEffect(() => db.Users.listenOne(setReportingUser, report.userId), [report]);
 
   const [alert, setAlert] = useState(false)
-// console.log(sensor);
+  // console.log(sensor);
   return (
-    <SafeAreaProvider style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          {
-            alert
-            &&
-            <>
-              <Text style={styles.normalTxt}>User: {reportingUser.name}</Text>
-              <Text style={styles.normalTxt}>Status: {report.status}</Text>
-              <Text style={styles.normalTxt}>Message: {report.message}</Text>
-              <Text style={styles.normalTxt}>Sensor Id: {report.sensorId}</Text>
-              <Text style={styles.normalTxt}>Location: {sensor.location}</Text>
-              <Picker
-                selectedValue={status}
-                style={{ height: 50, width: 200 }}
-                selectedValue={status}
-                onValueChange={setStatus}
-              >
-                <Picker.Item label="Pending" value="Pending" />
-                <Picker.Item label="Resolved" value="Resolved" />
-              </Picker>
-              <Button
-                disabled= {status == "Pending"}
-                onPress={save}
-                title="Save"
-                type="outline"
-              />
-            </>
-          }
+    <>
+      <View style={styles.navBar}>
+        <Text style={styles.headingText}>Reports</Text>
+      </View>
+      <SafeAreaProvider style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
 
-          {user ? user.role === "Support" ? (
-            reports
+          <View style={styles.container}>
+            {
+              alert
+              &&
+              <>
+                <Text style={styles.normalTxt}>User: {reportingUser.name}</Text>
+                <Text style={styles.normalTxt}>Status: {report.status}</Text>
+                <Text style={styles.normalTxt}>Message: {report.message}</Text>
+                <Text style={styles.normalTxt}>Sensor Id: {report.sensorId}</Text>
+                <Text style={styles.normalTxt}>Location: {sensor.location}</Text>
+                <Picker
+                  selectedValue={status}
+                  style={{ height: 50, width: 200 }}
+                  selectedValue={status}
+                  onValueChange={setStatus}
+                >
+                  <Picker.Item label="Pending" value="Pending" />
+                  <Picker.Item label="Resolved" value="Resolved" />
+                </Picker>
+                <Button
+                  disabled={status == "Pending"}
+                  onPress={save}
+                  title="Save"
+                  type="outline"
+                />
+              </>
+            }
+
+            {user
               ?
-              reports.map(r =>
-                <View style={{ backgroundColor: "#007cc7", width: 300 }} key={r.id}>
-                  <Card>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Message: {r.message}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Status: {r.status}
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Date Created: {r.dateCreated.toDateString()}
-                    </Text>
-                    <Card.Divider />
-                    {
-                      r.status === "Pending"
-                      &&
-                      <TouchableOpacity
-                        onPress={() => {
-                          edit(r),
-                            setReport(r),
-                            setAlert(true)
-                        }}
-                        style={styles.title}
-                      >
-                        <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-                          Edit
+              user.role === "Support"
+                ?
+                (
+                  reports.length > 0
+                    ?
+                    reports.map(r =>
+                      <View style={{ backgroundColor: "#007cc7", width: 300 }} key={r.id}>
+                        <Card>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Message: {r.message}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Status: {r.status}
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 15,
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Date Created: {r.dateCreated.toDateString()}
+                          </Text>
+                          <Card.Divider />
+                          {
+                            r.status === "Pending"
+                            &&
+                            <TouchableOpacity
+                              onPress={() => {
+                                edit(r),
+                                  setReport(r),
+                                  setAlert(true)
+                              }}
+                              style={styles.title}
+                            >
+                              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
+                                Edit
                       </Text>
 
-                      </TouchableOpacity>
-                    }
+                            </TouchableOpacity>
+                          }
 
-                  </Card>
-                </View>
-              )
-              :
-              <Text
-                style={{
-                  fontSize: 20,
-                }}
-              >
-                There are no reports
-              </Text>
-          ) :
-            null
-            : null}
+                        </Card>
+                      </View>
+                    )
+                    :
+                    <Text
+                      style={{
+                        fontSize: 20,
+                      }}
+                    >
+                      There are no reports
+                    </Text>
+                ) :
+                null
+              : null}
 
 
 
-          {/* <View style={styles.container}>
+            {/* <View style={styles.container}>
         {faq.map((faq) =>
           faq.answer !== "" ? (
             <FaqScreen
@@ -175,9 +184,10 @@ export default function Reports() {
           : null
         )}
       </View> */}
-        </View>
-      </ScrollView>
-    </SafeAreaProvider>
+          </View>
+        </ScrollView>
+      </SafeAreaProvider>
+    </>
   );
 }
 
@@ -219,5 +229,20 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  navBar: {
+    backgroundColor: "#007CC7",
+    height: 60,
+    paddingRight: 10,
+    width: "100%",
+    marginBottom: 10,
+    flexDirection: "row",
+  },
+  headingText: {
+    top: "0.5%",
+    fontSize: 30,
+    textAlign: "center",
+    marginLeft: "37.5%",
+    fontWeight: "bold",
   },
 });
