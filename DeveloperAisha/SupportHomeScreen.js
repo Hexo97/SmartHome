@@ -183,9 +183,9 @@ export default function SupportHomeScreen({ navigation }) {
         </View>
 
         <Button
-          title="View Reviews"
+          title="View Maintenance Requests"
           type="outline"
-          //   onPress={() => navigation.navigate('Reviews')}
+            onPress={() => navigation.navigate('Maintenance')}
         />
 {/* ------------------------------------------HANAN------------------------------------- */}
         <Button
