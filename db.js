@@ -384,7 +384,6 @@ export default {
   
   Request: new Request(),
   Reports: new Reports(),
-  Reviews: new Reviews(),
 
   //HANAN
   Ads: new Ads(),
