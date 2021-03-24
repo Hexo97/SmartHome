@@ -425,6 +425,7 @@ export default {
   Reviews: new Reviews(),
   Maintenance: new Maintenance(),
 
+
   //HANAN
   Ads: new Ads(),
   Faq: new Faq(),
