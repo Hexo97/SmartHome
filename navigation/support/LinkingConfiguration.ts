@@ -11,7 +11,8 @@ export default {
               Home: 'one',
               SensorRequest:'two',
               Reviews:'three',
-              SuggestionForSupport:'four'
+              SuggestionForSupport:'four',
+              Maintenance:'five',
             },
           },
           TabTwo: {
@@ -27,6 +28,11 @@ export default {
           TabFour: {
             screens: {
               Settings: 'four',
+            },
+          },
+          TabFive: {
+            screens: {
+              Maintenance: 'five',
             },
           },
         },

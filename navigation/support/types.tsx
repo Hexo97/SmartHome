@@ -5,12 +5,14 @@ export type BottomTabParamList = {
   Settings: undefined;
   SensorRequest: undefined
   SuggestionForSupport:undefined
+  Maintenance:undefined
 };
 
 export type TabOneParamList = {
   Home: undefined;
   SensorRequest: undefined;
   SuggestionForSupport:undefined;
+  Maintenance:undefined;
 };
 
 export type TabTwoParamList = {

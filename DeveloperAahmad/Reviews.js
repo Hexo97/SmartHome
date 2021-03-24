@@ -23,7 +23,7 @@ export default function Reviews({ route }) {
                 {reviews.length !== 0 ? (
                     <>
                         {reviews.map((c) => (
-                            <Review key={c.id} review={c}/>
+                            <Review key={c.id} review={c} />
                         ))}
                     </>
                 ) : (
@@ -32,11 +32,9 @@ export default function Reviews({ route }) {
                             fontSize: 15,
                             color: "white",
                             marginTop: "60%",
-                            marginLeft: "28%",
                         }}
                     >
-                        {" "}
-            NO REVIEWS FOR THIS SENSOR YET{" "}
+                        NO REVIEWS FOR THIS SENSOR YET
                     </Text>
                 )}
             </ScrollView>
