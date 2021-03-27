@@ -9,7 +9,7 @@ import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-elements";
 
-export default function Shop({navigation}) {
+export default function Shop({ navigation }) {
 
   const [category, setCategory] = useState([]);
   useEffect(() => db.Categories.listenAll(setCategory), []);
@@ -25,23 +25,25 @@ export default function Shop({navigation}) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}>BUY Smart Home Sensors </Text>
           <View style={styles.container}>
-            <Button
-              title="FREE SERVICES"
-              type="outline"
-              onPress={() => navigation.navigate('Promotion')}
-            />
+
             {
               userSensors.length >= 2
               &&
-              <TouchableOpacity
+              <Button
+                title="FREE SERVICES"
+                type="outline"
                 onPress={() => navigation.navigate('Promotion')}
-                style={styles.TouchPromotion}
-              >
-                <Text style={styles.TextPromotion}>
-                  FREE SERVICES
-              </Text>
-              </TouchableOpacity>
-              
+              />
+              // &&
+              // <TouchableOpacity
+              //   onPress={() => navigation.navigate('Promotion')}
+              //   style={styles.TouchPromotion}
+              // >
+              //   <Text style={styles.TextPromotion}>
+              //     FREE SERVICES
+              // </Text>
+              // </TouchableOpacity>
+
             }
             {category.map((category) => (
               <ShopItem

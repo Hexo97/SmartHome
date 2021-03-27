@@ -17,7 +17,9 @@ import Faq from '../../DeveloperHanan/Faq';
 import SensorRequest from '../../DeveloperHanan/SensorRequest';
 // @ts-expect-error
 import Reports from '../../DeveloperAahmad/Reports';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList } from './types';
+// @ts-expect-error
+import Promotions from '../../DeveloperMahmoud/Promotion';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -31,8 +33,8 @@ export default function BottomTabNavigator() {
         name="Home"
         component={TabOneNavigator}
         options={{
-           // @ts-expect-error
-            tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="home" color="black" size={25} />,
         }}
       />
 
@@ -40,16 +42,16 @@ export default function BottomTabNavigator() {
         name="Reports"
         component={TabTwoNavigator}
         options={{
-           // @ts-expect-error
-           tabBarIcon: ({ color }) => <Icon name="report" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="report" color="black" size={25} />,
         }}
       />
-         <BottomTab.Screen
+      <BottomTab.Screen
         name="Faq"
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="question" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="question" color="black" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -57,7 +59,7 @@ export default function BottomTabNavigator() {
         component={TabFourNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="settings" color="black" size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -88,10 +90,15 @@ function TabOneNavigator() {
         component={SuggestionForSupport}
         options={{ headerTitle: 'SuggestionForSupport' }}
       />
-<TabOneStack.Screen
+      <TabOneStack.Screen
         name="SensorRequest"
         component={SensorRequest}
         options={{ headerTitle: 'Sensor Request' }}
+      />
+      <TabOneStack.Screen
+        name="Promotions"
+        component={Promotions}
+        options={{ headerTitle: 'Promotions' }}
       />
     </TabOneStack.Navigator>
   );

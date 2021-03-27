@@ -46,6 +46,13 @@ export default function AdminSensorsLogs({ ...sentlog }) {
                         {sentlog.logMessage}
                     </Text>
                 }
+                {
+                    sentlog.logMessage.includes("Request")
+                    &&
+                    <Text style={styles.LogsTextLogsMsgRequest}>
+                        {sentlog.logMessage}
+                    </Text>
+                }
             </Text>
         </View>
     )

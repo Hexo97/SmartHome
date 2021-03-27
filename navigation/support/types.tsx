@@ -1,16 +1,18 @@
 export type BottomTabParamList = {
   Home: undefined;
   Reports: undefined;
-  Faq:undefined;
+  Faq: undefined;
   Settings: undefined;
   SensorRequest: undefined
-  SuggestionForSupport:undefined
+  SuggestionForSupport: undefined
+  Promotions: undefined
 };
 
 export type TabOneParamList = {
   Home: undefined;
   SensorRequest: undefined;
-  SuggestionForSupport:undefined;
+  SuggestionForSupport: undefined;
+  Promotions: undefined;
 };
 
 export type TabTwoParamList = {

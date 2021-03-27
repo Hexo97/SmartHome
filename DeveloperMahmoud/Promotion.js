@@ -1,31 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
-import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Service from "../DeveloperMahmoud/Service";
 
 export default function Shop() {
+  const { user } = useContext(UserContext);
 
   const [promotions, setPromotions] = useState([]);
   useEffect(() => db.Promotions.listenAll(setPromotions), []);
-  const { user } = useContext(UserContext);
 
   return (
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>Available Free Services for you: </Text>
+          <Text style={styles.title}>Available Free Services: </Text>
           <View style={styles.container}>
-            {/* {promotions.map((promotion) => (
+            {promotions.map((promotion) => (
               <Service
                 key={promotion.id}
                 promotion={promotion}
-                {...promotion}
               />
-            ))} */}
+            ))}
           </View>
         </ScrollView>
       </SafeAreaProvider>

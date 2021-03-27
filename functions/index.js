@@ -99,9 +99,26 @@ exports.createSampleData = functions.https.onCall(
     });
 
     const promotions = await findAll("promotions");
-    await Promise.all(promotions.map(async (promotion) => await removeOne("promotions", promotion.id))).catch(function (err) {
-      console.log(err.message);
-    });
+    await Promise.all(
+      promotions.map(async (promo) => {
+        const ActivePromotions = await findOneSubAll(
+          "promotions",
+          promo.id,
+          "ActivePromotions"
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+        await Promise.all(
+          ActivePromotions.map(
+            async (ap) =>
+              await removeOneSubOne("promotions", promo.id, "ActivePromotions", ap.id)
+          )
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+        await removeOne("promotions", promo.id);
+      })
+    );
 
     const reports = await findAll("reports");
     await Promise.all(reports.map(async (report) => await removeOne("reports", report.id))).catch(function (err) {
@@ -275,8 +292,8 @@ exports.createSampleData = functions.https.onCall(
     const { id: logId2 } = await db.collection('logs').add({ sensorId: sensorId2, categoryId: categoryId2, date: new Date(), logMessage: ` Sensor Created` })
     functions.logger.info("logId2", { logId2 })
 
-    const { id: promotionId1 } = await db.collection('promotions').add({ categoryId: categoryId2, startdate: new Date(), OfferedServices: ` Free Maintenance` })
-    functions.logger.info("logId2", { logId2 })
+    const { id: promotionId1 } = await db.collection('promotions').add({ name: `Free Maintenance`, description: `Have a free maintenance for one of your sensors for a whole 3 months!`, image: "http://www.pngall.com/wp-content/uploads/5/Construction-Maintenance-PNG-Picture.png" })
+    functions.logger.info("promotionId1", { promotionId1 })
 
 
     // const { id: promotionId2 } = await db.collection('promotions').add({ OfferedServices: ` Free Maintenance` })

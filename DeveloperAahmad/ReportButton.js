@@ -72,165 +72,115 @@ export default function ReportButton({ user, category, sensor }) {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor:"#12232E",flexDirection:"row", alignSelf:"center",}}>
-                <View style={{backgroundColor:"#12232E", alignItems:"center"}} >
-                    <Icon
-                        name="report"
-                        type="material-icons"
-                        size={20}
-                        reverse
-                        containerStyle={{
-                            left: "42.5%"
-                        }}
-                        color="#f50"
+                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", }}>
+                    <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
+                        <Icon
+                            name="report"
+                            type="material-icons"
+                            size={20}
+                            reverse
+                            containerStyle={{
+                                left: "42.5%"
+                            }}
+                            color="#f50"
 
-                        onPress={() => {
-                            setVisible(true)
-                        }}
-                    />
-                    <DialogInput
-                        style={{ width: "80%" }}
-                        isDialogVisible={visible}
-                        title={"Report This Sensor"}
-                        message={
+                            onPress={() => {
+                                setVisible(true)
+                            }}
+                        />
+                        <DialogInput
+                            style={{ width: "80%" }}
+                            isDialogVisible={visible}
+                            title={"Report This Sensor"}
+                            message={
                                 alert
                                 &&
                                 <Text style={styles.alert}>Please enter a message</Text>
-}
-                        value={message}
-                        submitInput={(inputText) => {
-                            // setMessage(inputText) , 
-                            createRequest({ sensor }, inputText)
-                        }
-                        }
-                        closeDialog={() => {
-                            setVisible(false),
-                                setMessage(""),
-                                setAlert(false)
-                        }
-                        }
-                        onTouchOutside={() => {
-                            setVisible(false);
-                        }}
-                    >
-                    {
-                            alert
-                            &&
-                            <Text style={styles.alert}>Please enter a message</Text>
-                        }
-                    </DialogInput>
-                </View>
+                            }
+                            value={message}
+                            submitInput={(inputText) => {
+                                // setMessage(inputText) , 
+                                createRequest({ sensor }, inputText)
+                            }
+                            }
+                            closeDialog={() => {
+                                setVisible(false),
+                                    setMessage(""),
+                                    setAlert(false)
+                            }
+                            }
+                            onTouchOutside={() => {
+                                setVisible(false);
+                            }}
+                        >
+                            {
+                                alert
+                                &&
+                                <Text style={styles.alert}>Please enter a message</Text>
+                            }
+                        </DialogInput>
+                    </View>
 
 
-                <View style={{backgroundColor:"#12232E" , marginHorizontal:20}}>
-                    <Icon
-                        name="star"
-                        type="ant-design"
-                        size={20}
-                        reverse
-                        containerStyle={{
-                            left: "42.5%"
-                        }}
-                        color="#f50"
+                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                        <Icon
+                            name="star"
+                            type="ant-design"
+                            size={20}
+                            reverse
+                            containerStyle={{
+                                left: "42.5%"
+                            }}
+                            color="#f50"
 
-                        onPress={() => {
-                            setReviewVisible(true)
-                        }}
-                    />
-                    {/* <Dialog
-                        style={{ width: "80%" }}
-                        visible={reviewVisible}
-                        footer={
-                            <DialogFooter>
-                                <DialogButton
-                                    text="CANCEL"
-                                    onPress={() => {
-                                        setReviewVisible(false),
-                                            setReviewMessage(""),
-                                            setReviewAlert(false)
-                                    }
-                                    }
+                            onPress={() => {
+                                setReviewVisible(true)
+                            }}
+                        />
+                       
+
+                        <DialogInput
+                            style={{ width: "80%" }}
+                            isDialogVisible={reviewVisible}
+                            title={"Report This Sensor"}
+                            message={
+                                <AirbnbRating
+                                    count={5}
+                                    reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
+                                    defaultRating={1}
+                                    size={20}
+                                    onPress={setRating}
+                                    onFinishRating={rating => setRating(rating)}
                                 />
-                                <DialogButton
-                                    text="OK"
-                                    onPress={() => {
-                                        createReview(category, reviewMessage)
-                                    }
-                                    }
-                                />
-                            </DialogFooter>
-                        }
-                        onTouchOutside={() => {
-                            setReviewVisible(false);
-                        }}
-                    >
-                        <DialogContent>
-                            <TextInput
-                                style={{ fontSize: 15, alignItems: "center" }}
-                                style={styles.TextInput}
-                                placeholder="Leave your review here ..."
-                                value={reviewMessage}
-                                onChangeText={(value) => setReviewMessage(value)}
-                            />
-                            <AirbnbRating
-                                count={5}
-                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                                defaultRating={1}
-                                size={20}
-                                onPress={setRating}
-                                onFinishRating={rating => setRating(rating)}
-                            />
+                            }
+                            submitInput={(inputText) => {
+                                // setReviewMessage(inputText),
+                                createReview(category, inputText)
+
+                            }
+
+                            }
+
+                            closeDialog={() => {
+                                setReviewVisible(false),
+                                    setReviewMessage(""),
+                                    setReviewAlert(false)
+                            }
+                            }
+                            onTouchOutside={() => {
+                                setReviewVisible(false);
+                            }}
+                        >
+
                             {
                                 reviewAlert
                                 &&
                                 <Text style={styles.alert}>Please enter a review</Text>
                             }
-                        </DialogContent>
-                    </Dialog> */}
 
-
-                    <DialogInput
-                        style={{ width: "80%" }}
-                        isDialogVisible={reviewVisible}
-                        title={"Report This Sensor"}
-                        message={
-                            <AirbnbRating
-                            count={5}
-                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                            defaultRating={1}
-                            size={20}
-                            onPress={setRating}
-                            onFinishRating={rating => setRating(rating)}
-                        />
-                        }
-                        submitInput={(inputText) => {
-                            // setReviewMessage(inputText),
-                                createReview(category, inputText)
-
-                        }
-
-                        }
-
-                        closeDialog={() => {
-                            setReviewVisible(false),
-                                setReviewMessage(""),
-                                setReviewAlert(false)
-                        }
-                        }
-                        onTouchOutside={() => {
-                            setReviewVisible(false);
-                        }}
-                    >
-
-                        {
-                            reviewAlert
-                            &&
-                            <Text style={styles.alert}>Please enter a review</Text>
-                        }
-
-                    </DialogInput>
+                        </DialogInput>
                     </View>
-                   
+
                 </View>
             </ScrollView>
         </SafeAreaProvider >

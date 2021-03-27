@@ -5,194 +5,241 @@ import {
   Text,
   Image,
   ScrollView,
+  TextInput
 } from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Colors from "../constants/Colors";
+import CategoryByUserPicker from "../screens/pickers/CategoryByUserPicker";
+import SensorByUserAndCategoryPicker from "../screens/pickers/SensorByUserAndCategoryPicker";
+import Dialog from "react-native-dialog";
+import styles from './SmartStyle'
 import UserContext from "../UserContext";
-import db from "../db";
+import db from '../db'
 
 export default function Service({ promotion }) {
   const { user } = useContext(UserContext);
 
-  const [service, setService] = useState([]);
+  const [category, setCategory] = useState(null)
+  const [sensor, setSensor] = useState(null)
+  const [warning, setWarning] = useState("")
+  const [currPromotion, setCurrPromotion] = useState(promotion)
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [suppdialogVisible, setSuppDialogVisible] = useState(false)
+  const [addsuppdialogVisible, setSuppAddDialogVisible] = useState(false)
+  const [deleteSuppDialogVisible, setDeleteSuppDialogVisible] = useState(false)
 
-  const create = async (cprice, catId) => {
-    db.Promotions.create({
-      id: id,
-      cdate: new Date(),
-      price: cprice,
-      userid: user.id,
-      categories: catId,
-    });
-    setId("");
-    setPrice("");
-    setUser("");
-    setDate("");
-    setCategory("");
-    alert("Payment successfully done, Sensor will be avaibale in some time");
+  const Redeem = async () => {
+    if (category && sensor) {
+      await db.Promotions.ActivePromotions.createAP(promotion.id,
+        {
+          sensorId: sensor.id,
+          categoryId: category.id,
+          RedeemedDate: new Date(),
+          Status: `on hold`
+        })
+      await db.Logs.create(
+        {
+          sensorId: sensor.id,
+          categoryId: sensor.categoryid,
+          date: new Date(),
+          logMessage: ` Service Requested`
+        })
+      cancel()
+    } else {
+      setWarning("You need to select required fields!")
+    }
   };
+  const EditPromo = async () => {
+    await db.Promotions.update({ id: promotion.id, name: currPromotion.name, description: currPromotion.description, image: currPromotion.image })
+    cancel()
+  };
+  const AddPromo = async () => {
+    if (currPromotion.name != null && currPromotion.description != null) {
+      await db.Promotions.create({ name: currPromotion.name, description: currPromotion.description, image: currPromotion.image ? currPromotion.image : 'http://www.pngall.com/wp-content/uploads/2016/07/Special-offer-Free-PNG-Image.png' })
+      cancel()
+    } else {
+      setWarning("You need to name/desc fields!")
+    }
 
+  };
+  const DeletePromo = async () => {
+    console.log(currPromotion.id);
+    await db.Promotions.remove(currPromotion.id)
+    cancel()
+  };
+  const cancel = async () => {
+    setDialogVisible(false)
+    setSuppDialogVisible(false)
+    setSuppAddDialogVisible(false)
+    setDeleteSuppDialogVisible(false)
+    setWarning("")
+  }
 
   return (
-    <SafeAreaProvider style={styles.container}>
+    <SafeAreaProvider style={styles.redeemContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
-          <Card>
-            <Card.Title
-              style={{
-                backgroundColor: "#4DA8DA",
-                color: "black",
-                fontWeight: "bold",
-              }}
-            >
-              {category.name}
-            </Card.Title>
-            <Image
-              style={styles.tinyLogo}
-              source={{
-                uri: category.image,
-              }}
-            />
-            <Text
-              style={{
-                fontSize: 15,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
-              }}
-            >
-              {category.description}
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
-              }}
-            >
-              QR: {category.price}
-            </Text>
-
+        <View style={styles.redeemContainer}>
+          {
+            (user.role == "Support" || user.role == "Support")
+            &&
             <TouchableOpacity
-              onPress={() => create(category.price, category.id)}
-              style={styles.title}
+              onPress={() => {
+                setSuppAddDialogVisible(true)
+                setCurrPromotion([])
+
+              }}
             >
-              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-                Buy
+              <Text style={styles.AddPromoButton}>
+                Add Promotion
               </Text>
             </TouchableOpacity>
+          }
+          <Card>
+            <Card.Title
+              style={styles.redeemTitle}
+            >
+              {promotion.name}
+            </Card.Title>
+            <Image
+              style={styles.redeemImage}
+              source={{ uri: promotion.image }}
+            />
+            <Text
+              style={styles.redeemDesc}
+            >
+              Description:
+            </Text>
+            <Text
+              style={styles.redeemServDesc}
+            >
+              {promotion.description}
+            </Text>
+            {
+              (user.role == "Support" || user.role == "Support")
+              &&
+              <TouchableOpacity
+                onPress={() => {
+                  setSuppDialogVisible(true)
+                }}
+              >
+                <Text style={styles.RedeemButton}>
+                  Edit
+              </Text>
+              </TouchableOpacity>
+            }
+            {
+              (user.role == "Support" || user.role == "Support")
+              &&
+              <TouchableOpacity
+                onPress={() => {
+                  setDeleteSuppDialogVisible(true)
+                }}
+              >
+                <Text style={styles.RedeemButton}>
+                  Delete
+              </Text>
+              </TouchableOpacity>
+            }
+            {
+              user.role == "Customer"
+              &&
+              <TouchableOpacity
+                onPress={() => {
+                  setDialogVisible(true)
+                }}
+                style={styles.title}
+              >
+                <Text style={styles.RedeemButton}>
+                  Redeem
+              </Text>
+              </TouchableOpacity>
+            }
 
           </Card>
+
+          <Dialog.Container visible={dialogVisible}>
+            <Dialog.Title>Redeem to:</Dialog.Title>
+            <View style={styles.redeemDialogContent}>
+              <Text style={styles.redeemWarning}>
+                {warning ? warning : ''}
+              </Text>
+              <CategoryByUserPicker set={setCategory} />
+              {category
+                &&
+                <SensorByUserAndCategoryPicker category={category} set={setSensor} />
+              }
+            </View>
+            <Dialog.Button label="Cancel" onPress={cancel} />
+            <Dialog.Button label="Redeem" onPress={Redeem} />
+          </Dialog.Container>
+
+
+          <Dialog.Container visible={suppdialogVisible}>
+            {/* <SuppDialog currPromotion={currPromotion} /> */}
+            <Dialog.Title>Edit Service:</Dialog.Title>
+            <View>
+              <Text>Name:</Text>
+              <TextInput
+                placeholder={currPromotion ? currPromotion.name : 'Enter Name'}
+                defaultValue={currPromotion ? currPromotion.name : 'Enter Name'}
+                onChangeText={(value) => currPromotion.name = value}
+              />
+
+              <Text>Description:</Text>
+              <TextInput
+                placeholder={currPromotion ? currPromotion.description : 'Enter Description'}
+                defaultValue={currPromotion ? currPromotion.description : 'Enter Description'}
+                onChangeText={(value) => currPromotion.description = value}
+                multiline={true}
+              />
+
+              <Text>Image:</Text>
+              <TextInput
+                placeholder={currPromotion ? currPromotion.image : 'Insert Image URL'}
+                defaultValue={currPromotion ? currPromotion.image : 'Insert Image URL'}
+                onChangeText={(value) => currPromotion.image = value}
+                multiline={true}
+              />
+            </View>
+
+            <Dialog.Button label="Cancel" onPress={cancel} />
+            <Dialog.Button label="Update" onPress={EditPromo} />
+          </Dialog.Container>
+
+
+
+
+          <Dialog.Container visible={addsuppdialogVisible}>
+            <Dialog.Title>Add Promotion:</Dialog.Title>
+            <View>
+              <Text style={styles.redeemWarning}>
+                {warning ? warning : ''}
+              </Text>
+              <Text>Name:</Text>
+              <TextInput placeholder={'Enter Name'} onChangeText={(value) => currPromotion.name = value} />
+              <Text>Description:</Text>
+              <TextInput placeholder={'Enter Description'} onChangeText={(value) => currPromotion.description = value} multiline={true} />
+              <Text>Image:</Text>
+              <TextInput placeholder={'Insert Image URL/ Leave Empty For Default'} onChangeText={(value) => currPromotion.image = value} multiline={true} />
+            </View>
+            <Dialog.Button label="Cancel" onPress={cancel} />
+            <Dialog.Button label="Add" onPress={AddPromo} />
+          </Dialog.Container>
+
+
+          <Dialog.Container visible={deleteSuppDialogVisible}>
+            <Dialog.Title>Delete Promotion:</Dialog.Title>
+            <View>
+              <Text>Name:</Text>
+              <Text>{currPromotion.name}</Text>
+            </View>
+            <Dialog.Button label="Cancel" onPress={cancel} />
+            <Dialog.Button label="Delete" onPress={DeletePromo} />
+          </Dialog.Container>
+
         </View>
       </ScrollView>
-    </SafeAreaProvider>
+    </SafeAreaProvider >
   );
 }
-
-const styles = StyleSheet.create({
-  tinyLogo: {
-    width: 150,
-    height: 150,
-    marginLeft: 100,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#203647",
-  },
-  cardBg: {
-    backgroundColor: "rgba(96,100,109, 0.8)",
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center",
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)",
-  },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: "center",
-  },
-  helpContainer: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: "center",
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    textAlign: "center",
-    // display: "flex",
-    height: 30,
-    width: 100,
-    borderRadius: 4,
-    // justifyContent: "center",
-    // alignItems: "center",
-    backgroundColor: "#4DA8DA",
-    shadowColor: "white",
-    shadowOpacity: 0.4,
-    padding: 5,
-    margin: 2,
-    marginLeft: 120,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  title1: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#4DA8DA",
-  },
-  title3: {
-    height: 20,
-    width: 20,
-  },
-  cardtext: {
-    fontSize: 20,
-    textAlign: "left",
-  },
-  cardbg: {
-    backgroundColor: "lightblue",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
