@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet,ImageBackground, Image,TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ImageBackground, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from '../db'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StatusBar } from "react-native";
 import { Tile } from 'react-native-elements';
 
 
 export default function Popular({ navigation }) {
 
-  const[popular, setPopular] = useState([])
-  useEffect(() => db.PopularSensor.listenToLatestThree(setPopular),[])
+  const [popular, setPopular] = useState([])
+  useEffect(() => db.PopularSensor.listenToLatestThree(setPopular), [])
 
   let onePop = ""
   let twoPop = ""
@@ -20,78 +18,78 @@ export default function Popular({ navigation }) {
     twoPop = popular[1]
     threePop = popular[2]
   }
-  const[firstSensor , setFirstSensor] = useState(null)
-  useEffect(() => onePop ? db.Sensors.listenOne(setFirstSensor, onePop.sensorid):undefined,[onePop])
+  const [firstSensor, setFirstSensor] = useState(null)
+  useEffect(() => onePop ? db.Sensors.listenOne(setFirstSensor, onePop.sensorid) : undefined, [onePop])
 
-  const[firstCategory , setFirstCategory] = useState(null)
-  useEffect(() => firstSensor ? db.Categories.listenOne(setFirstCategory, firstSensor.categoryid):undefined,[firstSensor])
+  const [firstCategory, setFirstCategory] = useState(null)
+  useEffect(() => firstSensor ? db.Categories.listenOne(setFirstCategory, firstSensor.categoryid) : undefined, [firstSensor])
 
-  const[secondSensor , setSecondSensor] = useState(null)
-  useEffect(() => twoPop ? db.Sensors.listenOne(setSecondSensor, twoPop.sensorid):undefined,[twoPop])
+  const [secondSensor, setSecondSensor] = useState(null)
+  useEffect(() => twoPop ? db.Sensors.listenOne(setSecondSensor, twoPop.sensorid) : undefined, [twoPop])
 
-  const[secondCategory , setSecondCategory] = useState(null)
-  useEffect(() => secondSensor ? db.Categories.listenOne(setSecondCategory, secondSensor.categoryid):undefined,[secondSensor])
+  const [secondCategory, setSecondCategory] = useState(null)
+  useEffect(() => secondSensor ? db.Categories.listenOne(setSecondCategory, secondSensor.categoryid) : undefined, [secondSensor])
 
-  const[thirdSensor , setThirdSensor] = useState(null)
-  useEffect(() => threePop ? db.Sensors.listenOne(setThirdSensor, threePop.sensorid):undefined,[threePop])
+  const [thirdSensor, setThirdSensor] = useState(null)
+  useEffect(() => threePop ? db.Sensors.listenOne(setThirdSensor, threePop.sensorid) : undefined, [threePop])
 
-  const[thirdCategory , setThirdCategory] = useState(null)
-  useEffect(() => thirdSensor ? db.Categories.listenOne(setThirdCategory, thirdSensor.categoryid):undefined,[thirdSensor])
+  const [thirdCategory, setThirdCategory] = useState(null)
+  useEffect(() => thirdSensor ? db.Categories.listenOne(setThirdCategory, thirdSensor.categoryid) : undefined, [thirdSensor])
 
   const image = { uri: "https://media.istockphoto.com/vectors/abstract-white-background-geometric-texture-vector-id1069183510?k=6&m=1069183510&s=612x612&w=0&h=IsR2U2IjDpCVAyY6oeeANwvIP1SHpBalMZPB_QNGnbw=" };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-    <View style={styles.imagebg}>
-    <View style={styles.navBar}>
-        <TouchableOpacity
-          style={{ width: 50, height: 50}}
-          onPress={() => navigation.openDrawer()}
-        >
-        <Image
-            source={require("../assets/images/menu.png")}
-            style={{ width: 60, height: 60 }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headingText}>Customer Favourite Products</Text>
+      <View style={styles.imagebg}>
+        <View style={styles.navBar}>
+          <TouchableOpacity
+            style={{ width: 50, height: 50 }}
+            onPress={() => navigation.openDrawer()}
+          >
+            <Image
+              source={require("../assets/images/menu.png")}
+              style={{ width: 60, height: 60 }}
+            />
+          </TouchableOpacity>
+          <Text style={styles.headingText}>Customer Favourite Products</Text>
+        </View>
+        <ImageBackground source={image} style={styles.image}>
+          {/* <View style={{alignSelf:"center", margin:50}}> */}
+          <Tile
+            imageSrc={require('../assets/images/customer.gif')}
+            featured
+            onPress={() => console.log("HELLO")} />
+          {/* </View> */}
+
+          {
+            firstCategory
+            &&
+            <Tile
+              imageSrc={require('../assets/images/box.png')}
+              title={firstCategory.name + "\n" + "QR" + firstCategory.price}
+              featured
+            />
+          }
+          {
+            thirdCategory
+            &&
+            <Tile
+              imageSrc={require('../assets/images/boxFlip.png')}
+              title={thirdCategory.name + "\n" + "QR" + thirdCategory.price}
+              featured
+            />
+          }
+          {
+            secondCategory
+            &&
+            <Tile
+              imageSrc={require('../assets/images/box.png')}
+              title={secondCategory.name + "\n" + "QR" + secondCategory.price}
+              featured
+              onPress={() => console.log("HELLO")} />
+          }
+
+        </ImageBackground>
       </View>
-      <ImageBackground source={image} style={styles.image}>
-      {/* <View style={{alignSelf:"center", margin:50}}> */}
-      <Tile
-          imageSrc={require('../assets/images/customer.gif')}
-          featured
-          onPress ={() => console.log("HELLO")}        />
-      {/* </View> */}
-  
-      {
-        firstCategory
-        &&
-        <Tile
-          imageSrc={require('../assets/images/box.png')}
-          title={firstCategory.name + "\n" + "QR" + firstCategory.price}
-          featured
-        />
-      }
-      {
-        thirdCategory
-        &&
-        <Tile
-          imageSrc={require('../assets/images/boxFlip.png')}
-          title={thirdCategory.name + "\n" + "QR" + thirdCategory.price}
-          featured
-        />
-      }
-      {
-        secondCategory
-        &&
-        <Tile
-          imageSrc={require('../assets/images/box.png')}
-          title={secondCategory.name + "\n" + "QR" + secondCategory.price}
-          featured
-          onPress ={() => console.log("HELLO")}        />
-      }
-          
-    </ImageBackground>
-    </View>
     </ScrollView>
 
   );
@@ -154,7 +152,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
-    
+
   },
 
   loginBtn: {
@@ -191,8 +189,8 @@ const styles = StyleSheet.create({
     top: "1%",
     fontSize: 20,
     textAlign: "center",
-    marginLeft:20,
-    marginTop:15,
+    marginLeft: 20,
+    marginTop: 15,
     fontWeight: "bold",
   },
   slide1: {
@@ -218,12 +216,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold'
   },
-  wrapper:{
+  wrapper: {
 
   },
-  backgroundImage:{
-    width:320,
-    height:480,
+  backgroundImage: {
+    width: 320,
+    height: 480,
   },
   image: {
     flex: 1,

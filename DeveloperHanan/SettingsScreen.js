@@ -9,7 +9,7 @@ import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import fb from "../fb";
 import db from "../db";
-import { Input, Button, Card } from "react-native-elements";
+import { Card } from "react-native-elements";
 
 export default function SettingsScreen() {
   const { user } = useContext(UserContext);
@@ -27,6 +27,7 @@ export default function SettingsScreen() {
     setId(user.id);
     setName(user.name);
     setAge(user.age);
+    setPhone(user.phone)
   };
 
   const saveName = async () => {
@@ -35,11 +36,13 @@ export default function SettingsScreen() {
       name: name,
       role: user.role,
       age: age,
+      phone: phone,
     });
     setName("");
     setId("");
     setRole("");
     setAge("");
+    setPhone("");
   };
 
   const updatePassword = async () => {
@@ -57,12 +60,11 @@ export default function SettingsScreen() {
   };
 
   const logout = async () => {
-    if(user.name)
-    {
-      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date() , email:user.name})
+    if (user.name) {
+      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date(), email: user.name })
     }
-    else{
-      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date() , email:user.id})
+    else {
+      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date(), email: user.id })
     }
     await fb.auth().signOut();
   };
@@ -70,7 +72,7 @@ export default function SettingsScreen() {
   console.log(user);
 
   return (
-    
+
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
@@ -121,14 +123,14 @@ export default function SettingsScreen() {
           onChangeText={(value) => setPassword(value)}
         />
       </View>
-      
+
 
       <TouchableOpacity onPress={updatePassword} style={styles.loginBtn}>
         <Text style={styles.loginText}>Reset Password</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={logout} style={styles.loginBtn}>
-          <Text style={styles.loginText}>Logout</Text>
-        </TouchableOpacity>
+        <Text style={styles.loginText}>Logout</Text>
+      </TouchableOpacity>
       <View style={{ backgroundColor: "#fff", width: 300, height: 150 }}>
         <Card style={{}}>
           <Card.Title>Current-Details</Card.Title>
@@ -139,7 +141,7 @@ export default function SettingsScreen() {
           <Text style={styles.title1}> Password:- ********</Text>
           <Text style={styles.title1}>Age:- {user.age}</Text>
         </Card>
-        
+
         {/* <Button onPress={logout} title="Logout" type="outline" /> */}
       </View>
     </View>
@@ -147,9 +149,9 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  title:{
-    fontSize:40,
-    fontWeight:"bold"
+  title: {
+    fontSize: 40,
+    fontWeight: "bold"
   },
   navBar: {
     backgroundColor: "#4DA8DA",

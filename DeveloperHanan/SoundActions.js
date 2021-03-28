@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Button, Card, Icon, Slider } from "react-native-elements";
+import { Card, Icon, Slider } from "react-native-elements";
 
 export default function SoundActions({ sensor }) {
   const { user } = useContext(UserContext);
@@ -227,7 +227,7 @@ export default function SoundActions({ sensor }) {
             size={20}
             onPress={uploadReading}
           />
-           <Icon
+          <Icon
             raised
             name="exclamation-triangle"
             type="font-awesome"
@@ -289,8 +289,8 @@ export default function SoundActions({ sensor }) {
             backgroundColor: "#12232E",
             width: "60%",
             flexDirection: "row",
-            marginLeft:"35%",
-            marginTop:"2%"
+            marginLeft: "35%",
+            marginTop: "2%"
           }}
         >
           <Icon
@@ -311,9 +311,9 @@ export default function SoundActions({ sensor }) {
           />
         </View>
 
-        <View style={{ margin: 10, width:"45%", marginLeft:"27%" }}>
+        <View style={{ margin: 10, width: "45%", marginLeft: "27%" }}>
           <Card>
-            <Text style={{ color: "black", fontSize: 20, marginLeft:"15%" }}>Delay {delay}</Text>
+            <Text style={{ color: "black", fontSize: 20, marginLeft: "15%" }}>Delay {delay}</Text>
           </Card>
         </View>
       </ScrollView>

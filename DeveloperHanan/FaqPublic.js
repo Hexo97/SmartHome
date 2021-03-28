@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TextInput, TouchableOpacity ,Image} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity, Image } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Input } from "react-native-elements";
 import FaqScreen from "./FaqScreen";
-import { Button } from "react-native-elements";
 import { Card } from "react-native-elements";
 
 export default function FaqPublic({ navigation }) {
@@ -75,14 +73,14 @@ export default function FaqPublic({ navigation }) {
   return (
     <View style={styles.container}>
 
-      
+
 
       <View style={styles.navBar}>
         <TouchableOpacity
           style={{ width: 50, height: 50 }}
           onPress={() => navigation.openDrawer()}
         >
-          
+
           <Image
             source={require("../assets/images/icon2.png")}
             style={{ width: 60, height: 60 }}

@@ -1,30 +1,63 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import React, { useState, useEffect, useContext, } from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
 import ShopItem from "./ShopItem";
-import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Button } from "react-native-elements";
+import { useFocusEffect } from "@react-navigation/native";
 
-export default function Shop({navigation}) {
+export default function Shop({ navigation }) {
 
   const [category, setCategory] = useState([]);
   useEffect(() => db.Categories.listenAll(setCategory), []);
+
   const { user } = useContext(UserContext);
+  const [userSensors, setUserSensors] = useState([])
+
+  useEffect(() => db.Sensors.listenByUser(setUserSensors, user.id), [user])
+
+  const [promotion, setPromotion] = useState([]);
+  const [ActivePromotion, setService] = useState([]);
+  useEffect(() => {
+    db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+  }, [navigation]);
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // do this when focused
+      db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+      return () => {
+        // Do something when the screen is unfocused
+      };
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>BUY Smart Home Sensors </Text>
+          <Text style={styles.title}>BUY Smart Home Sensors </Text>
           <View style={styles.container}>
+
+            {
+              userSensors.length >= 2
+              &&
+              <Button
+                title="FREE SERVICES"
+                type="outline"
+                onPress={() => navigation.navigate('Promotion')}
+              />
+            }
             {category.map((category) => (
               <ShopItem
                 key={category.id}
                 category={category}
                 navigation={navigation}
                 {...category}
+                discount={promotion.name == ("Discount")}
               />
             ))}
           </View>
@@ -35,6 +68,29 @@ export default function Shop({navigation}) {
 }
 
 const styles = StyleSheet.create({
+  TextPromotion: {
+    fontSize: 17,
+    color: 'yellow'
+  },
+  TouchPromotion: {
+    padding: 5,
+    height: 35,
+    overflow: 'hidden',
+    borderRadius: 55,
+    backgroundColor: '#3B58F5'
+  },
+  customViewStyle: {
+    width: 120,
+    height: 40,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  buttonStyle8: {
+    backgroundColor: 'white',
+    borderColor: '#333',
+    borderWidth: 2,
+    borderRadius: 22,
+  },
   container: {
     flex: 1,
     alignItems: "center",
@@ -51,8 +107,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "bold",
-    marginLeft:60,
-    color:"white"
+    marginLeft: 60,
+    color: "white"
   },
   helpLink: {
     paddingVertical: 15,

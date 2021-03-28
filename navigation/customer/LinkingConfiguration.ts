@@ -13,19 +13,20 @@ export default {
               Reviews:'three',
               Search:'four',
               List:'five',
-              AllUserSensors:'six',
-              PaymentHistory:'seven',
-              AllUserTrashCans:'eight'
+              PaymentHistory:'six',
+              AllUserTrashCans:'seven'
             },
           },
           TabTwo: {
             screens: {
-              Sensors: 'two',
+              Sensors: 'one',
+              Precautions:'two'
             },
           },
           TabThree: {
             screens: {
               Shop: 'two',
+              Promotion: 'three',
             },
           },
           TabFour: {

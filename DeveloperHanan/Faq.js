@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TextInput, TouchableOpacity ,Image} from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Input } from "react-native-elements";
 import FaqScreen from "./FaqScreen";
-import { Button } from "react-native-elements";
 import { Card } from "react-native-elements";
 
 export default function Faq({ navigation }) {
@@ -75,7 +73,7 @@ export default function Faq({ navigation }) {
   return (
     <View style={styles.container}>
 
-      
+
 
       <View style={styles.navBar}>
         {/* <TouchableOpacity

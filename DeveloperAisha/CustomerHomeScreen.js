@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, Image, ScrollView } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { View } from '../components/Themed';
-import { Button, Avatar, Badge } from 'react-native-elements'
+import { Button, Badge } from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import UserContext from '../UserContext'
 import db from '../db'
 import fb from '../fb'
-import { IconButton, Colors } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-// import { Audio } from 'expo-av';
 
 export default function CustomerHomeScreen({ navigation }) {
   const { user } = useContext(UserContext)

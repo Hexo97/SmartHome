@@ -4,9 +4,10 @@ export type BottomTabParamList = {
   Search: undefined;
   Settings: undefined;
   Faq:undefined;
-  Shop:undefined;
+  Shop: undefined;
+  Promotion: undefined;
   List:undefined;
-  AllUserSensors:undefined;
+  Precautions:undefined;
   PaymentHistory: undefined;
   Reviews: undefined;
   AllUserTrashCans:undefined;
@@ -17,7 +18,7 @@ export type TabOneParamList ={
   Reviews: undefined;
   Search: undefined;
   List:undefined;
-  AllUserSensors:undefined;
+  Precautions:undefined;
   PaymentHistory: undefined;
   AllUserTrashCans:undefined;
 }
@@ -28,6 +29,7 @@ export type TabTwoParamList = {
 
 export type TabThreeParamList = {
   Shop: undefined;
+  Promotion: undefined;
 };
 
 export type TabFourParamList = {

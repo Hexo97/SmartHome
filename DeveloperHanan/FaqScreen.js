@@ -16,11 +16,11 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
   return (
     <Collapse>
       <CollapseHeader>
-      
+
         <View>
           <Text> + {faq.question} </Text>
-          <Card.Divider/>
-          
+          <Card.Divider />
+
         </View>
       </CollapseHeader>
       <CollapseBody>
@@ -42,8 +42,8 @@ export default function FaqScreen({ faq, userid, edit, remove }) {
             </TouchableOpacity>
           </>
         )
-        : null
-         : null}
+          : null
+          : null}
       </CollapseBody>
     </Collapse>
   );
@@ -122,16 +122,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
     padding: 5,
     margin: 2,
-    color:"white",
+    color: "white",
     fontWeight: "bold",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-   
+
     textAlign: "center",
-    marginLeft:"30%",
-    
+    marginLeft: "30%",
+
   },
   title1: {
     fontSize: 14,

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
-  TouchableOpacity,
   Text,
   Image,
   ScrollView,
@@ -9,13 +8,11 @@ import {
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
 import fb from "../fb";
 import { Button, Icon } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
-// import { Button } from "native-base";
 
 export default function CategoryAction({ category, edit, remove }) {
   const { user } = useContext(UserContext);
@@ -77,8 +74,8 @@ export default function CategoryAction({ category, edit, remove }) {
                 fontSize: 15,
                 fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
-                paddingLeft:"5%",
-                paddingTop:"2%"
+                paddingLeft: "5%",
+                paddingTop: "2%"
               }}
             >
               {category.description}
@@ -88,7 +85,7 @@ export default function CategoryAction({ category, edit, remove }) {
                 fontSize: 15,
                 fontWeight: "bold",
                 backgroundColor: "#4DA8DA",
-                paddingLeft:"36%"
+                paddingLeft: "36%"
               }}
             >
               QR: {category.price}
@@ -98,10 +95,10 @@ export default function CategoryAction({ category, edit, remove }) {
               style={{
                 backgroundColor: "#4DA8DA",
                 marginLeft: "8%",
-                marginRight:"10%",
+                marginRight: "10%",
                 marginTop: "5%",
                 flexDirection: "row",
-                marginTop:"0%",
+                marginTop: "0%",
               }}
             >
               <Icon

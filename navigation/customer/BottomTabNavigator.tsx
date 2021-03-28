@@ -12,7 +12,7 @@ import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
 import SuggestionList from '../../DeveloperAisha/SuggestionList';
 // @ts-expect-error
-import AllUserSensors from '../../DeveloperAisha/AllUserSensors';
+import Precautions from '../../DeveloperAisha/Precautions';
 // @ts-expect-error
 import AllUserTrashCans from '../../DeveloperAisha/AllUserTrashCans';
 // @ts-expect-error
@@ -24,12 +24,14 @@ import Faq from '../../DeveloperHanan/Faq';
 // @ts-expect-error
 import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
+import Promotion from '../../DeveloperMahmoud/Promotion';
+// @ts-expect-error
 import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
 // @ts-expect-error
 import Reviews from '../../DeveloperAahmad/Reviews';
 // @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList} from './types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -45,23 +47,23 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
-            <BottomTab.Screen
+      <BottomTab.Screen
         name="Sensors"
         component={TabTwoNavigator}
         options={{
-           // @ts-expect-error
-           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="monitor" color="white" size={25} />,
         }}
       />
-        <BottomTab.Screen
+      <BottomTab.Screen
         name="Shop"
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="shopping-cart" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="shopping-cart" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -69,7 +71,7 @@ export default function BottomTabNavigator() {
         component={TabFourNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -113,26 +115,22 @@ function TabOneNavigator() {
         component={SuggestionList}
         options={{ headerTitle: 'List' }}
       />
+
       <TabOneStack.Screen
-        name="AllUserSensors"
-        component={AllUserSensors}
-        options={{ headerTitle: 'AllUserSensors' }}
-        />
-       <TabOneStack.Screen
         name="PaymentHistory"
         component={PaymentHistory}
         options={{ headerTitle: 'Payment History' }}
       />
-       <TabOneStack.Screen
+      <TabOneStack.Screen
         name="Reviews"
         component={Reviews}
         options={{ headerTitle: 'Reviews' }}
       />
-       <TabOneStack.Screen
+      <TabOneStack.Screen
         name="AllUserTrashCans"
         component={AllUserTrashCans}
         options={{ headerTitle: 'AllUserTrashCans' }}
-        />
+      />
     </TabOneStack.Navigator>
   );
 }
@@ -147,6 +145,11 @@ function TabTwoNavigator() {
         component={SensorsScreen}
         options={{ headerTitle: 'Sensors' }}
       />
+      <TabOneStack.Screen
+        name="Precautions"
+        component={Precautions}
+        options={{ headerTitle: 'Precautions' }}
+      />
     </TabTwoStack.Navigator>
   );
 }
@@ -160,6 +163,11 @@ function TabThreeNavigator() {
         name="Shop"
         component={Shop}
         options={{ headerTitle: 'Shop' }}
+      />
+      <TabThreeStack.Screen
+        name="Promotion"
+        component={Promotion}
+        options={{ headerTitle: 'Promotion' }}
       />
     </TabThreeStack.Navigator>
   );

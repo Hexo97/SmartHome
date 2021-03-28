@@ -41,7 +41,7 @@ export default function SensorsScreen({ navigation }) {
             name='warning'
             type='font-awesome'
             color='red'
-            onPress={() => navigation.navigate('AllUserSensors')} />
+            onPress={() => navigation.navigate('Precautions')} />
         </View>
 
         {
@@ -97,6 +97,7 @@ export default function SensorsScreen({ navigation }) {
               &&
               <PressureInfo sensor={sensor}/>
             }
+            
             <ReportButton user={user} category={category} sensor={sensor} />
           </>
         }

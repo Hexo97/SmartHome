@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, ScrollView } from "react-native";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
-import PaymentHistory from "./PaymentHistory";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function Payment() {
@@ -15,7 +14,7 @@ export default function Payment() {
     user,
   ]);
 
-  console.log(payments )
+  console.log(payments)
   console.log("hellooo")
 
   return (
@@ -56,8 +55,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "bold",
-    marginLeft:60,
-    color:"white"
+    marginLeft: 60,
+    color: "white"
   },
   helpLink: {
     paddingVertical: 15,
