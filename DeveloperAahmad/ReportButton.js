@@ -122,7 +122,7 @@ export default function ReportButton({ user, category, sensor }) {
                 </View>
 
 
-                <View style={{backgroundColor:"#12232E" , marginHorizontal:20}}>
+                <View style={{backgroundColor:"#12232E" , marginHorizontal:20, }}>
                     <Icon
                         name="star"
                         type="ant-design"

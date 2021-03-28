@@ -25,6 +25,7 @@ export default function SettingsScreen() {
     setId(user.id);
     setName(user.name);
     setAge(user.age);
+    setPhone(user.phone)
   };
 
   const saveName = async () => {
@@ -33,11 +34,13 @@ export default function SettingsScreen() {
       name: name,
       role: user.role,
       age: age,
+      phone: phone,
     });
     setName("");
     setId("");
     setRole("");
     setAge("");
+    setPhone("");
   };
 
   const updatePassword = async () => {

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { StyleSheet, TextInput, TouchableOpacity,ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import Colors from "../constants/Colors";
 import { Card, Image, Icon } from "react-native-elements";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // all picker values should be non-object (number, string, etc.)
 
@@ -37,7 +38,9 @@ export default function SmokeInfo({ user, category, sensor }) {
   };
 
   return (
-    <>
+    
+    <SafeAreaProvider style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       
         <View style={styles.rolesContainer}>
           <Text style={styles.title}>Update Location</Text>
@@ -123,11 +126,14 @@ export default function SmokeInfo({ user, category, sensor }) {
       <View
         style={{
           backgroundColor: "#12232E",
-          width: "99%",
-          marginLeft: "7%",
-          marginBottom: "50%",
+          width: "105%",
+          marginLeft: "3%",
+          marginBottom: "80%",
           marginTop: "4%",
           marginRight: "10%",
+          height:"50%",
+   
+          padddingBotton:"20%"
         }}
       >
         <Image
@@ -138,18 +144,22 @@ export default function SmokeInfo({ user, category, sensor }) {
           }}
         />
       </View>
-    </>
+    
+   
+    </ScrollView>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   tinyLogo: {
     width: "90%",
-    height: "75%",
+    height: "100%",
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#12232E",
+  
   },
   developmentModeText: {
     marginBottom: 20,

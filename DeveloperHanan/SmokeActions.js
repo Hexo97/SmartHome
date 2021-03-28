@@ -316,7 +316,7 @@ export default function SmokeActions({ sensor }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+  
     alignItems: "center",
     justifyContent: "center",
     marginLeft: "0%",

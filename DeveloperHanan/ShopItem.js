@@ -12,6 +12,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 export default function ShopItem({ navigation, category, edit, remove }) {
   const { user } = useContext(UserContext);
@@ -22,6 +23,7 @@ export default function ShopItem({ navigation, category, edit, remove }) {
   const [cdate, setDate] = useState("");
   const [price, setPrice] = useState("");
   const [userid, setUser] = useState("");
+  const [status, setStatus] = useState("");
   const [id, setId] = useState("");
 
   const create = async (cprice, catId) => {
@@ -31,12 +33,14 @@ export default function ShopItem({ navigation, category, edit, remove }) {
       price: cprice,
       userid: user.id,
       categories: catId,
+      status: ""
     });
     setId("");
     setPrice("");
     setUser("");
     setDate("");
     setCategory("");
+    setStatus("");
     alert("Payment successfully done, Sensor will be avaibale in some time");
   };
 

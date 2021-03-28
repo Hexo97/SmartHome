@@ -97,6 +97,7 @@ export default function SensorsScreen({ navigation }) {
               &&
               <PressureInfo sensor={sensor}/>
             }
+            
             <ReportButton user={user} category={category} sensor={sensor} />
           </>
         }
