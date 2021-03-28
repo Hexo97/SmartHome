@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, ScrollView, TextInput } from "react-native";
 import { View, Text } from "../components/Themed";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Icon, AirbnbRating, Button } from "react-native-elements";
-// import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
 import db from '../db'
 import DialogInput from 'react-native-dialog-input';
-// import { Button } from "native-base";
-
 
 export default function ReportButton({ user, category, sensor }) {
 
@@ -94,7 +91,7 @@ export default function ReportButton({ user, category, sensor }) {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50}}>
+                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
                     <View style={{ backgroundColor: "#12232E" }} >
                         <Icon
                             name="report"
@@ -135,14 +132,8 @@ export default function ReportButton({ user, category, sensor }) {
                                 setVisible(false);
                             }}
                         >
-                            {/* {
-                                alert
-                                &&
-                                <Text style={styles.alert}>Please enter a message</Text>
-                            } */}
                         </DialogInput>
                     </View>
-
 
                     <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
                         <Icon
@@ -159,58 +150,9 @@ export default function ReportButton({ user, category, sensor }) {
                                 setReviewVisible(true)
                             }}
                         />
-                        {/* <Dialog
-                        style={{ width: "80%" }}
-                        visible={reviewVisible}
-                        footer={
-                            <DialogFooter>
-                                <DialogButton
-                                    text="CANCEL"
-                                    onPress={() => {
-                                        setReviewVisible(false),
-                                            setReviewMessage(""),
-                                            setReviewAlert(false)
-                                    }
-                                    }
-                                />
-                                <DialogButton
-                                    text="OK"
-                                    onPress={() => {
-                                        createReview(category, reviewMessage)
-                                    }
-                                    }
-                                />
-                            </DialogFooter>
-                        }
-                        onTouchOutside={() => {
-                            setReviewVisible(false);
-                        }}
-                    >
-                        <DialogContent>
-                            <TextInput
-                                style={{ fontSize: 15, alignItems: "center" }}
-                                style={styles.TextInput}
-                                placeholder="Leave your review here ..."
-                                value={reviewMessage}
-                                onChangeText={(value) => setReviewMessage(value)}
-                            />
-                            <AirbnbRating
-                                count={5}
-                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                                defaultRating={1}
-                                size={20}
-                                onPress={setRating}
-                                onFinishRating={rating => setRating(rating)}
-                            />
-                            {
-                                reviewAlert
-                                &&
-                                <Text style={styles.alert}>Please enter a review</Text>
-                            }
-                        </DialogContent>
-                    </Dialog> */}
+                    </View>
 
-
+                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
                         <DialogInput
                             style={{ width: "80%" }}
                             isDialogVisible={reviewVisible}
@@ -259,15 +201,14 @@ export default function ReportButton({ user, category, sensor }) {
                             }}
                         >
 
-                            {/* {
+                            {
                                 reviewAlert
                                 &&
                                 <Text style={styles.alert}>Please enter a review</Text>
-                            } */}
+                            }
 
                         </DialogInput>
                     </View>
-
 
                     <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
                         <Icon
@@ -343,6 +284,8 @@ export default function ReportButton({ user, category, sensor }) {
                         >
                         </DialogInput>
                     </View>
+
+
                 </View>
             </ScrollView>
         </SafeAreaProvider >

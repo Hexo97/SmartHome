@@ -24,6 +24,8 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   const [user, setUser] = useState(null); // store db user, not auth user
+  
+  
 
   // run once, set listener to auth user state
   useEffect(() => {
@@ -31,14 +33,14 @@ export default function App() {
     // 1 - cancel db user listener
     // 2 - if non-null auth user,  start new db user listener
 
-    let dbUnsubscribe = () => {}; // initially, do nothing
+    let dbUnsubscribe = () => { }; // initially, do nothing
 
     const findAndSetUser = async (user) => {
       dbUnsubscribe();
       if (user) {
         dbUnsubscribe = db.Users.listenOne(setUser, user.uid);
       } else {
-        dbUnsubscribe = () => {};
+        dbUnsubscribe = () => { };
         setUser(null);
       }
     };
@@ -51,33 +53,23 @@ export default function App() {
     };
   }, []);
 
-  console.log("user", user);
 
   const selectNavigation = () => {
     if (!user) {
-  
-      //--------------------------------------HANAN----------------------------------------//
-      return <Home/>;
-      //-----------------------------------------------------------------------------------//
+      return <Home />;
     } else if (user?.role === "Customer") {
-      return <NavigationCustomer colorScheme={colorScheme} />;
+      return <NavigationCustomer colorScheme={'dark'} />;
     } else if (user?.role === "Admin") {
-      return <NavigationAdmin colorScheme={colorScheme} />;
+      return <NavigationAdmin colorScheme={'dark'} />;
     } else if (user?.role === "Support") {
-      return <NavigationSupport colorScheme={colorScheme} />;
-
-     //--------------------------------------HANAN----------------------------------------//
+      return <NavigationSupport colorScheme={'dark'} />;
     } else if (user?.role === "Marketing") {
-      return <NavigationMarketing colorScheme={colorScheme} />
-    //-----------------------------------------------------------------------------------//
+      return <NavigationMarketing colorScheme={'dark'} />
     } else {
-      // console.log('user role', user?.role)
       fb.auth().signOut()
       return null
     }
   };
-
-
 
   return (
     isLoadingComplete && (

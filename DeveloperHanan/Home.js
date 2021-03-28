@@ -43,10 +43,10 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-       <Image
+       {/* <Image
           source={require("../assets/images/home.gif")}
           style={{ width: 280, height: 250, alignSelf:"center" }}
-      />
+      /> */}
       <View style={styles.space} />
         <Image
           source={require("../assets/images/AAHM-logos.jpeg")}
