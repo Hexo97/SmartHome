@@ -14,9 +14,9 @@ import UserContext from "../UserContext";
 import db from "../db";
 import { setStatusBarBackgroundColor } from "expo-status-bar";
 
-export default function ShopItem({ navigation, category, edit, remove }) {
+export default function ShopItem({ navigation, category, edit, remove, discount }) {
   const { user } = useContext(UserContext);
-
+  
   const [payment, setPayment] = useState([]);
 
   const [catId, setCategory] = useState([]);
@@ -84,7 +84,7 @@ export default function ShopItem({ navigation, category, edit, remove }) {
                 color: "black",
               }}
             >
-              QR: {category.price}
+              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)":category.price}
             </Text>
 
             <TouchableOpacity
@@ -95,7 +95,16 @@ export default function ShopItem({ navigation, category, edit, remove }) {
                 Buy
               </Text>
             </TouchableOpacity>
-            
+
+            {/* <TouchableOpacity
+              onPress={() => reviews(category.id)}
+              style={styles.title}
+            >
+              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
+                Reviews
+              </Text>
+            </TouchableOpacity> */}
+
             <TouchableOpacity
               onPress={() => navigation.navigate('Reviews', { reviewCategory: category })}
               style={styles.title}

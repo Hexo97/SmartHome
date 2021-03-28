@@ -26,26 +26,26 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="Home"
         component={TabOneNavigator}
-          options={{
-            // @ts-expect-error
-            tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
+        options={{
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
         name="AdsAction"
         component={TabTwoNavigator}
-        
+
         options={{
-               // @ts-expect-error
-               tabBarIcon: ({ color }) => <Icon name="advertisement" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="advertisement" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={TabThreeNavigator}
         options={{
-                // @ts-expect-error
-                tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -83,7 +83,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="AdsAction"
         component={AdsAction}
-        options={{ headerTitle: 'Ads', headerShown:false }}
+        options={{ headerTitle: 'Ads', headerShown: false }}
       />
     </TabTwoStack.Navigator>
   );

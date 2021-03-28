@@ -11,7 +11,7 @@ export default function AdminSensorsLogs() {
     useEffect(() => db.Logs.listen2OrderByWhen(setLogs), []);
 
     return (
-        <SafeAreaProvider style={styles.container}>
+        <SafeAreaProvider style={styles.Logscontainer}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.LogsViewTitle}>
                     <Text style={styles.LogsTextTitle}> SENSORS LOGS</Text>

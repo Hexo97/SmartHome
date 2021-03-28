@@ -14,6 +14,8 @@ import { Input, Button, Card } from "react-native-elements";
 export default function SettingsScreen() {
   const { user } = useContext(UserContext);
 
+  const findAuthUser = fb.functions().httpsCallable('findAuthUser');
+
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -58,6 +60,13 @@ export default function SettingsScreen() {
   };
 
   const logout = async () => {
+    if(user.name)
+    {
+      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date() , email:user.name})
+    }
+    else{
+      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Logout", activityDate: new Date() , email:user.id})
+    }
     await fb.auth().signOut();
   };
 

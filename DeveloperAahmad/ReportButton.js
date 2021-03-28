@@ -1,29 +1,29 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, ScrollView, TextInput } from "react-native";
 import { View, Text } from "../components/Themed";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Icon, AirbnbRating } from "react-native-elements";
-// import Dialog, { DialogFooter, DialogButton, DialogContent } from 'react-native-popup-dialog';
+import { Icon, AirbnbRating, Button } from "react-native-elements";
 import db from '../db'
 import DialogInput from 'react-native-dialog-input';
-
 
 export default function ReportButton({ user, category, sensor }) {
 
     const [reviewVisible, setReviewVisible] = useState(false)
+    const [maintenanceVisible, setMaintenanceVisible] = useState(false)
     const [visible, setVisible] = useState(false)
     const [alert, setAlert] = useState(false)
     const [reviewAlert, setReviewAlert] = useState(false)
+    const [maintenanceAlert, setMaintenanceAlert] = useState(false)
     const [message, setMessage] = useState("")
     const [reviewMessage, setReviewMessage] = useState("")
+    const [maintenanceMessage, setMaintenanceMessage] = useState("")
     console.log(reviewMessage)
     const [rating, setRating] = useState(0)
-
-
+    const [maintenanceDate, setMaintenanceDate] = useState(new Date())
+    const [show, setShow] = useState(false);
 
     const createRequest = async (sensor, msg) => {
-        console.log(msg, "=--==")
-
         if (!msg) {
             setAlert(true);
         }
@@ -52,7 +52,7 @@ export default function ReportButton({ user, category, sensor }) {
             setReviewAlert(true)
         }
         else {
-            console.log("else:", sensor.id);
+            // console.log("else:", sensor.id);
             const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
             await db.Categories.Reviews.createReview(category.id, review);
             await db.Logs.create(
@@ -68,169 +68,224 @@ export default function ReportButton({ user, category, sensor }) {
         }
     };
 
+    const createMaintenance = async (maintMsg) => {
+        if (!maintMsg) {
+            setMaintenanceAlert(true)
+        }
+        else {
+            const maintenance = { userId: user.id, sensorId: sensor.id, status: "Requested", dateScheduled: maintenanceDate, comments: "", requestMessage: maintMsg };
+            await db.Sensors.Maintenance.createMaintenance(sensor.id, maintenance);
+            setMaintenanceVisible(false)
+            setMaintenanceMessage("")
+        }
+    };
+
+    const onChange = (event, selectedDate) => {
+        setShow(false)
+        const currentDate = selectedDate || maintenanceDate;
+        setMaintenanceDate(currentDate);
+        console.log(maintenanceDate);
+    };
+
     return (
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor:"#12232E",flexDirection:"row", alignSelf:"center",}}>
-                <View style={{backgroundColor:"#12232E", alignItems:"center"}} >
-                    <Icon
-                        name="report"
-                        type="material-icons"
-                        size={20}
-                        reverse
-                        containerStyle={{
-                            left: "42.5%"
-                        }}
-                        color="#f50"
+                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
+                    <View style={{ backgroundColor: "#12232E" }} >
+                        <Icon
+                            name="report"
+                            type="material-icons"
+                            size={20}
+                            reverse
+                            containerStyle={{
+                                left: "42.5%"
+                            }}
+                            color="#f50"
 
-                        onPress={() => {
-                            setVisible(true)
-                        }}
-                    />
-                    <DialogInput
-                        style={{ width: "80%" }}
-                        isDialogVisible={visible}
-                        title={"Report This Sensor"}
-                        message={
+                            onPress={() => {
+                                setVisible(true)
+                            }}
+                        />
+                        <DialogInput
+                            style={{ width: "80%" }}
+                            isDialogVisible={visible}
+                            title={"Report This Sensor"}
+                            message={
                                 alert
                                 &&
                                 <Text style={styles.alert}>Please enter a message</Text>
-}
-                        value={message}
-                        submitInput={(inputText) => {
-                            // setMessage(inputText) , 
-                            createRequest({ sensor }, inputText)
-                        }
-                        }
-                        closeDialog={() => {
-                            setVisible(false),
-                                setMessage(""),
-                                setAlert(false)
-                        }
-                        }
-                        onTouchOutside={() => {
-                            setVisible(false);
-                        }}
-                    >
-                    {
-                            alert
-                            &&
-                            <Text style={styles.alert}>Please enter a message</Text>
-                        }
-                    </DialogInput>
-                </View>
+                            }
+                            value={message}
+                            submitInput={(inputText) => {
+                                // setMessage(inputText) , 
+                                createRequest({ sensor }, inputText)
+                            }
+                            }
+                            closeDialog={() => {
+                                setVisible(false),
+                                    setMessage(""),
+                                    setAlert(false)
+                            }
+                            }
+                            onTouchOutside={() => {
+                                setVisible(false);
+                            }}
+                        >
+                        </DialogInput>
+                    </View>
 
+                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                        <Icon
+                            name="star"
+                            type="ant-design"
+                            size={20}
+                            reverse
+                            containerStyle={{
+                                left: "42.5%"
+                            }}
+                            color="#f50"
 
-                <View style={{backgroundColor:"#12232E" , marginHorizontal:20, }}>
-                    <Icon
-                        name="star"
-                        type="ant-design"
-                        size={20}
-                        reverse
-                        containerStyle={{
-                            left: "42.5%"
-                        }}
-                        color="#f50"
+                            onPress={() => {
+                                setReviewVisible(true)
+                            }}
+                        />
+                    </View>
 
-                        onPress={() => {
-                            setReviewVisible(true)
-                        }}
-                    />
-                    {/* <Dialog
-                        style={{ width: "80%" }}
-                        visible={reviewVisible}
-                        footer={
-                            <DialogFooter>
-                                <DialogButton
-                                    text="CANCEL"
-                                    onPress={() => {
-                                        setReviewVisible(false),
-                                            setReviewMessage(""),
-                                            setReviewAlert(false)
-                                    }
-                                    }
-                                />
-                                <DialogButton
-                                    text="OK"
-                                    onPress={() => {
-                                        createReview(category, reviewMessage)
-                                    }
-                                    }
-                                />
-                            </DialogFooter>
-                        }
-                        onTouchOutside={() => {
-                            setReviewVisible(false);
-                        }}
-                    >
-                        <DialogContent>
-                            <TextInput
-                                style={{ fontSize: 15, alignItems: "center" }}
-                                style={styles.TextInput}
-                                placeholder="Leave your review here ..."
-                                value={reviewMessage}
-                                onChangeText={(value) => setReviewMessage(value)}
-                            />
-                            <AirbnbRating
-                                count={5}
-                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                                defaultRating={1}
-                                size={20}
-                                onPress={setRating}
-                                onFinishRating={rating => setRating(rating)}
-                            />
+                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                        <DialogInput
+                            style={{ width: "80%" }}
+                            isDialogVisible={reviewVisible}
+                            title={"Review This Sensor"}
+                            message={
+                                reviewAlert
+                                    ?
+                                    <View style={{ paddingHorizontal: 50 }}>
+                                        <AirbnbRating
+                                            count={5}
+                                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
+                                            defaultRating={1}
+                                            size={20}
+                                            onPress={setRating}
+                                            onFinishRating={rating => setRating(rating)}
+                                        />
+                                        <Text>{'\n'}</Text>
+                                        <Text style={styles.alert}>Please enter a review</Text>
+                                    </View>
+                                    :
+                                    <View style={{ paddingHorizontal: 50 }}>
+                                        <AirbnbRating
+                                            count={5}
+                                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
+                                            defaultRating={1}
+                                            size={20}
+                                            onPress={setRating}
+                                            onFinishRating={rating => setRating(rating)}
+                                        />
+                                    </View>
+                            }
+                            submitInput={(inputText) => {
+                                createReview(category, inputText)
+                            }
+
+                            }
+
+                            closeDialog={() => {
+                                setReviewVisible(false),
+                                    setReviewMessage(""),
+                                    setReviewAlert(false)
+                            }
+                            }
+                            onTouchOutside={() => {
+                                setReviewVisible(false);
+                            }}
+                        >
+
                             {
                                 reviewAlert
                                 &&
                                 <Text style={styles.alert}>Please enter a review</Text>
                             }
-                        </DialogContent>
-                    </Dialog> */}
 
-
-                    <DialogInput
-                        style={{ width: "80%" }}
-                        isDialogVisible={reviewVisible}
-                        title={"Report This Sensor"}
-                        message={
-                            <AirbnbRating
-                            count={5}
-                            reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                            defaultRating={1}
-                            size={20}
-                            onPress={setRating}
-                            onFinishRating={rating => setRating(rating)}
-                        />
-                        }
-                        submitInput={(inputText) => {
-                            // setReviewMessage(inputText),
-                                createReview(category, inputText)
-
-                        }
-
-                        }
-
-                        closeDialog={() => {
-                            setReviewVisible(false),
-                                setReviewMessage(""),
-                                setReviewAlert(false)
-                        }
-                        }
-                        onTouchOutside={() => {
-                            setReviewVisible(false);
-                        }}
-                    >
-
-                        {
-                            reviewAlert
-                            &&
-                            <Text style={styles.alert}>Please enter a review</Text>
-                        }
-
-                    </DialogInput>
+                        </DialogInput>
                     </View>
-                   
+
+                    <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
+                        <Icon
+                            name="tools"
+                            type="entypo"
+                            size={20}
+                            reverse
+                            containerStyle={{
+                                left: "42.5%"
+                            }}
+                            color="#f50"
+
+                            onPress={() => {
+                                setMaintenanceVisible(true)
+                            }}
+                        />
+                        <DialogInput
+                            style={{ width: "80%" }}
+                            isDialogVisible={maintenanceVisible}
+                            title={"Request Maintenance for Sensor"}
+                            message={
+                                <>
+                                    <Button
+                                        onPress={() => setShow(true)}
+                                        title="Set Maintenance Date"
+                                    />
+                                    {'  '}
+                                    <Button
+                                        title={maintenanceDate.toLocaleDateString()}
+                                        value={maintenanceDate.toLocaleDateString()}
+                                        disabled
+                                    />
+                                    {
+                                        show
+                                        &&
+                                        <>
+                                            <DateTimePicker
+                                                testID="dateTimePicker"
+                                                value={maintenanceDate}
+                                                mode={"date"}
+                                                is24Hour={true}
+                                                display="default"
+                                                onChange={onChange}
+                                            />
+                                        </>
+                                    }
+                                    {maintenanceAlert
+                                        &&
+                                        <Text style={[styles.alert, { fontSize: 14 }]}>{'\n\n'}Please enter a comment explaining the issue</Text>
+                                    }
+                                </>
+                            }
+                            value={message}
+                            submitInput={(inputText) => {
+                                setMaintenanceMessage(inputText)
+                                createMaintenance(inputText)
+                                setShow(false)
+                            }
+                            }
+                            closeDialog={() => {
+                                setMaintenanceVisible(false),
+                                    setMaintenanceMessage(""),
+                                    setMaintenanceAlert(false)
+                                setShow(false)
+                                setMaintenanceDate(new Date())
+                            }
+                            }
+                            onTouchOutside={() => {
+                                setMaintenanceVisible(false);
+                                setShow(false)
+                                setMaintenanceDate(new Date())
+                            }}
+                        >
+                        </DialogInput>
+                    </View>
+
+
                 </View>
             </ScrollView>
         </SafeAreaProvider >
