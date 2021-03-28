@@ -19,6 +19,8 @@ import SensorRequest from '../../DeveloperHanan/SensorRequest';
 import Reports from '../../DeveloperAahmad/Reports';
 // @ts-expect-error
 import Promotions from '../../DeveloperMahmoud/Promotion';
+// @ts-expect-error
+import Maintenance from '../../DeveloperAahmad/Maintenance';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -37,6 +39,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
+      
       <BottomTab.Screen
         name="Reports"
         component={TabTwoNavigator}
@@ -98,6 +101,11 @@ function TabOneNavigator() {
         name="Promotions"
         component={Promotions}
         options={{ headerTitle: 'Promotions' }}
+      />
+      <TabOneStack.Screen
+        name="Maintenance"
+        component={Maintenance}
+        options={{ headerTitle: 'Maintenance' }}
       />
     </TabOneStack.Navigator>
   );

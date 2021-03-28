@@ -68,6 +68,7 @@ class Sensors extends DB {
   constructor() {
     super("sensors");
     this.Readings = new Readings(this.collection);
+    this.Maintenance = new Maintenance(this.collection);
   }
 
   listenByCategory = (set, categoryid) =>
@@ -258,6 +259,43 @@ class Request extends DB {
   }
 }
 
+class Maintenance extends DB {
+  constructor(containing) {
+    super("maintenance");
+    this.containing = containing;
+  }
+
+  createMaintenance = (sensorId, maintenance) => {
+    const { ...rest } = maintenance;
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .add(rest);
+  }
+
+  updateMaintenance = (sensorId, maintenance, maintenanceId) => {
+    const { ...rest } = maintenance;
+    db
+      .collection(this.containing)
+      .doc(sensorId)
+      .collection(this.collection)
+      .doc(maintenanceId)
+      .set(rest);
+  }
+
+  reformat(doc) {
+    return {
+      ...super.reformat(doc),
+      dateScheduled: doc.data().dateScheduled.toDate(),
+    };
+  }
+
+  listenToAll = (set) =>
+    db
+      .collectionGroup(this.collection).onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+}
+
 class Reports extends DB {
   constructor() {
     super("reports");
@@ -421,6 +459,8 @@ export default {
   Request: new Request(),
   Reports: new Reports(),
   Reviews: new Reviews(),
+  Maintenance: new Maintenance(),
+
 
   //HANAN
   Ads: new Ads(),
