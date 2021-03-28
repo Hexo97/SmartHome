@@ -187,18 +187,20 @@ export default function SupportHomeScreen({ navigation }) {
           type="outline"
             onPress={() => navigation.navigate('Maintenance')}
         />
-{/* ------------------------------------------HANAN------------------------------------- */}
         <Button
           title="New Sensors Request"
           type="outline"
           onPress={() => navigation.navigate('SensorRequest')}
         />
-{/* ------------------------------------------------------------------------------------- */}
-        <View style={styles.space} />
         <Button
           title="Show User Suggestions"
           type="outline"
           onPress={() => navigation.navigate('SuggestionForSupport')}
+        />
+        <Button
+          title="Promotions"
+          type="outline"
+          onPress={() => navigation.navigate('Promotions')}
         />
       </ScrollView>
     </SafeAreaProvider>

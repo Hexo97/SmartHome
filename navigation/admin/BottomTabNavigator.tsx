@@ -20,7 +20,7 @@ import RealTimeMonitoring from '../../DeveloperAisha/RealTimeMonitoring';
 import AdminSensorsLogs from '../../DeveloperMahmoud/AdminSensorsLogs';
 // @ts-expect-error
 import ManageSensors from '../../screens/Admin/ManageSensors';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList,TabFourParamList} from './types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -35,7 +35,7 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -43,7 +43,7 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="monitor" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -51,15 +51,15 @@ export default function BottomTabNavigator() {
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="publish" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="publish" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={TabFourNavigator}
         options={{
-            // @ts-expect-error
-            tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
     </BottomTab.Navigator>

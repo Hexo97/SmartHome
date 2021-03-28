@@ -185,7 +185,6 @@ class Reviews extends DB {
       .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 }
 
-
 class Users extends DB {
   constructor() {
     super("users");
@@ -224,6 +223,7 @@ class SuggestionList extends DB {
 
   listenToStaffSuggestion = (set, userid) =>
     db.collection(this.containing).doc(userid).collection(this.collection).where("type", "==", "Staff").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
   removeUserSuggestList = (userid, listid) =>
     db
       .collection(this.containing)
@@ -408,11 +408,47 @@ class Logs extends DB {
   listen2OrderByWhen = (set) =>
     db.collection(this.collection).orderBy("date").onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
-  // listenBySensor = (set, sensorid) =>
-  //   db.collection(this.collection).where("sensorid", "==", sensorid).onSnapshot(snap => set(snap.docs.map(this.reformat)[0]))
-
 }
 
+class Promotions extends DB {
+  constructor() {
+    super("promotions");
+    this.ActivePromotions = new ActivePromotions(this.collection);
+  }
+}
+
+class ActivePromotions extends DB {
+  constructor(containing) {
+    super("activepromotions");
+    this.containing = containing;
+  }
+
+  reformat(doc) {
+    return {
+      ...super.reformat(doc)
+    };
+  }
+
+  createAP = (promotionid, userPromotion) => {
+    db.collection(this.containing).doc(promotionid).collection(this.collection).add(userPromotion);
+  }
+
+  // This is Mahmoud. I am so proud of doing this function. I shall flex on my instructor, Thanks
+  listenToAllAPByUser = async (setProm,set, userid) => {
+    db.collection(this.containing).get().then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        db.collection('promotions').doc(doc.id).collection('activepromotions').where("userId", "==", userid).get().then(function (querySnapshot2) {
+          querySnapshot2.forEach(function (doc2) {
+            setProm(doc.data())
+            set(doc2.data())
+          });
+        })
+      });
+    }
+    );
+  }
+
+}
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
@@ -433,6 +469,8 @@ export default {
 
 
   Logs: new Logs(),
+  Promotions: new Promotions(),
+  ActivePromotions: new ActivePromotions(),
 
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),

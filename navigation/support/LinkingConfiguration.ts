@@ -11,8 +11,9 @@ export default {
               Home: 'one',
               SensorRequest:'two',
               Reviews:'three',
-              SuggestionForSupport:'four',
-              Maintenance:'five',
+              SuggestionForSupport: 'four',
+              Promotions:'five',
+              Maintenance:'six',
             },
           },
           TabTwo: {
