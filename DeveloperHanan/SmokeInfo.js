@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, TextInput, TouchableOpacity,ScrollView } from "react-native";
+import { StyleSheet, TextInput, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
-import Colors from "../constants/Colors";
-import { Card, Image, Icon } from "react-native-elements";
+import { Image, Icon } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // all picker values should be non-object (number, string, etc.)
@@ -38,10 +37,10 @@ export default function SmokeInfo({ user, category, sensor }) {
   };
 
   return (
-    
+
     <SafeAreaProvider style={styles.container}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-      
+      <ScrollView showsVerticalScrollIndicator={false}>
+
         <View style={styles.rolesContainer}>
           <Text style={styles.title}>Update Location</Text>
           <View style={styles.inputView}>
@@ -81,72 +80,72 @@ export default function SmokeInfo({ user, category, sensor }) {
             />
           </View>
         </View>
-  
 
-      <View
-        style={{
-          backgroundColor: "#12232E",
-          width: "90%",
-          marginLeft: "5%",
-          marginTop: "5%",
-        }}
-      >
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)"
+
+        <View
+          style={{
+            backgroundColor: "#12232E",
+            width: "90%",
+            marginLeft: "5%",
+            marginTop: "5%",
+          }}
         >
-          Standard Humdity Level: {sensor.max}
-        </Text>
-        <Text
-          style={styles.getStartedText}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)"
-        >
-          Min Humidty Level: {sensor.min}
-        </Text>
-        {reading && (
+          <Text
+            style={styles.getStartedText}
+            lightColor="rgba(0,0,0,0.8)"
+            darkColor="rgba(255,255,255,0.8)"
+          >
+            Standard Humdity Level: {sensor.max}
+          </Text>
+          <Text
+            style={styles.getStartedText}
+            lightColor="rgba(0,0,0,0.8)"
+            darkColor="rgba(255,255,255,0.8)"
+          >
+            Min Humidty Level: {sensor.min}
+          </Text>
+          {reading && (
+            <Text
+              style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
+              lightColor="rgba(0,0,0,0.8)"
+              darkColor="rgba(255,255,255,0.8)"
+            >
+              Live Humidity Level: {reading.current}
+            </Text>
+          )}
           <Text
             style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
             lightColor="rgba(0,0,0,0.8)"
             darkColor="rgba(255,255,255,0.8)"
           >
-            Live Humidity Level: {reading.current}
+            Smoke alert: {sensor.alert ? "True" : "False"}
           </Text>
-        )}
-        <Text
-          style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
-          lightColor="rgba(0,0,0,0.8)"
-          darkColor="rgba(255,255,255,0.8)"
-        >
-          Smoke alert: {sensor.alert ? "True" : "False"}
-        </Text>
-      </View>
+        </View>
 
-      <View
-        style={{
-          backgroundColor: "#12232E",
-          width: "105%",
-          marginLeft: "3%",
-          marginBottom: "80%",
-          marginTop: "4%",
-          marginRight: "10%",
-          height:"50%",
-   
-          padddingBotton:"20%"
-        }}
-      >
-        <Image
-          style={styles.tinyLogo}
-          source={{
-            uri:
-              "https://www.airthings.com/hs-fs/hubfs/Website/Images/Newsletter/Blog/Blog%20body%20images%20compressed%20-illustration/Humidity%20level%20chart%20(1).jpg?width=1754&name=Humidity%20level%20chart%20(1).jpg",
+        <View
+          style={{
+            backgroundColor: "#12232E",
+            width: "105%",
+            marginLeft: "3%",
+            marginBottom: "80%",
+            marginTop: "4%",
+            marginRight: "10%",
+            height: "50%",
+
+            padddingBotton: "20%"
           }}
-        />
-      </View>
-    
-   
-    </ScrollView>
+        >
+          <Image
+            style={styles.tinyLogo}
+            source={{
+              uri:
+                "https://www.airthings.com/hs-fs/hubfs/Website/Images/Newsletter/Blog/Blog%20body%20images%20compressed%20-illustration/Humidity%20level%20chart%20(1).jpg?width=1754&name=Humidity%20level%20chart%20(1).jpg",
+            }}
+          />
+        </View>
+
+
+      </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -159,7 +158,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#12232E",
-  
+
   },
   developmentModeText: {
     marginBottom: 20,

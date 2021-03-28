@@ -12,7 +12,7 @@ import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
 import SuggestionList from '../../DeveloperAisha/SuggestionList';
 // @ts-expect-error
-import AllUserSensors from '../../DeveloperAisha/AllUserSensors';
+import Precautions from '../../DeveloperAisha/Precautions';
 // @ts-expect-error
 import AllUserTrashCans from '../../DeveloperAisha/AllUserTrashCans';
 // @ts-expect-error
@@ -115,11 +115,7 @@ function TabOneNavigator() {
         component={SuggestionList}
         options={{ headerTitle: 'List' }}
       />
-      <TabOneStack.Screen
-        name="AllUserSensors"
-        component={AllUserSensors}
-        options={{ headerTitle: 'AllUserSensors' }}
-      />
+
       <TabOneStack.Screen
         name="PaymentHistory"
         component={PaymentHistory}
@@ -148,6 +144,11 @@ function TabTwoNavigator() {
         name="Sensors"
         component={SensorsScreen}
         options={{ headerTitle: 'Sensors' }}
+      />
+      <TabOneStack.Screen
+        name="Precautions"
+        component={Precautions}
+        options={{ headerTitle: 'Precautions' }}
       />
     </TabTwoStack.Navigator>
   );

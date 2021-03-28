@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { View, Text } from "react-native";
 import db from '../db'
 import styles from './SmartStyle'
 import PrintTime from './PrintTime'
 export default function AdminSensorsLogs({ ...sentlog }) {
 
-
     const [category, setCategory] = useState([]);
     useEffect(() => db.Categories.listenOne(setCategory, sentlog.categoryId), []);
-    console.log("cate:", category.name);
 
     return (
         < View style={styles.LogsViewLogs} key={sentlog.id}>

@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import { StyleSheet, ScrollView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Button, Card, Icon, Image } from "react-native-elements";
-import { ViewPagerAndroidBase } from "react-native";
+import { Card, Icon } from "react-native-elements";
 
 export default function SmokeActions({ sensor }) {
   const { user } = useContext(UserContext);
@@ -316,7 +314,7 @@ export default function SmokeActions({ sensor }) {
 
 const styles = StyleSheet.create({
   container: {
-  
+
     alignItems: "center",
     justifyContent: "center",
     marginLeft: "0%",

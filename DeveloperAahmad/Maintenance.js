@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-nativ
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Input, Button, ListItem } from "react-native-elements";
+import { Button, ListItem } from "react-native-elements";
 import { Card } from "react-native-elements";
 import Colors from "../constants/Colors";
 import { Picker } from '@react-native-picker/picker';
@@ -99,10 +99,10 @@ export default function Maintenance({ route }) {
                                 <Text style={styles.normalTxt}>Message: {maintenanceReport.requestMessage}</Text>
                                 <Text style={styles.normalTxt}>Sensor ID: {maintenanceReport.sensorId}</Text>
                                 <Text style={styles.normalTxt}>Location: {sensor.location}</Text> */}
-                                <View style={{ backgroundColor: "#EEFBFB", alignItems:"center" }}>
+                                <View style={{ backgroundColor: "#EEFBFB", alignItems: "center" }}>
                                     <Picker
                                         style={{
-                                            height: 50, width: 200, backgroundColor:"white", marginVertical:10
+                                            height: 50, width: 200, backgroundColor: "white", marginVertical: 10
                                         }}
                                         selectedValue={status || maintenanceReport.status}
                                         onValueChange={setStatus}

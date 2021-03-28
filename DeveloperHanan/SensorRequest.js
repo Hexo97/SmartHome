@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
 import SensorRequestProcessed from "./SensorRequestProcessed";
-import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function SensorRequest() {
   const [payment, setPayment] = useState([]);
   useEffect(() => db.Payment.listenAll(setPayment), []);
 
-  console.log(payment.length, "--------------------------------")
 
   const { user } = useContext(UserContext);
 
@@ -22,7 +19,7 @@ export default function SensorRequest() {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.title}> User's Sensor Request </Text>
           <View style={styles.container}>
-            {payment.length !== 0 ? 
+            {payment.length !== 0 ?
               <>
                 {payment.map((payment) => (
                   <SensorRequestProcessed
@@ -32,7 +29,7 @@ export default function SensorRequest() {
                   />
                 ))}
               </>
-             : 
+              :
               <>
                 <Text
                   style={{

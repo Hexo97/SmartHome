@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import fb from "../fb";
 import db from "../db";
 import { StyleSheet, TouchableOpacity, TextInput, Image } from "react-native";
-
 import { Text, View } from "../components/Themed";
-
 
 export default function Register({ navigation }) {
   const [email, setEmail] = useState("");
@@ -19,7 +17,7 @@ export default function Register({ navigation }) {
         id: fb.auth().currentUser.uid,
         role: "Customer",
       });
-      await db.RealTimeMonitoring.create({userid: fb.auth().currentUser.uid, activity: "Register", activityDate: new Date() , email})
+      await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Register", activityDate: new Date(), email })
     } catch (error) {
       alert(error.message);
     }

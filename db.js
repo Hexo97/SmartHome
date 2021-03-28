@@ -433,7 +433,7 @@ class ActivePromotions extends DB {
     db.collection(this.containing).doc(promotionid).collection(this.collection).add(userPromotion);
   }
 
-  // This is Mahmoud. I am so proud of doing this function. I shall flex on my instructor, Thanks
+  // This is Mahmoud. I am so proud of doing this function. I shall flex on my instructor and my peers, Thanks
   listenToAllAPByUser = async (setProm,set, userid) => {
     db.collection(this.containing).get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {

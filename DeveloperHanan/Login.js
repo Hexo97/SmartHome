@@ -12,7 +12,7 @@ export default function Login({ navigation }) {
 
   const login = async () => {
     await fb.auth().signInWithEmailAndPassword(email, password);
-    await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Login", activityDate: new Date() , email })
+    await db.RealTimeMonitoring.create({ userid: fb.auth().currentUser.uid, activity: "Login", activityDate: new Date(), email })
   };
 
   const valid = () => email !== "" && password !== "";
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
-    
+
   },
 
   loginBtn: {

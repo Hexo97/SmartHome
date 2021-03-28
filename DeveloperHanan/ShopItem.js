@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,16 +7,15 @@ import {
   ScrollView,
 } from "react-native";
 import { View } from "../components/Themed";
-import { Card, Button } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
-import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 export default function ShopItem({ navigation, category, edit, remove, discount }) {
   const { user } = useContext(UserContext);
-  
+
   const [payment, setPayment] = useState([]);
 
   const [catId, setCategory] = useState([]);
@@ -84,7 +83,7 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
                 color: "black",
               }}
             >
-              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)":category.price}
+              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)" : category.price}
             </Text>
 
             <TouchableOpacity

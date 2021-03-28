@@ -41,7 +41,7 @@ export default function SensorsScreen({ navigation }) {
             name='warning'
             type='font-awesome'
             color='red'
-            onPress={() => navigation.navigate('AllUserSensors')} />
+            onPress={() => navigation.navigate('Precautions')} />
         </View>
 
         {

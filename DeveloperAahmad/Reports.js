@@ -3,14 +3,11 @@ import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
-import { Input } from "react-native-elements";
 import { Button } from "react-native-elements";
 import { Card } from "react-native-elements";
 import Colors from "../constants/Colors";
 import { Picker } from '@react-native-picker/picker';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
-
 
 export default function Reports() {
   const [reports, setReports] = useState([]);

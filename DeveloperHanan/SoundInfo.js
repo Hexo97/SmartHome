@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, ScrollView,TextInput } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
-import { Button, Card } from "react-native-elements";
 import { Slider, Icon } from "react-native-elements";
-
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
 // all picker values should be non-object (number, string, etc.)
 
 export default function SoundInfo({ sensor }) {
@@ -18,25 +14,25 @@ export default function SoundInfo({ sensor }) {
         : undefined,
     [sensor]
   );
-   // console.log("Reading here", reading)
-    
+  // console.log("Reading here", reading)
+
   const updateMinMax = async (minmax, amount) =>
     await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount });
 
   const [value, setValue] = useState(sensor.minDB);
   const saveMin = async (value) => {
-    if(reading) {
+    if (reading) {
       await db.Sensors.update({ ...sensor, minDB: value, alert: reading.current < value ? true : false });
-    } else { 
+    } else {
       await db.Sensors.update({ ...sensor, minDB: value });
     }
   };
 
   const [valuemax, setValuemax] = useState(sensor.maxDB);
   const saveMax = async (value) => {
-    if(reading) {
+    if (reading) {
       await db.Sensors.update({ ...sensor, maxDB: value, alert: reading.current > valuemax ? true : false });
-    } else { 
+    } else {
       await db.Sensors.update({ ...sensor, maxDB: value });
     }
   };
@@ -64,45 +60,45 @@ export default function SoundInfo({ sensor }) {
 
   return (
     <>
-    <View style={styles.rolesContainer}>
-          <Text style={styles.title}>Update Location</Text>
-          <View style={styles.inputView}>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="Change location name"
-              placeholderTextColor="#12232E"
-              value={location}
-              onChangeText={(value) => setLocation(value)}
-            />
-          </View>
-
-          <View
-            style={{
-              width: "60%",
-              marginLeft: "22%",
-              marginTop: "3%",
-              flexDirection: "row",
-            }}
-          >
-            <Icon
-              reverse
-              name="save"
-              type="font-awesome"
-              color="#4DA8DA"
-              size={20}
-              onPress={updateLoc}
-            />
-
-            <Icon
-              reverse
-              name="edit"
-              type="font-awesome"
-              color="#4DA8DA"
-              size={20}
-              onPress={() => EditUserRole(sensor.location)}
-            />
-          </View>
+      <View style={styles.rolesContainer}>
+        <Text style={styles.title}>Update Location</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change location name"
+            placeholderTextColor="#12232E"
+            value={location}
+            onChangeText={(value) => setLocation(value)}
+          />
         </View>
+
+        <View
+          style={{
+            width: "60%",
+            marginLeft: "22%",
+            marginTop: "3%",
+            flexDirection: "row",
+          }}
+        >
+          <Icon
+            reverse
+            name="save"
+            type="font-awesome"
+            color="#4DA8DA"
+            size={20}
+            onPress={updateLoc}
+          />
+
+          <Icon
+            reverse
+            name="edit"
+            type="font-awesome"
+            color="#4DA8DA"
+            size={20}
+            onPress={() => EditUserRole(sensor.location)}
+          />
+        </View>
+      </View>
       <View
         style={{
           backgroundColor: "#4DA8DA",
@@ -156,14 +152,14 @@ export default function SoundInfo({ sensor }) {
         type="outline"
         onPress={() => updateMinMax("maxDB", 10)}
       /> */}
-  
+
         <View
           style={{
-         paddingLeft:15,
-         paddingRight:5,
-         paddingTop:10,
-         marginTop:5,
-         paddingBottom:15,
+            paddingLeft: 15,
+            paddingRight: 5,
+            paddingTop: 10,
+            marginTop: 5,
+            paddingBottom: 15,
           }}
         >
           <Slider
@@ -192,7 +188,7 @@ export default function SoundInfo({ sensor }) {
             }}
           />
           <Text>MinDb: {sensor.minDB}</Text>
-        
+
           <Slider
             value={sensor.maxDB}
             onValueChange={saveMax}
