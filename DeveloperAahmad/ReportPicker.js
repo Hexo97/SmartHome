@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
-import db from "../db";
 import { View } from "../components/Themed";
 import { Picker } from "@react-native-picker/picker";
 
 export default function ReportPicker({ set }) {
-  
+
   return (
     <View
       style={{
@@ -18,16 +17,16 @@ export default function ReportPicker({ set }) {
       }}
     >
       <Picker
-            selectedValue={userType}
-            style={{ height: 50, width: 200  }}
-            selectedValue={userType}
-            onValueChange={setUserType}
-        >
-            <Picker.Item label="Check User Login Here...." value="userType" />
-            <Picker.Item label="Register" value="Register" />
-            <Picker.Item label="Login" value="Login" />
-            <Picker.Item label="Logout" value="Logout" />
-        </Picker> 
+        selectedValue={userType}
+        style={{ height: 50, width: 200 }}
+        selectedValue={userType}
+        onValueChange={setUserType}
+      >
+        <Picker.Item label="Check User Login Here...." value="userType" />
+        <Picker.Item label="Register" value="Register" />
+        <Picker.Item label="Login" value="Login" />
+        <Picker.Item label="Logout" value="Logout" />
+      </Picker>
     </View>
   );
 }

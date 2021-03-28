@@ -1,10 +1,8 @@
 import * as React from "react";
-
 import { useState, useEffect, useContext } from "react";
 import UserContext from "../UserContext";
-import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { StatusBar } from "react-native";
-import Gallery from "react-native-image-gallery";
 import db from "../db";
 import { SliderBox } from "react-native-image-slider-box";
 import "react-native-gesture-handler";

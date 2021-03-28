@@ -231,7 +231,6 @@ exports.createSampleData = functions.https.onCall(
     const { id: categoryId6 } = await db.collection('categories').add({ name: "Capacitive Pressure", description: "Capacitive pressure sensors measure pressure by detecting changes in electrical capacitance caused by the movement of a diaphragm.", image: "https://cdn.shopify.com/s/files/1/0953/3946/files/BedMatDiagram_2_grande.jpg?v=1510244844", price: 1800 })
     functions.logger.info("categoryId6", { categoryId6 })
 
-
     const { id: sensorId1 } = await db.collection('sensors').add({ userid: authId1, categoryid: categoryId1, location: "front door", motiondetected: false })
     functions.logger.info("sensorId1", { sensorId1 })
 
@@ -247,6 +246,7 @@ exports.createSampleData = functions.https.onCall(
     const { id: sensorId4 } = await db.collection('sensors').add({ userid: authId2, categoryid: categoryId3, location: "Club-Hall", minDB: 0, maxDB: 100, alert: false })
     functions.logger.info("sensorId4", { sensorId4 })
 
+    
     const { id: sensorId5 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId4, location: "Toilet", latitude: 20, longitude: 26, presenceDetected: false, fill: "Empty" })
 
     const { id: sensorId7 } = await db.collection('sensors').add({ userid: authId6, categoryid: categoryId6, location: "Bedroom", area: 4, pressureDetected: false, status: "Sleeping" , alarm:"off" })

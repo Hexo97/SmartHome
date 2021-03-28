@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   TouchableOpacity,
@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { View } from "../components/Themed";
-import { Card, Button } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
@@ -15,13 +15,14 @@ import db from "../db";
 
 export default function ShopItem({ navigation, category, edit, remove, discount }) {
   const { user } = useContext(UserContext);
-  
+
   const [payment, setPayment] = useState([]);
 
   const [catId, setCategory] = useState([]);
   const [cdate, setDate] = useState("");
   const [price, setPrice] = useState("");
   const [userid, setUser] = useState("");
+  const [status, setStatus] = useState("");
   const [id, setId] = useState("");
 
   const create = async (cprice, catId) => {
@@ -31,12 +32,14 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
       price: cprice,
       userid: user.id,
       categories: catId,
+      status: ""
     });
     setId("");
     setPrice("");
     setUser("");
     setDate("");
     setCategory("");
+    setStatus("");
     alert("Payment successfully done, Sensor will be avaibale in some time");
   };
 
@@ -80,7 +83,7 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
                 color: "black",
               }}
             >
-              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)":category.price}
+              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)" : category.price}
             </Text>
 
             <TouchableOpacity

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, Text, Image, ScrollView, TextInput } from "react-native";
+import { TouchableOpacity, Text, Image, ScrollView, TextInput } from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";

@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, ScrollView, } from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import UserContext from "../UserContext";
 import db from "../db";
 import { Button } from "react-native-elements";
 
@@ -60,28 +59,26 @@ export default function SensorRequestProcessed({ payment }) {
       )
       setAddd(true)
     }
-    if(category && category.name === "Proximity")
-    {
+    if (category && category.name === "Proximity") {
       db.Sensors.create({
-      categoryid: categoryid,
-      userid: userid,
-      location: "Kitchen",
+        categoryid: categoryid,
+        userid: userid,
+        location: "Kitchen",
         state: "off",
         latitude: 25.354826,
         longitude: 25.4,
         motiondetected: false,
-    });
-    setAddd(true)
+      });
+      setAddd(true)
     }
-    if(category && category.name === "Motion")
-    {
-      db.Sensors.create({
-      categoryid: categoryid,
-      userid: userid,
-      motiondetected:false,
-      location:"Default",
-    });
-    setAddd(true)
+    if (category && category.name === "Motion") {
+      const { id: sensorid } = await db.Sensors.create({
+        categoryid: categoryid,
+        userid: userid,
+        motiondetected: false,
+        location: "Default",
+      });
+      setAddd(true)
       await db.Logs.create(
         {
           sensorId: sensorid,
@@ -91,20 +88,36 @@ export default function SensorRequestProcessed({ payment }) {
         }
       )
     }
-    if(category && category.name === "Smoke detector")
-    {
+    if (category && category.name === "Smoke detector") {
       db.Sensors.create({
-      categoryid: categoryid,
-      userid: userid,
-      alert: false,
-      location: "Default",
-      min: 25,
-      max: 70
-    });
-    setAddd(true)
+        categoryid: categoryid,
+        userid: userid,
+        alert: false,
+        location: "Default",
+        min: 25,
+        max: 70
+      });
+      setAddd(true)
+    }
+
+    if (category && category.name === "Capacitive Pressure") {
+      db.Sensors.create({
+        categoryid: categoryid,
+        userid: userid,
+        alert: false,
+        location: "Default",
+        area: 4,
+        pressureDetected: false,
+        status: "Sleeping",
+        alarm: "off"
+      });
+      setAddd(true)
     }
     alert("Sensor created");
+    await db.Payment.update({ ...payment, status: 'created' })
   }
+
+
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -140,7 +153,7 @@ export default function SensorRequestProcessed({ payment }) {
               <Button
                 onPress={() => create(payment.userid, payment.categories)}
                 title="Create"
-                disabled={addd}
+                disabled={payment.status === "created"}
                 buttonStyle={styles.myButton}
               />
             </Card>

@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { View, Text, Icon } from "../components/Themed";
+import { View, Text } from "../components/Themed";
 import db from "../db";
-import { StatusBar, SafeAreaView, FlatList } from "react-native";
+import { StatusBar } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
@@ -208,7 +208,7 @@ export default function AdsScreen() {
                   </Text>
                 </TouchableOpacity>
 
-                 <TouchableOpacity
+                <TouchableOpacity
                   onPress={() => {
                     remove(c.id);
                   }}
@@ -230,7 +230,7 @@ export default function AdsScreen() {
                   >
                     Remove
                   </Text>
-                </TouchableOpacity> 
+                </TouchableOpacity>
 
               </View>
             ))}

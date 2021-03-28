@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, Image, ScrollView } from "react-native";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { View } from "../components/Themed";
-import { Button, Avatar, Badge } from "react-native-elements";
+import { Button, Badge } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UserContext from "../UserContext";
 import db from "../db";
@@ -175,7 +175,7 @@ export default function SupportHomeScreen({ navigation }) {
           <Text
             style={
               ([styles.text, styles.subText],
-              { textAlign: "right", color: "white" })
+                { textAlign: "right", color: "white" })
             }
           >
             {dt}
@@ -185,7 +185,7 @@ export default function SupportHomeScreen({ navigation }) {
         <Button
           title="View Maintenance Requests"
           type="outline"
-            onPress={() => navigation.navigate('Maintenance')}
+          onPress={() => navigation.navigate('Maintenance')}
         />
         <Button
           title="New Sensors Request"

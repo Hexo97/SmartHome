@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Tile } from 'react-native-elements';
-import { useState, useEffect, useContext } from "react";
-import { Image, ScrollView } from "react-native";
+import { useContext } from "react";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import UserContext from "../UserContext";
 import Login from "./Login";
@@ -12,7 +11,7 @@ import Advertisments from "./Advertisments";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
 import "react-native-gesture-handler";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -24,11 +23,11 @@ import {
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
   return (
- 
+
     <View style={styles.imagebg}>
       <StatusBar hidden={true} />
       <View style={styles.navBar}>
-        
+
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Image
             source={require("../assets/images/icon2.png")}
@@ -43,17 +42,17 @@ export function Home({ navigation }) {
         ></Image>
       </View>
 
-       {/* <Image
+      {/* <Image
           source={require("../assets/images/home.gif")}
           style={{ width: 280, height: 250, alignSelf:"center" }}
       /> */}
       <View style={styles.space} />
-        <Image
-          source={require("../assets/images/AAHM-logos.jpeg")}
-          style={{ width: 280, height: 200, alignSelf:"center" }}
+      <Image
+        source={require("../assets/images/AAHM-logos.jpeg")}
+        style={{ width: 280, height: 200, alignSelf: "center" }}
       />
     </View>
-  
+
   );
 }
 
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fff",
     height: 200,
     width: 100,
-    marginTop:20,
+    marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
   },

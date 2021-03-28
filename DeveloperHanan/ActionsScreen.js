@@ -5,7 +5,7 @@ import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
 import CategoryAction from "./CategoryAction";
-import { Input, Card, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar, TextInput } from "react-native";
 
@@ -222,7 +222,7 @@ export default function ActionsScreen() {
               </View>
             </View>
           </Card>
-{/*imean, from where u call this page you mean where i am dispaying? yes */}
+          {/*imean, from where u call this page you mean where i am dispaying? yes */}
 
           {/* <View style={styles.catContainer}>
             {category.map((category) => (

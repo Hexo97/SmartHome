@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import db from '../db'
 import styles from './SmartStyle'

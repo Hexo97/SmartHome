@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
-  TouchableOpacity,
   Text,
   Image,
   ScrollView,
@@ -9,7 +8,6 @@ import {
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
 
@@ -54,20 +52,20 @@ export default function PaymentHistory({ payments }) {
                     }}
                   >
                     <Text key={c.id}> Receipt Code: {c.id} </Text>
-                    </Card.Title>
-                    <View   style={{
-                      backgroundColor: "white",
-                     alignContent:"center",
-                    }}>
-                      <Image
-                        style={styles.tinyLogo}
-                        source={{
-                          uri:
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png",
-                        }}
-                      />
-                    </View>
-                 
+                  </Card.Title>
+                  <View style={{
+                    backgroundColor: "white",
+                    alignContent: "center",
+                  }}>
+                    <Image
+                      style={styles.tinyLogo}
+                      source={{
+                        uri:
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png",
+                      }}
+                    />
+                  </View>
+
 
                   <Text
                     style={{

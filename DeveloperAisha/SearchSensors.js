@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
-import { View , Text} from '../components/Themed';
-import { SearchBar ,ListItem} from 'react-native-elements';
+import { View, Text } from '../components/Themed';
+import { SearchBar, ListItem } from 'react-native-elements';
 import UserContext from '../UserContext'
 import DisplaySearched from './DisplaySearched'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -15,7 +15,7 @@ export default function SearchSensors() {
   const [userSensors, setUserSensors] = useState([])
   useEffect(() => db.Sensors.listenByUser(setUserSensors, user.id), [])
 
-  const[search , setSearch] = useState("")
+  const [search, setSearch] = useState("")
 
   const [suggestions, setSuggestions] = useState([])
 
@@ -26,8 +26,7 @@ export default function SearchSensors() {
     if (searchValue !== "") {
       sensors.map(sense => {
         const singleItem = userSensors.filter(item => item.id === sense.id)[0]
-        if(singleItem)
-        {
+        if (singleItem) {
           if (singleItem.location.toLowerCase().includes(searchValue.toLowerCase())) {
             filteredList.push({ sense: sense, sensorItem: singleItem })
           }
@@ -42,47 +41,47 @@ export default function SearchSensors() {
   const [go, setGo] = useState("")
 
   const DisplayResults = async (sensor) => {
-    await db.PopularSensor.create({ sensorid: sensor.id, name:sensor.location, dateSearched: new Date(), rating:null })
+    await db.PopularSensor.create({ sensorid: sensor.id, name: sensor.location, dateSearched: new Date(), rating: null })
     setGo("go")
     setSensorResult(sensor)
   }
 
   return (
     <SafeAreaProvider style={styles.container}>
-           <ScrollView showsVerticalScrollIndicator={false}>
-      <View style= {{ backgroundColor:"#4DA8DA", height:50, margin:20, marginBottom:10}}>
-        <Text style= {{ color: 'black',textAlign:"center",marginTop:10, fontSize:18 , fontWeight:"bold"}}> Search Sensors</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 20, marginBottom: 10 }}>
+          <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 18, fontWeight: "bold" }}> Search Sensors</Text>
         </View>
 
-        <Text style= {{ color: '#fff',textAlign:"center", fontSize:15 ,margin:5,fontStyle:"italic" }}>Search you sensors and get information about your sensors below.</Text>
+        <Text style={{ color: '#fff', textAlign: "center", fontSize: 15, margin: 5, fontStyle: "italic" }}>Search you sensors and get information about your sensors below.</Text>
 
-      <SearchBar
-        placeholder="Search Sensors"
-        onChangeText={text => showSuggestions(text)}
-        value={search}
-        containerStyle={{margin:10}}
-        round
-        placeholderTextColor="white"
-      />
-      <View>
-      {
-        suggestions.map((sr, index) =>
-        (
-          <ListItem style={{backgroundColor:"black"}} bottomDivider key={index} onPress={() => DisplayResults(sr.sense)}>
-             <ListItem.Title style={{color:"black", fontSize:20}}>{sr.sensorItem.location}</ListItem.Title>
-          </ListItem>
-        ))
-      }
-      </View>
+        <SearchBar
+          placeholder="Search Sensors"
+          onChangeText={text => showSuggestions(text)}
+          value={search}
+          containerStyle={{ margin: 10 }}
+          round
+          placeholderTextColor="white"
+        />
+        <View>
+          {
+            suggestions.map((sr, index) =>
+            (
+              <ListItem style={{ backgroundColor: "black" }} bottomDivider key={index} onPress={() => DisplayResults(sr.sense)}>
+                <ListItem.Title style={{ color: "black", fontSize: 20 }}>{sr.sensorItem.location}</ListItem.Title>
+              </ListItem>
+            ))
+          }
+        </View>
 
         <Text>
-        {
-          go
-          &&
-          <DisplaySearched sensor={sensorResult} />
-        }
-       </Text>
-       </ScrollView>
+          {
+            go
+            &&
+            <DisplaySearched sensor={sensorResult} />
+          }
+        </Text>
+      </ScrollView>
     </SafeAreaProvider>
   );
 }
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor:"#12232E"
+    backgroundColor: "#12232E"
   },
   developmentModeText: {
     marginBottom: 20,

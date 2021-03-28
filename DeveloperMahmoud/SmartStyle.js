@@ -112,5 +112,27 @@ module.exports = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
     },
- 
+    // ADMIN DASHBOARD SCREEN
+    AdminDashScrncontainer: {
+        flex: 1,
+        flexDirection: "column",
+        backgroundColor: "#12232E"
+    },
+    AdminDashScrnspace: {
+        width: 0, // or whatever size you need
+        height: 20,
+    },
+    AdminDashScrnheadingText: {
+        top: "9%",
+        fontSize: 30,
+        textAlign: "center",
+        fontWeight: "bold",
+    },
+    AdminDashScrnnavBar: {
+        backgroundColor: "#007CC7",
+        height: 50,
+        alignItems: "center",
+        marginBottom: 20
+    },
+
 })

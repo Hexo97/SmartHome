@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext, } from "react";
-import { StyleSheet, TouchableOpacity, TouchableNativeFeedback, ScrollView } from "react-native";
-import Colors from "../constants/Colors";
+import { StyleSheet, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
 import ShopItem from "./ShopItem";
-import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-elements";
-import { useIsFocused, useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Shop({ navigation }) {
 
