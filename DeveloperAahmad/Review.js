@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import { StyleSheet } from "react-native";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Card, AirbnbRating, Rating } from "react-native-elements";
+import { Card, AirbnbRating } from "react-native-elements";
 
 export default function Review({ review }) {
 
@@ -39,8 +37,7 @@ export default function Review({ review }) {
                         reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
                         defaultRating={review.rating}
                         size={20}
-                        onFinishRating={review.rating}
-                        disabled
+                        isDisabled={true}
                     />
                 </Card>
             </View>

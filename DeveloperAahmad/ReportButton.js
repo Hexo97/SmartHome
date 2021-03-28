@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet,  ScrollView, TextInput } from "react-native";
+import { StyleSheet, ScrollView, TextInput } from "react-native";
 import { View, Text } from "../components/Themed";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -132,14 +132,8 @@ export default function ReportButton({ user, category, sensor }) {
                                 setVisible(false);
                             }}
                         >
-                            {/* {
-                                alert
-                                &&
-                                <Text style={styles.alert}>Please enter a message</Text>
-                            } */}
                         </DialogInput>
                     </View>
-
 
                     <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
                         <Icon
@@ -156,55 +150,6 @@ export default function ReportButton({ user, category, sensor }) {
                                 setReviewVisible(true)
                             }}
                         />
-                        {/* <Dialog
-                            style={{ width: "80%" }}
-                            visible={reviewVisible}
-                            footer={
-                                <DialogFooter>
-                                    <DialogButton
-                                        text="CANCEL"
-                                        onPress={() => {
-                                            setReviewVisible(false),
-                                                setReviewMessage(""),
-                                                setReviewAlert(false)
-                                        }
-                                        }
-                                    />
-                                    <DialogButton
-                                        text="OK"
-                                        onPress={() => {
-                                            createReview(category, reviewMessage)
-                                        }
-                                        }
-                                    />
-                                </DialogFooter>
-                            }
-                            onTouchOutside={() => {
-                                setReviewVisible(false);
-                            }}
-                        /> */}
-                        <DialogInput>
-                            <TextInput
-                                style={{ fontSize: 15, alignItems: "center" }}
-                                style={styles.TextInput}
-                                placeholder="Leave your review here ..."
-                                value={reviewMessage}
-                                onChangeText={(value) => setReviewMessage(value)}
-                            />
-                            <AirbnbRating
-                                count={5}
-                                reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
-                                defaultRating={1}
-                                size={20}
-                                onPress={setRating}
-                                onFinishRating={rating => setRating(rating)}
-                            />
-                            {
-                                alert
-                                &&
-                                <Text style={styles.alert}>Please enter a message</Text>
-                            }
-                        </DialogInput>
                     </View>
 
                     <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
