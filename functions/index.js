@@ -104,14 +104,14 @@ exports.createSampleData = functions.https.onCall(
         const ActivePromotions = await findOneSubAll(
           "promotions",
           promo.id,
-          "ActivePromotions"
+          "activepromotions"
         ).catch(function (err) {
           console.log(err.message);
         });
         await Promise.all(
           ActivePromotions.map(
             async (ap) =>
-              await removeOneSubOne("promotions", promo.id, "ActivePromotions", ap.id)
+              await removeOneSubOne("promotions", promo.id, "activepromotions", ap.id)
           )
         ).catch(function (err) {
           console.log(err.message);

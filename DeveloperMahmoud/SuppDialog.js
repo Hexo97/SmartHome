@@ -18,7 +18,7 @@ export default function SuppDialog({ currPromotion }) {
     };
 
     const cancel = async () => {
-        setDialogVisible(false)
+        setCustomerDialogVisible(false)
         setSuppDialogVisible(false)
         setWarning("")
     }

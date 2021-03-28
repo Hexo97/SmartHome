@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, } from "react";
 import { StyleSheet, TouchableOpacity, TouchableNativeFeedback, ScrollView } from "react-native";
 import Colors from "../constants/Colors";
 import { Text, View } from "../components/Themed";
@@ -8,6 +8,7 @@ import ShopItem from "./ShopItem";
 import { Input, Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-elements";
+import { useIsFocused, useFocusEffect } from "@react-navigation/native";
 
 export default function Shop({ navigation }) {
 
@@ -18,6 +19,23 @@ export default function Shop({ navigation }) {
   const [userSensors, setUserSensors] = useState([])
 
   useEffect(() => db.Sensors.listenByUser(setUserSensors, user.id), [user])
+
+  const [promotion, setPromotion] = useState([]);
+  const [ActivePromotion, setService] = useState([]);
+  useEffect(() => {
+    db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+  }, [navigation]);
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // do this when focused
+      db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+      return () => {
+        // Do something when the screen is unfocused
+      };
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -34,16 +52,6 @@ export default function Shop({ navigation }) {
                 type="outline"
                 onPress={() => navigation.navigate('Promotion')}
               />
-              // &&
-              // <TouchableOpacity
-              //   onPress={() => navigation.navigate('Promotion')}
-              //   style={styles.TouchPromotion}
-              // >
-              //   <Text style={styles.TextPromotion}>
-              //     FREE SERVICES
-              // </Text>
-              // </TouchableOpacity>
-
             }
             {category.map((category) => (
               <ShopItem
@@ -51,6 +59,7 @@ export default function Shop({ navigation }) {
                 category={category}
                 navigation={navigation}
                 {...category}
+                discount={promotion.name == ("Discount")}
               />
             ))}
           </View>

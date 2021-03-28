@@ -31,7 +31,7 @@ import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
 import Reviews from '../../DeveloperAahmad/Reviews';
 // @ts-expect-error
 import SearchSensors from '../../DeveloperAisha/SearchSensors';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList} from './types';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -47,23 +47,23 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
-            <BottomTab.Screen
+      <BottomTab.Screen
         name="Sensors"
         component={TabTwoNavigator}
         options={{
-           // @ts-expect-error
-           tabBarIcon: ({ color }) => <Icon name="monitor" color="black"size={25} />,
+          // @ts-expect-error
+          tabBarIcon: ({ color }) => <Icon name="monitor" color="white" size={25} />,
         }}
       />
-        <BottomTab.Screen
+      <BottomTab.Screen
         name="Shop"
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="shopping-cart" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="shopping-cart" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -71,7 +71,7 @@ export default function BottomTabNavigator() {
         component={TabFourNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="settings" color="black"size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
     </BottomTab.Navigator>
@@ -119,22 +119,22 @@ function TabOneNavigator() {
         name="AllUserSensors"
         component={AllUserSensors}
         options={{ headerTitle: 'AllUserSensors' }}
-        />
-       <TabOneStack.Screen
+      />
+      <TabOneStack.Screen
         name="PaymentHistory"
         component={PaymentHistory}
         options={{ headerTitle: 'Payment History' }}
       />
-       <TabOneStack.Screen
+      <TabOneStack.Screen
         name="Reviews"
         component={Reviews}
         options={{ headerTitle: 'Reviews' }}
       />
-       <TabOneStack.Screen
+      <TabOneStack.Screen
         name="AllUserTrashCans"
         component={AllUserTrashCans}
         options={{ headerTitle: 'AllUserTrashCans' }}
-        />
+      />
     </TabOneStack.Navigator>
   );
 }

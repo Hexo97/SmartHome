@@ -13,9 +13,9 @@ import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
 
-export default function ShopItem({ navigation, category, edit, remove }) {
+export default function ShopItem({ navigation, category, edit, remove, discount }) {
   const { user } = useContext(UserContext);
-
+  
   const [payment, setPayment] = useState([]);
 
   const [catId, setCategory] = useState([]);
@@ -80,7 +80,7 @@ export default function ShopItem({ navigation, category, edit, remove }) {
                 color: "black",
               }}
             >
-              QR: {category.price}
+              QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)":category.price}
             </Text>
 
             <TouchableOpacity

@@ -34,16 +34,15 @@ export default function BottomTabNavigator() {
         component={TabOneNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="home" color="black" size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
-
       <BottomTab.Screen
         name="Reports"
         component={TabTwoNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="report" color="black" size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="report" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -51,7 +50,7 @@ export default function BottomTabNavigator() {
         component={TabThreeNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="question" color="black" size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="question" color="white" size={25} />,
         }}
       />
       <BottomTab.Screen
@@ -59,7 +58,7 @@ export default function BottomTabNavigator() {
         component={TabFourNavigator}
         options={{
           // @ts-expect-error
-          tabBarIcon: ({ color }) => <Icon name="settings" color="black" size={25} />,
+          tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
     </BottomTab.Navigator>
