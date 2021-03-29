@@ -49,6 +49,14 @@ class DB {
   remove = async (id) => {
     await db.collection(this.collection).doc(id).delete();
   };
+
+  listenSubAll = (set , id ,sub) =>
+  {
+    if(sub === "suggestionlist")
+    {
+      db.collection(this.collection).doc(id).collection(sub).onSnapshot(snap => set(snap.docs.map(this.reformat)))
+    }
+  }
 }
 
 class Ads extends DB {
@@ -231,6 +239,15 @@ class SuggestionList extends DB {
       .collection(this.collection)
       .doc(listid)
       .delete();
+
+      listenToProductSuggestions = (set) =>
+        db.collectionGroup(this.collection).where("type", "==", "Products").onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+      listenToApplicationSuggestions = (set) =>
+        db.collectionGroup(this.collection).where("type", "==", "Application").onSnapshot(snap => set(snap.docs.map(this.reformat)))
+
+      listenToStaffSuggestions = (set) =>
+        db.collectionGroup(this.collection).where("type", "==", "Staff").onSnapshot(snap => set(snap.docs.map(this.reformat)))
 }
 
 class Categories extends DB {
@@ -474,4 +491,5 @@ export default {
 
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),
+  SuggestionList,
 };
