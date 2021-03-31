@@ -186,7 +186,7 @@ export default function CustomerHomeScreen({ navigation }) {
             buttonStyle={styles.myButton}
           // onPress={() => navigation.navigate('Notifications')}
           />
-          <View style={styles.space} />
+        
           <Button
             title="FAQs"
             type="outline"
@@ -199,14 +199,19 @@ export default function CustomerHomeScreen({ navigation }) {
           flexDirection: "row",
         }}
         >
-          <View style={styles.space} />
-
-
+        
           <Button
             title="Find Sensors"
             type="outline"
             buttonStyle={styles.myButton}
             onPress={() => navigation.navigate('Search')}
+          />
+
+        <Button
+            title="My List"
+            type="outline"
+            buttonStyle={styles.myButton}
+            onPress={() => navigation.navigate('List')}
           />
         </View>
         {/* ----------------------------------HANAN-------------------------------------------- */}
@@ -222,13 +227,6 @@ export default function CustomerHomeScreen({ navigation }) {
             onPress={() => navigation.navigate('PaymentHistory')}
           />
           {/*--------------------------------------------------------------------------------------  */}
-          <View style={styles.space} />
-          <Button
-            title="My List"
-            type="outline"
-            buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('List')}
-          />
         </View>
         <View style={styles.container}>
           {/* <Button title="Play Sound" onPress={playSound} /> */}
@@ -362,7 +360,7 @@ const styles = StyleSheet.create({
   myButton: {
     marginLeft: "10%",
     width: 155,
-    marginBottom: "3%"
+    marginBottom: "3%",
 
   },
 });

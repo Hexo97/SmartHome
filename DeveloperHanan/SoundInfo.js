@@ -46,8 +46,8 @@ export default function SoundInfo({ sensor }) {
       alert: sensor.alert,
       categoryid: sensor.categoryid,
       location: location,
-      max: sensor.max,
-      min: sensor.min,
+      maxDB: sensor.maxDB,
+      minDB: sensor.minDB,
       userid: sensor.userid,
     });
     setLocation("");

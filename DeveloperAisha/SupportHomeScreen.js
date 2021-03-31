@@ -182,26 +182,42 @@ export default function SupportHomeScreen({ navigation }) {
           </Text>
         </View>
 
+        <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }}
+        >
+
         <Button
           title="View Maintenance Requests"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Maintenance')}
         />
         <Button
           title="New Sensors Request"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('SensorRequest')}
         />
+          </View>
+          <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }} >
         <Button
           title="Show User Suggestions"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('SuggestionForSupport')}
         />
         <Button
           title="Promotions"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Promotions')}
         />
+         </View>
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -327,5 +343,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     marginBottom: 16,
+  },
+  myButton: {
+    marginLeft: "10%",
+    width: 155,
+    marginBottom: "3%",
+
   },
 });

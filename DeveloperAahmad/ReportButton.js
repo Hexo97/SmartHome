@@ -91,7 +91,7 @@ export default function ReportButton({ user, category, sensor }) {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
+                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 30 }}>
                     <View style={{ backgroundColor: "#12232E" }} >
                         <Icon
                             name="report"
@@ -101,7 +101,7 @@ export default function ReportButton({ user, category, sensor }) {
                             containerStyle={{
                                 left: "42.5%"
                             }}
-                            color="#f50"
+                            color="#4DA8DA"
 
                             onPress={() => {
                                 setVisible(true)
@@ -144,7 +144,7 @@ export default function ReportButton({ user, category, sensor }) {
                             containerStyle={{
                                 left: "42.5%"
                             }}
-                            color="#f50"
+                              color="#4DA8DA"
 
                             onPress={() => {
                                 setReviewVisible(true)
@@ -152,7 +152,7 @@ export default function ReportButton({ user, category, sensor }) {
                         />
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 0 }}>
                         <DialogInput
                             style={{ width: "80%" }}
                             isDialogVisible={reviewVisible}
@@ -210,7 +210,7 @@ export default function ReportButton({ user, category, sensor }) {
                         </DialogInput>
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
+                    <View style={{ backgroundColor: "#12232E", alignItems: "center", marginHorizontal:0 }} >
                         <Icon
                             name="tools"
                             type="entypo"
@@ -219,7 +219,7 @@ export default function ReportButton({ user, category, sensor }) {
                             containerStyle={{
                                 left: "42.5%"
                             }}
-                            color="#f50"
+                              color="#4DA8DA"
 
                             onPress={() => {
                                 setMaintenanceVisible(true)
@@ -304,7 +304,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#12232E"
+        backgroundColor: "#12232E",
+        marginTop:"2%",
+        marginRight:"5%"
     },
     getStartedContainer: {
         alignItems: "center",
