@@ -1,5 +1,4 @@
 const firebase = require("firebase");
-const fb = require('firebase/storage')
 
 const firebaseConfig = {
   apiKey: "AIzaSyDA9XBf7mmSydm45U8LAC_8ZanHAdj5mkY",
@@ -121,7 +120,7 @@ const simulateReading = async (sensor) => {
       .collection("readings")
       .add({
         when: new Date(),
-        distance: distance + Math.floor(Math.random() * 20) - 10,
+        distance: Math.floor(Math.random() * 30)+ 20,
         capacity : capacity + Math.floor(Math.random() * 20) - 10,
       });
   }
@@ -134,28 +133,6 @@ const simulateReading = async (sensor) => {
       .add({
         when: new Date(),
         force: force + Math.floor(Math.random() * 10) + 0,
-      });
-  }
-  if (isCategory(sensor, "Motion")) {
-        
-    let images = []
-    let index = 0
-    images[0] = "https://static01.nyt.com/images/2020/01/19/fashion/18RING-PREVIEW-IMAGE/18RING-PREVIEW-IMAGE-superJumbo-v4.png";
-    images[1] = "https://townsquare.media/site/10/files/2019/07/Porch-Pirate.png?w=980&q=75";
-    images[2] = "https://ewscripps.brightspotcdn.com/dims4/default/53f770f/2147483647/strip/true/crop/1280x672+0+24/resize/1200x630!/quality/90/?url=https%3A%2F%2Fx-default-stgec.uplynk.com%2Fausw%2Fslices%2F5c2%2Fbe88c4e651db4a7dbe102614d7272948%2F5c2579ee9c3b48479551eb29750baa19%2Fposter_92ae91e3b2da431fab2e0897ebf62d0e.jpg";
-    index = Math.floor(Math.random() * images.length);
-    const when = new Date()
-    const imageName = when.toISOString()
-    const imageRef = fb.storage().ref(`sensors/${sensor.id}/images/${imageName}.jpg`)
-    const url = images[index]
-
-    await db
-      .collection("sensors")
-      .doc(sensor.id)
-      .collection("readings")
-      .add({
-        when: new Date(),
-        url
       });
   }
   else {
