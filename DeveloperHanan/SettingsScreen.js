@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import {
+  ImageBackground,
   StyleSheet,
   StatusBar,
   TouchableOpacity,
@@ -10,6 +11,7 @@ import UserContext from "../UserContext";
 import fb from "../fb";
 import db from "../db";
 import { Card } from "react-native-elements";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function SettingsScreen() {
   const { user } = useContext(UserContext);
@@ -72,100 +74,113 @@ export default function SettingsScreen() {
   console.log(user);
 
   return (
+    <SafeAreaProvider>
 
-    <View style={styles.imagebg}>
-      <StatusBar hidden={true} />
-      <View style={styles.navBar}>
-        <Text style={styles.headingText}>Settings</Text>
-      </View>
+      <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Name"
-          placeholderTextColor="#12232E"
-          value={name}
-          onChangeText={(value) => setName(value)}
-        />
-      </View>
+        <View style={styles.imagebg}>
+          <StatusBar hidden={true} />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Age"
-          placeholderTextColor="#12232E"
-          value={age}
-          onChangeText={(value) => setAge(value)}
-        />
-      </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Name"
+              placeholderTextColor="#12232E"
+              value={name}
+              onChangeText={(value) => setName(value)}
+            />
+          </View>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Phone"
-          placeholderTextColor="#12232E"
-          value={phone}
-          onChangeText={(value) => setPhone(value)}
-        />
-      </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Age"
+              placeholderTextColor="#12232E"
+              value={age}
+              onChangeText={(value) => setAge(value)}
+            />
+          </View>
 
-      <TouchableOpacity onPress={saveName} style={styles.loginBtn}>
-        <Text style={styles.loginText}>Save</Text>
-      </TouchableOpacity>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Phone"
+              placeholderTextColor="#12232E"
+              value={phone}
+              onChangeText={(value) => setPhone(value)}
+            />
+          </View>
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          secureTextEntry={true}
-          placeholderTextColor="#12232E"
-          value={password}
-          onChangeText={(value) => setPassword(value)}
-        />
-      </View>
+          <TouchableOpacity onPress={saveName} style={styles.loginBtn}>
+            <Text style={styles.loginText}>Save</Text>
+          </TouchableOpacity>
+
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Password"
+              secureTextEntry={true}
+              placeholderTextColor="#12232E"
+              value={password}
+              onChangeText={(value) => setPassword(value)}
+            />
+          </View>
 
 
-      <TouchableOpacity onPress={updatePassword} style={styles.loginBtn}>
-        <Text style={styles.loginText}>Reset Password</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={logout} style={styles.loginBtn}>
-        <Text style={styles.loginText}>Logout</Text>
-      </TouchableOpacity>
-      <View style={{ backgroundColor: "#fff", width: 300, height: 150 }}>
-        <Card style={{}}>
-          <Card.Title>Current-Details</Card.Title>
+          <TouchableOpacity onPress={updatePassword} style={styles.loginBtn}>
+            <Text style={styles.loginText}>Reset Password</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
+            <Text style={styles.loginText}>Logout</Text>
+          </TouchableOpacity>
+          <View style={{ width: 300, height: 150 }}>
+            <Card style={{}}>
+              <Card.Title>Current-Details</Card.Title>
 
-          <Text style={styles.title1}>Name:- {user.name}</Text>
-          <Text style={styles.title1}>Phone:- {user.phone}</Text>
-          <Text style={styles.title1}>Role:- {user.role}</Text>
-          <Text style={styles.title1}> Password:- ********</Text>
-          <Text style={styles.title1}>Age:- {user.age}</Text>
-        </Card>
+              <Text style={styles.title1}>Name:- {user.name}</Text>
+              <Text style={styles.title1}>Phone:- {user.phone}</Text>
+              <Text style={styles.title1}>Role:- {user.role}</Text>
+              <Text style={styles.title1}> Password:- ********</Text>
+              <Text style={styles.title1}>Age:- {user.age}</Text>
+            </Card>
 
-        {/* <Button onPress={logout} title="Logout" type="outline" /> */}
-      </View>
-    </View>
+            {/* <Button onPress={logout} title="Logout" type="outline" /> */}
+          </View>
+        </View>
+      </ImageBackground>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   flexDirection: "column",
+  //   backgroundColor: "#12232E",
+  // },
+  background: {
+    flex: 1,
+    // backgroundColor:'transparent'
+  },
+  scroll: {
+    marginTop: 70
+  },
   title: {
     fontSize: 40,
     fontWeight: "bold"
   },
   navBar: {
-    backgroundColor: "#4DA8DA",
+    // backgroundColor: "#4DA8DA",
     height: 60,
     paddingRight: 10,
     width: "100%",
     marginBottom: 10,
     flexDirection: "row",
   },
-
   container: {
     height: 400,
     width: "90%",
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     paddingTop: 50,
     alignItems: "center",
     position: "absolute",
@@ -175,13 +190,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 15,
   },
-
   imagebg: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
-    backgroundColor: "#EEFBFB",
+    // backgroundColor: "#EEFBFB",
+    marginTop: 70,
   },
-
   inputView: {
     borderColor: "#4DA8DA",
     borderWidth: 2,
@@ -192,6 +206,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#12232E",
     marginBottom: 20,
+    marginTop: 5
   },
 
   TextInput: {
@@ -215,20 +230,15 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: 25,
     marginBottom: 20,
     backgroundColor: "#007CC7",
   },
   logoutBtn: {
-    marginLeft: 10,
-    marginTop: 10,
-    width: "95%",
-    borderRadius: 15,
-    height: 50,
+    width: "35%",
+    borderRadius: 10,
+    height: 35,
     alignItems: "center",
     justifyContent: "center",
-    // marginTop: 25,
-    marginBottom: 20,
     backgroundColor: "#007CC7",
   },
   footerView: {

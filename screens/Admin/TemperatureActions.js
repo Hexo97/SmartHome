@@ -125,7 +125,7 @@ export default function TemperatureActions({ sensor }) {
           style={{
             backgroundColor: "#4DA8DA",
             width: "70%",
-            height:"8%",
+            height: "8%",
             marginLeft: "20%",
             marginTop: "2%",
           }}
@@ -138,7 +138,7 @@ export default function TemperatureActions({ sensor }) {
               fontSize: 18,
             }}
           >
-         Sensor's Dashboard
+            Sensor's Dashboard
           </Text>
         </View>
 
@@ -168,7 +168,7 @@ export default function TemperatureActions({ sensor }) {
             size={20}
             onPress={handleToggleAlert}
           />
-            <Icon
+          <Icon
             raised
             name="play-circle"
             type="font-awesome"
@@ -176,7 +176,7 @@ export default function TemperatureActions({ sensor }) {
             size={20}
             onPress={handleStartSimulator}
           />
-            <Icon
+          <Icon
             raised
             name="stop"
             type="font-awesome"
@@ -223,10 +223,10 @@ export default function TemperatureActions({ sensor }) {
             onPress={() => setDelay(delay + 1)}
           />
         </View>
-      
-        <View style={{ margin: 10, width:"45%", marginLeft:"31%" }}>
+
+        <View style={{ margin: 10, width: "45%", marginLeft: "31%" }}>
           <Card>
-            <Text style={{ color: "black", fontSize: 20, marginLeft:"15%" }}>Delay {delay}</Text>
+            <Text style={{ color: "black", fontSize: 20, marginLeft: "15%" }}>Delay {delay}</Text>
           </Card>
         </View>
       </ScrollView>
@@ -239,8 +239,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft:"0%",
-    marginRight:"10%"
+    marginLeft: "0%",
+    marginRight: "10%"
   },
   title: {
     fontSize: 20,

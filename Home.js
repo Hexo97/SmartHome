@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useState, useEffect } from "react";
-import { Image} from "react-native";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import RegisterLogin from "./RegisterLogin";
@@ -151,13 +151,11 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     width: "100%",
   },
-
   imagebg: {
     flex: 1,
     alignItems: "center",
     backgroundColor: "#EEFBFB",
   },
-
   container: {
     height: 350,
     width: "70%",
@@ -171,7 +169,6 @@ const styles = StyleSheet.create({
     bottom: 350,
     borderRadius: 15,
   },
-
   imgContainer: {
     marginRight: "30%",
     marginLeft: "30%",
@@ -181,7 +178,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   image: {
     marginRight: "30%",
     marginLeft: "30%",

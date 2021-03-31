@@ -166,6 +166,25 @@ exports.createSampleData = functions.https.onCall(
         await removeOne("users", user.id);
       })
     );
+    await Promise.all(
+      users.map(async (user) => {
+        const notifications = await findOneSubAll(
+          "users",
+          user.id,
+          "notifications"
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+        await Promise.all(
+          notifications.map(
+            async (notification) =>
+              await removeOneSubOne("users", user.id, "notifications", notification.id)
+          )
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+      })
+    );
 
     const authUsers = (await admin.auth().listUsers()).users;
     await Promise.all(

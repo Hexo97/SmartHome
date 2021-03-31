@@ -38,6 +38,17 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Temperature sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Sound") {
@@ -57,6 +68,17 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Sound sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Proximity") {
@@ -69,6 +91,25 @@ export default function SensorRequestProcessed({ payment }) {
         longitude: 25.4,
         motiondetected: false,
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Proximity sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Motion") {
@@ -78,7 +119,6 @@ export default function SensorRequestProcessed({ payment }) {
         motiondetected: false,
         location: "Default",
       });
-      setAddd(true)
       await db.Logs.create(
         {
           sensorId: sensorid,
@@ -87,6 +127,18 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Motion sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
+      setAddd(true)
     }
     if (category && category.name === "Smoke detector") {
       db.Sensors.create({
@@ -97,6 +149,25 @@ export default function SensorRequestProcessed({ payment }) {
         min: 25,
         max: 70
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Smoke Detector sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
 
@@ -111,6 +182,25 @@ export default function SensorRequestProcessed({ payment }) {
         status: "Sleeping",
         alarm: "off"
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+,
+        {
+          userId: userid
+,
+          message: 'Capacitive Pressure sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     alert("Sensor created");

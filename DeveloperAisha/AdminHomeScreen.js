@@ -87,10 +87,6 @@ export default function AdminHomeScreen({ navigation }) {
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.titleBar}>
-                    <Ionicons name="menu-outline" size={24} color="white"></Ionicons>
-                    <Ionicons name="notifications-outline" size={30} color="white"></Ionicons>
-        </View> */}
         <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
           <View style={styles.profileImage}>
             <Image source={{ uri: currentProfile }} style={styles.image} resizeMode="center"></Image>

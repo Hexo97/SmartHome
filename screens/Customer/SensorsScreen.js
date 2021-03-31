@@ -31,9 +31,9 @@ export default function SensorsScreen({ navigation }) {
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={true}>
 
-        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
+        {/* <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
           <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Control Sensors</Text>
-        </View>
+        </View> */}
 
         <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
           <Icon
@@ -72,7 +72,7 @@ export default function SensorsScreen({ navigation }) {
               &&
               <MotionInfo user={user} category={category} sensor={sensor} />
             }
-              {category.name === "Smoke detector"
+            {category.name === "Smoke detector"
               &&
               <SmokeInfo user={user} category={category} sensor={sensor} />
             }
@@ -90,14 +90,14 @@ export default function SensorsScreen({ navigation }) {
             {
               category.name === "Proximity"
               &&
-              <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation}/>
+              <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation} />
             }
-             {
+            {
               category.name === "Capacitive Pressure"
               &&
-              <PressureInfo sensor={sensor}/>
+              <PressureInfo sensor={sensor} />
             }
-            
+
             <ReportButton user={user} category={category} sensor={sensor} />
           </>
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, Image, ScrollView } from "react-native";
+import { StyleSheet, Text, Image, ScrollView, ImageBackground, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { View } from '../components/Themed';
 import { Button, Badge } from 'react-native-elements'
@@ -9,10 +9,14 @@ import db from '../db'
 import fb from '../fb'
 import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Icon } from "react-native-elements";
+import { color } from 'react-native-reanimated';
 
 export default function CustomerHomeScreen({ navigation }) {
+  
   const { user } = useContext(UserContext)
   // const [sound, setSound] = React.useState();
+
 
   // async function playSound() {
   //   console.log('Loading Sound');
@@ -105,148 +109,168 @@ export default function CustomerHomeScreen({ navigation }) {
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <StatusBar hidden={true} />
+      <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
 
-        <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
-          <View style={styles.profileImage}>
-            <Image source={{ uri: currentProfile }} style={styles.image} resizeMode="center"></Image>
-          </View>
-          <View style={styles.dm}>
-            <Badge status="success" />
-          </View>
-          <View style={styles.add}>
-            <TouchableOpacity onPress={uploadImage}>
-              <Ionicons name="ios-add" size={35} color="#FFFF" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
-        <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-            {
-              fullUser
-              &&
-              fullUser.name
-            }
-          </Text>
-          <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
-            {
-              fullUser
-              &&
-              fullUser.role
-            }
-          </Text>
-        </View>
-        <View style={styles.statsContainer}>
-          <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>
+          <View style={{ alignSelf: "center", backgroundColor: 'transparent' }}>
+            <View style={styles.profileImage}>
+              <Image source={{ uri: currentProfile }} style={styles.image} resizeMode="center"></Image>
+            </View>
+            <View style={styles.dm}>
+              <Badge status="success" />
+            </View>
+            <View style={styles.add}>
+              <TouchableOpacity onPress={uploadImage}>
+                <Ionicons name="ios-add" size={35} color="#FFFF" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          <View style={styles.infoContainer}>
+            <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
               {
                 fullUser
                 &&
-                fullUser.phone
+                fullUser.name
               }
             </Text>
-            <Text style={[styles.text, styles.subText]}>Contact</Text>
-          </View>
-          <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-            <Text style={[styles.text, { fontSize: 24 }]}>
+            <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
               {
-                userSensors
+                fullUser
                 &&
-                userSensors.length
+                fullUser.role
               }
             </Text>
-            <Text style={[styles.text, styles.subText]}>Sensor Bukcet</Text>
           </View>
-          <View style={styles.statsBox}>
-            <Text style={[styles.text, { fontSize: 24 }]}>
-              {
-                user
-                &&
-                user.age
-              }
-            </Text>
-            <Text style={[styles.text, styles.subText]}>Age</Text>
+          <View style={styles.statsContainer}>
+            <View style={styles.statsBox}>
+              <Text style={[styles.text, { fontSize: 24 }]}>
+                {
+                  fullUser
+                  &&
+                  fullUser.phone
+                }
+              </Text>
+              <Text style={[styles.text, styles.subText]}>Contact</Text>
+            </View>
+            <View style={[styles.statsBox]}>
+              <Text style={[styles.text, { fontSize: 24 }]}>
+                {
+                  userSensors
+                  &&
+                  userSensors.length
+                }
+              </Text>
+              <Text style={[styles.text, styles.subText]}>Sensor Bukcet</Text>
+            </View>
+            <View style={styles.statsBox}>
+              <Text style={[styles.text, { fontSize: 24 }]}>
+                {
+                  user
+                  &&
+                  user.age
+                }
+              </Text>
+              <Text style={[styles.text, styles.subText]}>Age</Text>
+            </View>
           </View>
-        </View>
 
-        <View style={{ marginTop: 32, padding: 20, marginRight: 20, backgroundColor: "#12232E" }}>
-          <Text style={[styles.text, styles.subText]}>Email</Text>
-          <Text style={[styles.text, styles.subText]}>{email}</Text>
-          <Text style={[styles.text, styles.subText], { textAlign: "right", color: "white" }}>{dt}</Text>
-        </View>
-        <View style={{
-          backgroundColor: "#12232E",
-          flexDirection: "row",
-        }}
-        >
-          <Button
-            title="View Notifications"
-            type="outline"
-            buttonStyle={styles.myButton}
-          // onPress={() => navigation.navigate('Notifications')}
-          />
-          <View style={styles.space} />
-          <Button
-            title="FAQs"
-            type="outline"
-            buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('Faq')}
-          />
-        </View>
-        <View style={{
-          backgroundColor: "#12232E",
-          flexDirection: "row",
-        }}
-        >
-          <View style={styles.space} />
+          <View style={{ marginTop: 32, padding: 20, marginRight: 20, backgroundColor: 'transparent' }}>
+            <Text style={[styles.text, styles.subText]}>Email</Text>
+            <Text style={[styles.text, styles.subText]}>{email}</Text>
+            <Text style={[styles.text, styles.subText], { textAlign: "right", color: "white" }}>{dt}</Text>
+          </View>
+          {/* //////////////////////////BUTTONS START////////////////////////////// */}
+          <View style={{
+            backgroundColor: 'transparent',
+            flexDirection: "row",
+          }}
+          >
+            <Button
+              title="View Notifications"
+              type="outline"
+              buttonStyle={styles.myButton}
+              onPress={() => navigation.navigate('Notifications')}
+            />
+            <View style={styles.space} />
+            <Button
+              title="FAQs"
+              type="outline"
+              buttonStyle={styles.myButton}
+              onPress={() => navigation.navigate('Faq')}
+            />
+          </View>
+          {/* ///////////////////////////////////////////////////////////////////////////////////// */}
+          <View style={{
+            backgroundColor: 'transparent',
+            flexDirection: "row",
+          }}
+          >
+            <View style={styles.space} />
+            <Button
+              title="Find Sensors"
+              type="outline"
+              buttonStyle={styles.myButton}
+              onPress={() => navigation.navigate('Search')}
+            />
+          </View>
+          {/* ///////////////////////////////////////////////////////////////////////////////////// */}
 
+          <View style={{
+            backgroundColor: 'transparent',
+            flexDirection: "row",
+          }}
+          >
+            <Button
+              title="Payment History"
+              type="outline"
+              color='red'
+              buttonStyle={styles.myButton}
+              onPress={() => navigation.navigate('PaymentHistory')}
+            />
+            <View style={styles.space} />
+            <Button
+              title="My List"
+              type="outline"
+              buttonStyle={styles.myButton}
+              onPress={() => navigation.navigate('List')}
+            >
+              <Text style={styles.CHSButtonText}>My List</Text>
+            </Button>
+          </View>
 
-          <Button
-            title="Find Sensors"
-            type="outline"
-            buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('Search')}
-          />
-        </View>
-        {/* ----------------------------------HANAN-------------------------------------------- */}
-        <View style={{
-          backgroundColor: "#12232E",
-          flexDirection: "row",
-        }}
-        >
-          <Button
-            title="Payment History"
-            type="outline"
-            buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('PaymentHistory')}
-          />
-          {/*--------------------------------------------------------------------------------------  */}
-          <View style={styles.space} />
-          <Button
-            title="My List"
-            type="outline"
-            buttonStyle={styles.myButton}
-            onPress={() => navigation.navigate('List')}
-          />
-        </View>
-        <View style={styles.container}>
-          {/* <Button title="Play Sound" onPress={playSound} /> */}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  scroll: {
+    marginTop:70
+  },
+  background: {
+    // width: '100%',
+    // height: '100%',
+    // width: null,
+    // height: null,
+    flex: 1,
+    
+    // resizeMode: 'cover', // or 'stretch'
+  },
+  CHSButtonText: {
+    color: 'red'
+  },
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: "#12232E"
+    backgroundColor: "#12232E",
   },
   text: {
     color: "#EEFBFB",
-    backgroundColor: "#12232E"
+    backgroundColor: 'transparent'
   },
   image: {
     flex: 1,
@@ -265,7 +289,7 @@ const styles = StyleSheet.create({
     color: "#EEFBFB",
     textTransform: "uppercase",
     fontWeight: "500",
-    backgroundColor: "#12232E"
+    backgroundColor: 'transparent'
   },
   profileImage: {
     width: 150,
@@ -301,7 +325,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     alignSelf: "center",
-    // backgroundColor:"#12232E",
+    backgroundColor: 'transparent',
     marginTop: 16
   },
   dm: {
@@ -317,12 +341,13 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: "row",
     alignSelf: "center",
-    marginTop: 32
+    marginTop: 32,
+    backgroundColor: 'transparent'
   },
   statsBox: {
     alignItems: "center",
     flex: 1,
-    backgroundColor: "#12232E"
+    backgroundColor: 'transparent'
   },
   mediaImageContainer: {
     width: 180,
@@ -362,7 +387,7 @@ const styles = StyleSheet.create({
   myButton: {
     marginLeft: "10%",
     width: 155,
-    marginBottom: "3%"
-
+    marginBottom: "3%",
+    borderColor: 'green',
   },
 });

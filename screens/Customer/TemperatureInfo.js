@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet,TextInput } from "react-native";
+import { StyleSheet, TextInput } from "react-native";
 import { Text, View } from "../../components/Themed";
 import { Icon } from "react-native-elements";
 import db from "../../db";
@@ -37,85 +37,85 @@ export default function TemperatureInfo({ user, category, sensor }) {
   return (
 
     <>
-    <View style={styles.rolesContainer}>
-    <Text style={styles.title}>Update Location</Text>
-    <View style={styles.inputView}>
-      <TextInput
-        style={styles.TextInput}
-        placeholder="Change location name"
-        placeholderTextColor="#12232E"
-        value={location}
-        onChangeText={(value) => setLocation(value)}
-      />
-    </View>
+      <View style={styles.rolesContainer}>
+        <Text style={styles.title}>Update Location</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Change location name"
+            placeholderTextColor="#12232E"
+            value={location}
+            onChangeText={(value) => setLocation(value)}
+          />
+        </View>
 
-    <View
-      style={{
-        width: "60%",
-        marginLeft: "22%",
-        marginTop: "3%",
-        flexDirection: "row",
-      }}
-    >
-      <Icon
-        reverse
-        name="save"
-        type="font-awesome"
-        color="#4DA8DA"
-        size={20}
-        onPress={updateLoc}
-      />
+        <View
+          style={{
+            width: "60%",
+            marginLeft: "22%",
+            marginTop: "3%",
+            flexDirection: "row",
+          }}
+        >
+          <Icon
+            reverse
+            name="save"
+            type="font-awesome"
+            color="#4DA8DA"
+            size={20}
+            onPress={updateLoc}
+          />
 
-      <Icon
-        reverse
-        name="edit"
-        type="font-awesome"
-        color="#4DA8DA"
-        size={20}
-        onPress={() => EditUserRole(sensor.location)}
-      />
-    </View>
-  </View>
+          <Icon
+            reverse
+            name="edit"
+            type="font-awesome"
+            color="#4DA8DA"
+            size={20}
+            onPress={() => EditUserRole(sensor.location)}
+          />
+        </View>
+      </View>
 
-    <View
-      style={{
-        backgroundColor: "#4DA8DA",
-        width: "90%",
-        marginLeft: "5%",
-        marginTop: "5%",
-      }}
-    >
-      <Text
-        style={styles.getStartedText}
-        lightColor="rgba(0,0,0,0.8)"
-        darkColor="rgba(255,255,255,0.8)"
+      <View
+        style={{
+          backgroundColor: "#4DA8DA",
+          width: "90%",
+          marginLeft: "5%",
+          marginTop: "5%",
+        }}
       >
-        Max Volume: {sensor.max}
-      </Text>
-      <Text
-        style={styles.getStartedText}
-        lightColor="rgba(0,0,0,0.8)"
-        darkColor="rgba(255,255,255,0.8)"
-      >
-        Min Volume: {sensor.min}
-      </Text>
-      {reading && (
+        <Text
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)"
+        >
+          Max Volume: {sensor.max}
+        </Text>
+        <Text
+          style={styles.getStartedText}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)"
+        >
+          Min Volume: {sensor.min}
+        </Text>
+        {reading && (
+          <Text
+            style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
+            lightColor="rgba(0,0,0,0.8)"
+            darkColor="rgba(255,255,255,0.8)"
+          >
+            Current: {reading.current}
+          </Text>
+        )}
         <Text
           style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
           lightColor="rgba(0,0,0,0.8)"
           darkColor="rgba(255,255,255,0.8)"
         >
-          Current: {reading.current}
+          Alert: {sensor.alert ? "True" : "False"}
         </Text>
-      )}
-      <Text
-        style={sensor.alert ? styles.getStartedRed : styles.getStartedGreen}
-        lightColor="rgba(0,0,0,0.8)"
-        darkColor="rgba(255,255,255,0.8)"
-      >
-        Alert: {sensor.alert ? "True" : "False"}
-      </Text>
-    </View>
+      </View>
     </>
   );
 }

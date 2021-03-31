@@ -189,6 +189,7 @@ class Users extends DB {
   constructor() {
     super("users");
     this.SuggestionList = new SuggestionList(this.collection);
+    this.Notifications = new Notifications(this.collection);
   }
 
   listenByRole = (set, role) =>
@@ -205,7 +206,6 @@ class SuggestionList extends DB {
   }
 
   createList = (userid, list) =>
-    // console.log(userid)
     db.collection(this.containing).doc(userid).collection(this.collection).add(list);
 
   listenToUserSuggestion = (set, userid) =>
@@ -434,7 +434,7 @@ class ActivePromotions extends DB {
   }
 
   // This is Mahmoud. I am so proud of doing this function. I shall flex on my instructor and my peers, Thanks
-  listenToAllAPByUser = async (setProm,set, userid) => {
+  listenToAllAPByUser = async (setProm, set, userid) => {
     db.collection(this.containing).get().then(function (querySnapshot) {
       querySnapshot.forEach(function (doc) {
         db.collection('promotions').doc(doc.id).collection('activepromotions').where("userId", "==", userid).get().then(function (querySnapshot2) {
@@ -449,6 +449,39 @@ class ActivePromotions extends DB {
   }
 
 }
+class Notifications extends DB {
+  constructor(containing) {
+    super("notifications");
+    this.containing = containing;
+  }
+  createNotification = (userid, notification) =>
+    db.collection(this.containing).doc(userid).collection(this.collection).add(notification);
+
+  listenToUserNotifications = (set, userid) =>
+    db
+      .collection(this.containing)
+      .doc(userid)
+      .collection(this.collection)
+      .orderBy("date", "desc")
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
+  updateNotification = (userId, notificationId, Notification) => {
+    const { ...rest } = Notification;
+    db
+      .collection(this.containing)
+      .doc(userId)
+      .collection(this.collection)
+      .doc(notificationId)
+      .set(rest);
+  }
+  listenToAllUnread = (set, userid) =>
+    db
+      .collectionGroup(this.collection)
+      .where("userId", "==", userid)
+      .where("isRead", "==", false)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+}
+
 export default {
   Categories: new Categories(),
   Sensors: new Sensors(),
@@ -471,6 +504,7 @@ export default {
   Logs: new Logs(),
   Promotions: new Promotions(),
   ActivePromotions: new ActivePromotions(),
+  Notifications: new Notifications(),
 
   RealTimeMonitoring: new RealTimeMonitoring(),
   PopularSensor: new PopularSensor(),

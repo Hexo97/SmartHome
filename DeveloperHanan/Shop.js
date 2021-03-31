@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
@@ -28,9 +28,12 @@ export default function Shop({ navigation }) {
   useFocusEffect(
     React.useCallback(() => {
       // do this when focused
+      console.log("shop is focused");
       db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
       return () => {
         // Do something when the screen is unfocused
+        console.log("shop is unfocused");
+
       };
     }, [])
   );
@@ -39,18 +42,18 @@ export default function Shop({ navigation }) {
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.title}>BUY Smart Home Sensors </Text>
+          {
+            userSensors.length >= 2
+            &&
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Promotion')}
+              style={styles.TouchPromotion}
+            >
+              <Text style={styles.TextPromotion}>Promos</Text>
+            </TouchableOpacity>
+          }
           <View style={styles.container}>
 
-            {
-              userSensors.length >= 2
-              &&
-              <Button
-                title="FREE SERVICES"
-                type="outline"
-                onPress={() => navigation.navigate('Promotion')}
-              />
-            }
             {category.map((category) => (
               <ShopItem
                 key={category.id}
@@ -69,15 +72,18 @@ export default function Shop({ navigation }) {
 
 const styles = StyleSheet.create({
   TextPromotion: {
-    fontSize: 17,
-    color: 'yellow'
+    paddingVertical: 5,
+    fontSize: 15,
+    color: 'white',
+    textAlign: 'center',
   },
   TouchPromotion: {
-    padding: 5,
-    height: 35,
-    overflow: 'hidden',
+    marginLeft: 15,
+    marginTop: 10,
+    height: 30,
+    width: 100,
     borderRadius: 55,
-    backgroundColor: '#3B58F5'
+    backgroundColor: 'red'
   },
   customViewStyle: {
     width: 120,

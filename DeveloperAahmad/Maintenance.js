@@ -28,7 +28,6 @@ export default function Maintenance({ route }) {
     };
 
     const save = async () => {
-        console.log("status hhhhhhhhhhhhhhhhhhhhhhhhh", status)
         await db.Sensors.Maintenance.updateMaintenance(sensor.id, { ...maintenanceReport, status: status, comments: comment }, maintenanceReport.id);
         setAlert(false)
     };

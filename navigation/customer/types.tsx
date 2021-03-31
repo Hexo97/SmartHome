@@ -11,9 +11,11 @@ export type BottomTabParamList = {
   PaymentHistory: undefined;
   Reviews: undefined;
   AllUserTrashCans:undefined;
+  Notifications:undefined;
 };
 export type TabOneParamList ={
   Home: undefined;
+  Notifications: undefined;
   Faq: undefined;
   Reviews: undefined;
   Search: undefined;

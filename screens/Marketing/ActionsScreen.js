@@ -13,7 +13,7 @@ export default function ActionsScreen() {
 
   const create = async () => {
     setMyText("TRUE");
-    
+
     await db.Ads.create({
       desc: desc,
       categoryid: category.id,
@@ -23,7 +23,7 @@ export default function ActionsScreen() {
     alert("Ad successfully created");
     setDesc(""), setCategory(null), setUrl("");
     setMyText("FALSE");
-    
+
   };
 
   const valid = () => desc !== "" && category !== null && url != "";
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
-    textAlign:"center"
+    textAlign: "center"
   },
 
   createBtn: {

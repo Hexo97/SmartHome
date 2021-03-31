@@ -2,11 +2,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { Icon } from 'react-native-elements'
+import { Icon } from "react-native-elements";
+import { TouchableOpacity, Text } from "react-native";
+import { Button } from "react-native-elements";
+import { useState, useEffect, useContext } from "react";
 
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
+// @ts-expect-error
+import UserContext from '../../UserContext'
+// @ts-expect-error
+import db from "../../db";
 // @ts-expect-error
 import CustomerHomeScreen from '../../DeveloperAisha/CustomerHomeScreen';
 // @ts-expect-error
@@ -26,6 +33,8 @@ import Shop from '../../DeveloperHanan/Shop';
 // @ts-expect-error
 import Promotion from '../../DeveloperMahmoud/Promotion';
 // @ts-expect-error
+import Notifications from '../../DeveloperMahmoud/Notifications';
+// @ts-expect-error
 import PaymentHistory from '../../DeveloperHanan/PaymentHistory';
 // @ts-expect-error
 import Reviews from '../../DeveloperAahmad/Reviews';
@@ -41,7 +50,14 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        style: {
+          backgroundColor: 'transparent'
+        }
+      }
+      }
+    >
       <BottomTab.Screen
         name="Home"
         component={TabOneNavigator}
@@ -74,7 +90,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <Icon name="settings" color="white" size={25} />,
         }}
       />
-    </BottomTab.Navigator>
+    </BottomTab.Navigator >
   );
 }
 // https://icons.expo.fyi/
@@ -82,6 +98,13 @@ function TabBarIcon(props: { name: string; color: string }) {
   // @ts-expect-error
   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
+function checkNotification() {
+  const { user } = useContext(UserContext);
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
+  db.Users.Notifications.listenToAllUnread(setUnreadNotifications, user.id)
+  console.log("bottomtab unread:", unreadNotifications.length);
+}
+// setInterval(checkNotification, 4000);//run this thang every 2 seconds
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
@@ -93,18 +116,44 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="Home"
         component={CustomerHomeScreen}
-        options={{ headerTitle: 'Home' }}
+        options={({ navigation }) => ({
+          headerTransparent: true,
+          // headerStyle: {
+          //   backgroundColor: 'transparent',
+          // },
+          headerTitle: 'Home', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => {
+                // checkNotification()
+                navigation.navigate('Notifications')
+              }}
+            >
+              {
+                // unreadNotifications.length > 0
+                // &&
+                // @ts-expect-error
+                <Icon name='notifications-active' color='orange' size={25} />
+              }
+              {/* {
+                // !(unreadNotifications.length > 0)
+                // &&
+                // @ts-expect-error
+                <Icon name='notifications-none' color="grey" size={25} />
+              } */}
+
+            </TouchableOpacity>
+          )
+        }
+        )
+        }
       />
       <TabOneStack.Screen
         name="Faq"
         component={Faq}
         options={{ headerTitle: 'Faq' }}
       />
-      {/* <TabOneStack.Screen
-        name="Reviews"
-        component={Faq}
-        options={{ headerTitle: 'Reviews' }}
-      /> */}
       <TabOneStack.Screen
         name="Search"
         component={SearchSensors}
@@ -115,7 +164,6 @@ function TabOneNavigator() {
         component={SuggestionList}
         options={{ headerTitle: 'List' }}
       />
-
       <TabOneStack.Screen
         name="PaymentHistory"
         component={PaymentHistory}
@@ -131,6 +179,11 @@ function TabOneNavigator() {
         component={AllUserTrashCans}
         options={{ headerTitle: 'AllUserTrashCans' }}
       />
+      <TabOneStack.Screen
+        name="Notifications"
+        component={Notifications}
+        options={{ headerTitle: 'Notifications' }}
+      />
     </TabOneStack.Navigator>
   );
 }
@@ -143,7 +196,28 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="Sensors"
         component={SensorsScreen}
-        options={{ headerTitle: 'Sensors' }}
+        options={({ navigation }) => ({
+          headerTransparent: true,
+          headerTitle: 'Control Sensors',
+          headerTitleStyle: {
+            alignSelf: 'center',
+            marginLeft: 55
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.navigate('Notifications')}
+            // disabled={!this.state.isFormValid}
+            >
+              {
+                // @ts-expect-error
+                <Icon name={"notifications-none"} color="grey" size={25} />
+              }
+            </TouchableOpacity>
+          )
+        }
+        )
+        }
       />
       <TabOneStack.Screen
         name="Precautions"
@@ -162,7 +236,24 @@ function TabThreeNavigator() {
       <TabThreeStack.Screen
         name="Shop"
         component={Shop}
-        options={{ headerTitle: 'Shop' }}
+        options={({ navigation }) => ({
+          headerTransparent: true,
+          headerTitle: 'Shop', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.navigate('Notifications')}
+            // disabled={!this.state.isFormValid}
+            >
+              {
+                // @ts-expect-error
+                <Icon name="notifications-none" color="grey" size={25} />
+              }
+            </TouchableOpacity>
+          )
+        }
+        )
+        }
       />
       <TabThreeStack.Screen
         name="Promotion"
@@ -182,7 +273,24 @@ function TabFourNavigator() {
       <TabFourStack.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ headerTitle: 'Settings' }}
+        options={({ navigation }) => ({
+          headerTransparent: true,
+          headerTitle: 'Settings', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
+          headerRight: () => (
+            <TouchableOpacity
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.navigate('Notifications')}
+            // disabled={!this.state.isFormValid}
+            >
+              {
+                // @ts-expect-error
+                <Icon name="notifications-none" color="grey" size={25} />
+              }
+            </TouchableOpacity>
+          )
+        }
+        )
+        }
       />
     </TabFourStack.Navigator>
   );

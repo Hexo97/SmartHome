@@ -31,49 +31,49 @@ export default function MotionInfo({ user, category, sensor }) {
 
     return (
         <SafeAreaProvider style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-      
-        <View style= {{ backgroundColor:"#4DA8DA", height:50,margin:30}}>
-        <Text style= {{color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Previous Motion</Text>
-        </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
 
-        <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30}}>
-            <Image
-                style={styles.tinyLogo}
-                source={{
-                    uri: previousImageURL,
-                }}
-            />
-            </View>
-          
-        <View style= {{ backgroundColor:"#4DA8DA", height:50,margin:30}}>
-            <Text style= {{color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Current Motion</Text>
-        </View>
+                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 30 }}>
+                    <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Previous Motion</Text>
+                </View>
 
-        <View style= {{ backgroundColor:"#12232E", alignSelf:"center",marginHorizontal:30}}>
-            <Image
-                style={styles.tinyLogo}
-                source={{
-                    uri: latestImageURL,
-                }}
-            />
-            </View>
+                <View style={{ backgroundColor: "#12232E", alignSelf: "center", marginHorizontal: 30 }}>
+                    <Image
+                        style={styles.tinyLogo}
+                        source={{
+                            uri: previousImageURL,
+                        }}
+                    />
+                </View>
 
-        <View style= {{ backgroundColor:"#4DA8DA", height:50,margin:10, marginRight:30,marginLeft:30}}>
-        <Text style= {{color: 'black',textAlign:"center",marginTop:10, fontSize:20 , fontWeight:"bold", fontStyle:"italic"}}>Motion Detected</Text>
-        </View>
+                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 30 }}>
+                    <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Current Motion</Text>
+                </View>
 
-        <View style= {{ backgroundColor:"grey", alignSelf:"center", height:150}}>
-        <Avatar
-            size="xlarge"
-            rounded
-            icon={{name: 'camera', type: 'fontisto'}}
-            activeOpacity={0.7}
-            containerStyle={{flex: 5}}
-            />
-        <Text style={{textAlign:"center", fontSize:20, color:"black",fontWeight:"bold", fontStyle:'italic'}}> {sensor.motiondetected ? "True" : "False"}</Text>
-        </View>
-        </ScrollView>
+                <View style={{ backgroundColor: "#12232E", alignSelf: "center", marginHorizontal: 30 }}>
+                    <Image
+                        style={styles.tinyLogo}
+                        source={{
+                            uri: latestImageURL,
+                        }}
+                    />
+                </View>
+
+                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 10, marginRight: 30, marginLeft: 30 }}>
+                    <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Motion Detected</Text>
+                </View>
+
+                <View style={{ backgroundColor: "grey", alignSelf: "center", height: 150 }}>
+                    <Avatar
+                        size="xlarge"
+                        rounded
+                        icon={{ name: 'camera', type: 'fontisto' }}
+                        activeOpacity={0.7}
+                        containerStyle={{ flex: 5 }}
+                    />
+                    <Text style={{ textAlign: "center", fontSize: 20, color: "black", fontWeight: "bold", fontStyle: 'italic' }}> {sensor.motiondetected ? "True" : "False"}</Text>
+                </View>
+            </ScrollView>
         </SafeAreaProvider>
     );
 }
