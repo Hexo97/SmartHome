@@ -40,10 +40,10 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
           userId: userid
-,
+          ,
           message: 'Temperature sensor request has been processed',
           date: new Date(),
           isRead: false
@@ -70,10 +70,10 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
           userId: userid
-,
+          ,
           message: 'Sound sensor request has been processed',
           date: new Date(),
           isRead: false
@@ -82,7 +82,7 @@ export default function SensorRequestProcessed({ payment }) {
       setAddd(true)
     }
     if (category && category.name === "Proximity") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         location: "Kitchen",
@@ -101,10 +101,10 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
           userId: userid
-,
+          ,
           message: 'Proximity sensor request has been processed',
           date: new Date(),
           isRead: false
@@ -129,10 +129,10 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
           userId: userid
-,
+          ,
           message: 'Motion sensor request has been processed',
           date: new Date(),
           isRead: false
@@ -141,7 +141,7 @@ export default function SensorRequestProcessed({ payment }) {
       setAddd(true)
     }
     if (category && category.name === "Smoke detector") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         alert: false,
@@ -159,10 +159,10 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
           userId: userid
-,
+          ,
           message: 'Smoke Detector sensor request has been processed',
           date: new Date(),
           isRead: false
@@ -170,9 +170,8 @@ export default function SensorRequestProcessed({ payment }) {
       )
       setAddd(true)
     }
-
     if (category && category.name === "Capacitive Pressure") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         alert: false,
@@ -192,10 +191,9 @@ export default function SensorRequestProcessed({ payment }) {
       )
       await db.Users.Notifications.createNotification(
         userid
-,
+        ,
         {
-          userId: userid
-,
+          userId: userid,
           message: 'Capacitive Pressure sensor request has been processed',
           date: new Date(),
           isRead: false

@@ -4,6 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { Icon } from 'react-native-elements';
 import Colors from '../../constants/Colors';
+import { TouchableOpacity, Text } from "react-native";
+// @ts-expect-error
+import styles from '../../DeveloperMahmoud/SmartStyle';
 import useColorScheme from '../../hooks/useColorScheme';
 // @ts-expect-error
 import SupportHomeScreen from '../../DeveloperAisha/SupportHomeScreen';
@@ -19,6 +22,8 @@ import SensorRequest from '../../DeveloperHanan/SensorRequest';
 import Reports from '../../DeveloperAahmad/Reports';
 // @ts-expect-error
 import Promotions from '../../DeveloperMahmoud/Promotion';
+// @ts-expect-error
+import UserPromReq from '../../DeveloperMahmoud/UserPromReq';
 // @ts-expect-error
 import Maintenance from '../../DeveloperAahmad/Maintenance';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
@@ -39,7 +44,7 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <Icon name="home" color="white" size={25} />,
         }}
       />
-      
+
       <BottomTab.Screen
         name="Reports"
         component={TabTwoNavigator}
@@ -100,12 +105,29 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="Promotions"
         component={Promotions}
-        options={{ headerTitle: 'Promotions' }}
+        options={({ navigation }) => ({
+          headerTitle: 'Promotions',
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UserPromReq')}
+            >
+              {
+                <Text style={styles.AddPromoButton}>Process User Request</Text>
+              }
+            </TouchableOpacity>
+          )
+        })
+        }
       />
       <TabOneStack.Screen
         name="Maintenance"
         component={Maintenance}
         options={{ headerTitle: 'Maintenance' }}
+      />
+      <TabOneStack.Screen
+        name="UserPromReq"
+        component={UserPromReq}
+        options={{ headerTitle: 'UserPromReq LIST' }}
       />
     </TabOneStack.Navigator>
   );

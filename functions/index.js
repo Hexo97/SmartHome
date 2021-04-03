@@ -311,7 +311,7 @@ exports.createSampleData = functions.https.onCall(
     const { id: logId2 } = await db.collection('logs').add({ sensorId: sensorId2, categoryId: categoryId2, date: new Date(), logMessage: ` Sensor Created` })
     functions.logger.info("logId2", { logId2 })
 
-    const { id: promotionId1 } = await db.collection('promotions').add({ name: `Free Maintenance`, description: `Have a free maintenance for one of your sensors for a whole 3 months!`, image: "http://www.pngall.com/wp-content/uploads/5/Construction-Maintenance-PNG-Picture.png" })
+    const { id: promotionId1 } = await db.collection('promotions').add({ name: `Maintenance`, description: `Have a free maintenance for one of your sensors for a whole 3 months!`, image: "http://www.pngall.com/wp-content/uploads/5/Construction-Maintenance-PNG-Picture.png" })
     functions.logger.info("promotionId1", { promotionId1 })
 
 

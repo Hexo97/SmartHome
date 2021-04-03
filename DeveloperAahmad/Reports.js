@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  ImageBackground,
+StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
@@ -53,10 +55,9 @@ export default function Reports() {
   // console.log(sensor);
   return (
     <>
-      <View style={styles.navBar}>
-        <Text style={styles.headingText}>Reports</Text>
-      </View>
       <SafeAreaProvider style={styles.container}>
+        {/* <ImageBackground source={require("../assets/images/background.png")} style={styles.background}> */}
+
         <ScrollView showsVerticalScrollIndicator={false}>
 
           <View style={styles.container}>
@@ -157,43 +158,26 @@ export default function Reports() {
 
 
 
-            {/* <View style={styles.container}>
-        {faq.map((faq) =>
-          faq.answer !== "" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : user ? user.role === "Support" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : null 
-          : null
-        )}
-      </View> */}
+
           </View>
-        </ScrollView>
+          </ScrollView>
+        {/* </ImageBackground> */}
+
       </SafeAreaProvider>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  // background: {
+  //   flex: 1,
+  // },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#EEFBFB",
+    // backgroundColor: "transparent",
   },
   title: {
     fontSize: 20,

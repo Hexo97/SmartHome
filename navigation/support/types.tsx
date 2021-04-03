@@ -7,6 +7,7 @@ export type BottomTabParamList = {
   SuggestionForSupport: undefined
   Promotions: undefined
   Maintenance:undefined
+  UserPromReq:undefined
 };
 
 export type TabOneParamList = {
@@ -15,6 +16,7 @@ export type TabOneParamList = {
   SuggestionForSupport: undefined;
   Promotions: undefined;
   Maintenance:undefined;
+  UserPromReq:undefined;
 };
 
 export type TabTwoParamList = {

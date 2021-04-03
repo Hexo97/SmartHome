@@ -1,5 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { TouchableOpacity, Text, Image, ScrollView, TextInput } from "react-native";
+import {
+  ImageBackground,
+  TouchableOpacity, Text, Image, ScrollView, TextInput
+} from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -10,6 +13,7 @@ import styles from './SmartStyle'
 import UserContext from "../UserContext";
 import db from '../db'
 import { useFocusEffect } from "@react-navigation/native";
+import promDialog from "./UserPromReq";
 
 export default function Service({ promotion }) {
   const { user } = useContext(UserContext);
@@ -20,17 +24,15 @@ export default function Service({ promotion }) {
   const [currPromotion, setCurrPromotion] = useState(promotion)
 
   const [CustomerdialogVisible, setCustomerDialogVisible] = useState(false)
-
   const [suppdialogVisible, setSuppDialogVisible] = useState(false)
-  const [addsuppdialogVisible, setSuppAddDialogVisible] = useState(false)
   const [deleteSuppDialogVisible, setDeleteSuppDialogVisible] = useState(false)
 
+  // customer;button redeem doesn't show if exists
   const [checkPromotion, setPromotion] = useState([]);
   const [checkActivePromotion, setService] = useState([]);
   useEffect(() => {
     db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
   }, [promotion]);
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -44,11 +46,6 @@ export default function Service({ promotion }) {
       };
     }, [])
   );
-
-
-  // console.log("promotion", promotion.name);
-  // console.log(checkActivePromotion.userId == user.id);
-  // console.log(checkPromotion.name == promotion.name);
 
   const Redeem = async () => {
     if (category && sensor) {
@@ -81,15 +78,6 @@ export default function Service({ promotion }) {
     }
   };
 
-  const AddPromo = async () => {
-    if (currPromotion.name != null && currPromotion.description != null) {
-      await db.Promotions.create({ name: currPromotion.name, description: currPromotion.description, image: currPromotion.image ? currPromotion.image : 'http://www.pngall.com/wp-content/uploads/2016/07/Special-offer-Free-PNG-Image.png' })
-      cancel()
-    } else {
-      setWarning("You need to name/desc fields!")
-    }
-  };
-
   const EditPromo = async () => {
     await db.Promotions.update({ id: promotion.id, name: currPromotion.name, description: currPromotion.description, image: currPromotion.image })
     cancel()
@@ -103,7 +91,6 @@ export default function Service({ promotion }) {
   const cancel = async () => {
     setCustomerDialogVisible(false)
     setSuppDialogVisible(false)
-    setSuppAddDialogVisible(false)
     setDeleteSuppDialogVisible(false)
     setWarning("")
   }
@@ -112,21 +99,8 @@ export default function Service({ promotion }) {
     <SafeAreaProvider style={styles.redeemContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.redeemContainer}>
-          {
-            (user.role == "Support" || user.role == "Admin")
-            &&
-            <TouchableOpacity
-              onPress={() => {
-                setSuppAddDialogVisible(true)
-                setCurrPromotion([])
-              }}
-            >
-              <Text style={styles.AddPromoButton}>
-                Add Promotion
-              </Text>
-            </TouchableOpacity>
-          }
-          <Card>
+
+          <Card containerStyle={styles.redeemCard}>
             <Card.Title
               style={styles.redeemTitle}
             >
@@ -140,7 +114,7 @@ export default function Service({ promotion }) {
               style={styles.redeemDesc}
             >
               Description:
-            </Text>
+              </Text>
             <Text
               style={styles.redeemServDesc}
             >
@@ -172,9 +146,9 @@ export default function Service({ promotion }) {
               </Text>
               </TouchableOpacity>
             }
+          
             {
-              // console.log("checkPromotion:", checkPromotion, "&&& promotion.name", promotion.name),
-              // console.log("checkActivePromotion:", checkActivePromotion, "### user.id", user.id),
+              // this is Mahmoud, this is my second time to be proud of figuring this out. thanks for reading
               (
                 (
                   checkPromotion
@@ -205,6 +179,7 @@ export default function Service({ promotion }) {
 
           </Card>
 
+
           <Dialog.Container visible={CustomerdialogVisible}>
             <Dialog.Title>Redeem Voucher</Dialog.Title>
             <View style={styles.redeemDialogContent}>
@@ -221,17 +196,12 @@ export default function Service({ promotion }) {
                 &&
                 <SensorByUserAndCategoryPicker category={category} set={setSensor} />
               }
-              {
-                promotion.name.includes("Discount")
-              }
             </View>
             <Dialog.Button label="Cancel" onPress={cancel} />
             <Dialog.Button label="Redeem" onPress={Redeem} />
           </Dialog.Container>
 
-
           <Dialog.Container visible={suppdialogVisible}>
-            {/* <SuppDialog currPromotion={currPromotion} /> */}
             <Dialog.Title>Edit Service:</Dialog.Title>
             <View>
               <Text>Name:</Text>
@@ -262,23 +232,6 @@ export default function Service({ promotion }) {
             <Dialog.Button label="Update" onPress={EditPromo} />
           </Dialog.Container>
 
-          <Dialog.Container visible={addsuppdialogVisible}>
-            <Dialog.Title>Add Promotion:</Dialog.Title>
-            <View>
-              <Text style={styles.redeemWarning}>
-                {warning ? warning : ''}
-              </Text>
-              <Text>Name:</Text>
-              <TextInput placeholder={'Enter Name'} onChangeText={(value) => currPromotion.name = value} />
-              <Text>Description:</Text>
-              <TextInput placeholder={'Enter Description'} onChangeText={(value) => currPromotion.description = value} multiline={true} />
-              <Text>Image:</Text>
-              <TextInput placeholder={'Insert Image URL/ Leave Empty For Default'} onChangeText={(value) => currPromotion.image = value} multiline={true} />
-            </View>
-            <Dialog.Button label="Cancel" onPress={cancel} />
-            <Dialog.Button label="Add" onPress={AddPromo} />
-          </Dialog.Container>
-
           <Dialog.Container visible={deleteSuppDialogVisible}>
             <Dialog.Title>Delete Promotion:</Dialog.Title>
             <View>
@@ -289,8 +242,11 @@ export default function Service({ promotion }) {
             <Dialog.Button label="Delete" onPress={DeletePromo} />
           </Dialog.Container>
 
+
         </View>
       </ScrollView>
     </SafeAreaProvider >
+
   );
 }
+

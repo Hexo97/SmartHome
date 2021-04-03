@@ -91,8 +91,8 @@ export default function ReportButton({ user, category, sensor }) {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
-                    <View style={{ backgroundColor: "#12232E" }} >
+                <View style={{ backgroundColor: "transparent", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
+                    <View style={{ backgroundColor: "transparent" }} >
                         <Icon
                             name="report"
                             type="material-icons"
@@ -135,7 +135,7 @@ export default function ReportButton({ user, category, sensor }) {
                         </DialogInput>
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                    <View style={{ backgroundColor: "transparent", marginHorizontal: 20 }}>
                         <Icon
                             name="star"
                             type="ant-design"
@@ -152,7 +152,7 @@ export default function ReportButton({ user, category, sensor }) {
                         />
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                    <View style={{ backgroundColor: "transparent", marginHorizontal: 20 }}>
                         <DialogInput
                             style={{ width: "80%" }}
                             isDialogVisible={reviewVisible}
@@ -210,7 +210,7 @@ export default function ReportButton({ user, category, sensor }) {
                         </DialogInput>
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
+                    <View style={{ backgroundColor: "transparent", alignItems: "center" }} >
                         <Icon
                             name="tools"
                             type="entypo"
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#12232E"
+        backgroundColor: "transparent"
     },
     getStartedContainer: {
         alignItems: "center",

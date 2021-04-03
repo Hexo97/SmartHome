@@ -1,7 +1,11 @@
 'use strict';
 import { StyleSheet } from 'react-native';
+// backgroundColor: 'rgba(255, 255, 255, 0.3)',
 
 module.exports = StyleSheet.create({
+    background: {
+        flex: 1,
+    },
     //LOGS STYLE:
     Logscontainer: {
         flex: 1,
@@ -55,14 +59,34 @@ module.exports = StyleSheet.create({
         color: 'orange'
     },
     //PROMOTION STYLE:
+    processPromoButton: {
+
+    },
+    listRequest: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 30,
+        height: 50
+    },
+    redeemCard: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: 'transparent',
+        borderRadius: 30,
+        width: 300
+    },
     redeemImage: {
         width: 200,
         height: 160,
-        marginLeft: "20%",
+        marginLeft: "15%",
+    },
+    Promotioncontainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "transparent",
     },
     redeemContainer: {
-        flex: 1,
-        backgroundColor: "#203647",
+        // flex: 1,
+        backgroundColor: "transparent",
     },
     redeemDialogContent: {
         alignItems: "center",
@@ -71,18 +95,18 @@ module.exports = StyleSheet.create({
     RedeemButton: {
         textAlign: "center",
         height: 30,
-        width: 100,
+        width: 130,
         borderRadius: 4,
         backgroundColor: "#4DA8DA",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,
         margin: 2,
-        marginLeft: 230,
+        marginLeft: 70,
     },
     redeemTitle: {
-        backgroundColor: "#4DA8DA",
-        color: "black",
+        // backgroundColor: "#4DA8DA",
+        color: "white",
         fontWeight: "bold",
     },
     redeemWarning: {
@@ -90,14 +114,14 @@ module.exports = StyleSheet.create({
     },
     redeemDesc: {
         fontSize: 17,
-        backgroundColor: "#4DA8DA",
-        color: "black",
+        // backgroundColor: "#4DA8DA",
+        color: "white",
         fontWeight: "bold",
     },
     redeemServDesc: {
         fontSize: 14,
-        backgroundColor: "#4DA8DA",
-        color: "black",
+        // backgroundColor: "#4DA8DA",
+        color: "white",
     },
     AddPromoButton: {
         textAlign: "center",

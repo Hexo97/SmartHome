@@ -415,6 +415,10 @@ class Promotions extends DB {
     super("promotions");
     this.ActivePromotions = new ActivePromotions(this.collection);
   }
+
+  listenToActiveByMaintenance = (set) =>
+    db.collection(this.collection).where("name", "==", 'Maintenance').onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+
 }
 
 class ActivePromotions extends DB {
@@ -433,6 +437,22 @@ class ActivePromotions extends DB {
     db.collection(this.containing).doc(promotionid).collection(this.collection).add(userPromotion);
   }
 
+  listenToAll = (set, promoId) =>
+    db
+      .collection(this.containing)
+      .doc(promoId)
+      .collection(this.collection)
+      .onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+  
+  updateActivePromo = (promoId, acId, promo) => {
+    const { ...rest } = promo;
+    db
+      .collection(this.containing)
+      .doc(promoId)
+      .collection(this.collection)
+      .doc(acId)
+      .set(rest);
+  }
   // This is Mahmoud. I am so proud of doing this function. I shall flex on my instructor and my peers, Thanks
   listenToAllAPByUser = async (setProm, set, userid) => {
     db.collection(this.containing).get().then(function (querySnapshot) {
@@ -449,6 +469,7 @@ class ActivePromotions extends DB {
   }
 
 }
+
 class Notifications extends DB {
   constructor(containing) {
     super("notifications");

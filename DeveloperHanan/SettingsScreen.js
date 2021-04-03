@@ -74,7 +74,7 @@ export default function SettingsScreen() {
   console.log(user);
 
   return (
-    <SafeAreaProvider>
+    // <SafeAreaProvider>
 
       <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
 
@@ -133,22 +133,18 @@ export default function SettingsScreen() {
           <TouchableOpacity onPress={logout} style={styles.logoutBtn}>
             <Text style={styles.loginText}>Logout</Text>
           </TouchableOpacity>
-          <View style={{ width: 300, height: 150 }}>
-            <Card style={{}}>
-              <Card.Title>Current-Details</Card.Title>
-
-              <Text style={styles.title1}>Name:- {user.name}</Text>
-              <Text style={styles.title1}>Phone:- {user.phone}</Text>
-              <Text style={styles.title1}>Role:- {user.role}</Text>
-              <Text style={styles.title1}> Password:- ********</Text>
-              <Text style={styles.title1}>Age:- {user.age}</Text>
-            </Card>
-
-            {/* <Button onPress={logout} title="Logout" type="outline" /> */}
-          </View>
+          <Card>
+            <Card.Title >Current-Details</Card.Title>
+            <Text >Name:- {user.name}</Text>
+            <Text>Phone:- {user.phone}</Text>
+            <Text>Role:- {user.role}</Text>
+            <Text>Password:- ********</Text>
+            <Text>Age:- {user.age}</Text>
+          </Card>
+          {/* <Button onPress={logout} title="Logout" type="outline" /> */}
         </View>
       </ImageBackground>
-    </SafeAreaProvider>
+    // </SafeAreaProvider>
   );
 }
 
@@ -161,9 +157,6 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     // backgroundColor:'transparent'
-  },
-  scroll: {
-    marginTop: 70
   },
   title: {
     fontSize: 40,
@@ -191,9 +184,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   imagebg: {
-    // flex: 1,
     alignItems: "center",
-    // backgroundColor: "#EEFBFB",
+    backgroundColor: "transparent",
     marginTop: 70,
   },
   inputView: {

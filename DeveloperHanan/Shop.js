@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext, } from "react";
-import { StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  ImageBackground,
+StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
@@ -39,6 +41,7 @@ export default function Shop({ navigation }) {
   );
 
   return (
+    <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
     <View style={styles.container}>
       <SafeAreaProvider style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -66,11 +69,16 @@ export default function Shop({ navigation }) {
           </View>
         </ScrollView>
       </SafeAreaProvider>
-    </View>
+      </View>
+    </ImageBackground>
+
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
   TextPromotion: {
     paddingVertical: 5,
     fontSize: 15,
@@ -85,95 +93,13 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     backgroundColor: 'red'
   },
-  customViewStyle: {
-    width: 120,
-    height: 40,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  buttonStyle8: {
-    backgroundColor: 'white',
-    borderColor: '#333',
-    borderWidth: 2,
-    borderRadius: 22,
-  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#203647",
-  },
-  container1: {
-    height: 300,
-    width: 300,
-    margin: 20,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 25,
-    fontWeight: "bold",
-    marginLeft: 60,
-    color: "white"
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    textAlign: "center",
-    color: "black",
-    // display: "flex",
-    height: 30,
-    width: 100,
-    borderRadius: 4,
-    // justifyContent: "center",
-    // alignItems: "center",
-    backgroundColor: "#4DA8DA",
-    shadowColor: "white",
-    shadowOpacity: 0.4,
-    padding: 5,
-    margin: 2,
-    marginLeft: 10,
-  },
-  helpLinkText4: {
-    textAlign: "center",
-    color: "black",
-    fontSize: 15,
-    fontWeight: "bold",
-  },
-  helpLinkText3: {
-    textAlign: "center",
-    color: "black",
-    // display: "flex",
-    height: 30,
-    width: 100,
-    borderRadius: 4,
-    // justifyContent: "center",
-    // alignItems: "center",
-    backgroundColor: "#4DA8DA",
-    shadowColor: "white",
-    shadowOpacity: 0.4,
-    padding: 5,
-    margin: 2,
-    marginLeft: 15,
-  },
-  helpLinkText1: {
-    textAlign: "center",
-    color: "black",
-    // display: "flex",
-    height: 30,
-    width: 100,
-    borderRadius: 4,
-    // justifyContent: "center",
-    // alignItems: "center",
-    backgroundColor: "#4DA8DA",
-    shadowColor: "white",
-    shadowOpacity: 0.4,
-    padding: 5,
-    margin: 2,
-    marginLeft: 10,
-    marginBottom: 5,
-    marginTop: 0,
+    backgroundColor: "transparent",
+    marginTop: 2,
+
   },
   separator: {
     marginVertical: 30,

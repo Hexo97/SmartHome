@@ -6,12 +6,10 @@ import { Icon } from "react-native-elements";
 import { TouchableOpacity, Text } from "react-native";
 import { Button } from "react-native-elements";
 import { useState, useEffect, useContext } from "react";
-
+import NotificationHeader from '../../DeveloperMahmoud/NotificationHeader'
 import Colors from '../../constants/Colors';
 import useColorScheme from '../../hooks/useColorScheme';
 
-// @ts-expect-error
-import UserContext from '../../UserContext'
 // @ts-expect-error
 import db from "../../db";
 // @ts-expect-error
@@ -43,7 +41,7 @@ import SearchSensors from '../../DeveloperAisha/SearchSensors';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from './types';
 
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -94,23 +92,39 @@ export default function BottomTabNavigator() {
   );
 }
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string }) {
-  // @ts-expect-error
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
-}
-function checkNotification() {
-  const { user } = useContext(UserContext);
-  const [unreadNotifications, setUnreadNotifications] = useState([]);
-  db.Users.Notifications.listenToAllUnread(setUnreadNotifications, user.id)
-  console.log("bottomtab unread:", unreadNotifications.length);
-}
-// setInterval(checkNotification, 4000);//run this thang every 2 seconds
+// function TabBarIcon(props: { name: string; color: string }) {
+//   // @ts-expect-error
+//   return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+// }
+// interface Notification {
+//   isRead: boolean;
+//   message: string;
+//   userId: string;
+//   date: Date;
+// }
+
+// export const checkNotification = () => {
+//   const { user } = useContext(UserContext);
+//   const [unreadNotifications, setUnreadNotifs] = useState([]);
+//   // setUnreadNotifs(
+//   //   {
+//   //     userId: user.id,
+//   //     message: 'Capacitive Pressure sensor request has been processed',
+//   //     date: new Date(),
+//   //     isRead: false
+//   //   }
+//   // );
+//   // console.log("unreadNotifications", unreadNotifications);
+//   return true;
+// }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const TabOneStack = createStackNavigator();
+
 
 function TabOneNavigator() {
+  
   return (
     <TabOneStack.Navigator>
       <TabOneStack.Screen
@@ -118,32 +132,9 @@ function TabOneNavigator() {
         component={CustomerHomeScreen}
         options={({ navigation }) => ({
           headerTransparent: true,
-          // headerStyle: {
-          //   backgroundColor: 'transparent',
-          // },
           headerTitle: 'Home', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: 20 }}
-              onPress={() => {
-                // checkNotification()
-                navigation.navigate('Notifications')
-              }}
-            >
-              {
-                // unreadNotifications.length > 0
-                // &&
-                // @ts-expect-error
-                <Icon name='notifications-active' color='orange' size={25} />
-              }
-              {/* {
-                // !(unreadNotifications.length > 0)
-                // &&
-                // @ts-expect-error
-                <Icon name='notifications-none' color="grey" size={25} />
-              } */}
-
-            </TouchableOpacity>
+            <NotificationHeader nav={navigation}/>
           )
         }
         )
@@ -188,7 +179,7 @@ function TabOneNavigator() {
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const TabTwoStack = createStackNavigator();
 
 function TabTwoNavigator() {
   return (
@@ -228,7 +219,7 @@ function TabTwoNavigator() {
   );
 }
 
-const TabThreeStack = createStackNavigator<TabThreeParamList>();
+const TabThreeStack = createStackNavigator();
 
 function TabThreeNavigator() {
   return (
@@ -265,7 +256,7 @@ function TabThreeNavigator() {
 }
 
 
-const TabFourStack = createStackNavigator<TabFourParamList>();
+const TabFourStack = createStackNavigator();
 
 function TabFourNavigator() {
   return (
