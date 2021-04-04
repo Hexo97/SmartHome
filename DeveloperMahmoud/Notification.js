@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, ScrollView, FlatList } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import UserContext from '../UserContext'
-import { Button, ListItem, Card } from "react-native-elements";
-import { render } from "react-dom";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function Notifications({ notification }) {

@@ -417,7 +417,7 @@ class Promotions extends DB {
   }
 
   listenToActiveByMaintenance = (set) =>
-    db.collection(this.collection).where("name", "==", 'Maintenance').onSnapshot((snap) => set(snap.docs.map(this.reformat)));
+    db.collection(this.collection).where("name", "!=", 'Discount').onSnapshot((snap) => set(snap.docs.map(this.reformat)));
 
 }
 

@@ -1,14 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
-import { ImageBackground, TouchableOpacity, Text, Image, ScrollView, TextInput } from "react-native";
-import { View } from "../components/Themed";
-import { Card, ListItem } from "react-native-elements";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Dialog from "react-native-dialog";
+import React, {  useState, useEffect } from "react";
+import {  Image } from "react-native";
+import { Card } from "react-native-elements";
 import styles from './SmartStyle'
-import UserContext from "../UserContext";
 import db from '../db'
-import { useFocusEffect } from "@react-navigation/native";
-import { CardItem } from "native-base";
 import ListPromoRequest from "./ListPromoRequest";
 
 export default function RedeemedRequest({ request }) {
@@ -17,9 +11,6 @@ export default function RedeemedRequest({ request }) {
     useEffect(() => {
         db.Promotions.ActivePromotions.listenToAll(setPromotion, request.id)
     }, []);
-
-    // console.log("request", request);
-    // console.log("checkPromotion", checkPromotion);
 
     return (
         <Card containerStyle={styles.redeemCard}>

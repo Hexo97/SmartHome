@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, ScrollView, FlatList, ImageBackground, Image } from "react-native";
-import { Text, View } from "../components/Themed";
+import { StyleSheet, FlatList, ImageBackground } from "react-native";
 import db from "../db";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UserContext from '../UserContext'
-import { Button, ListItem } from "react-native-elements";
-import { render } from "react-dom";
+import { Button } from "react-native-elements";
 import Notification from './Notification'
 
 export default function Notifications() {

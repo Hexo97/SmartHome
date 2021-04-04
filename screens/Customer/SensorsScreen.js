@@ -34,74 +34,73 @@ export default function SensorsScreen({ navigation }) {
     <SafeAreaProvider>
       <ImageBackground source={require("../../assets/images/background.png")} style={styles.background}>
         <ScrollView>
-        <View style={styles.container}>
+          <View style={styles.container}>
 
-          <View style={{ alignSelf: "center", backgroundColor: "transparent" }}>
-            <Icon
-              raised
-              name='warning'
-              type='font-awesome'
-              color='red'
-              onPress={() => navigation.navigate('Precautions')} />
-          </View>
+            <View style={{ alignSelf: "center", backgroundColor: "transparent" }}>
+              <Icon
+                raised
+                name='warning'
+                type='font-awesome'
+                color='red'
+                onPress={() => navigation.navigate('Precautions')} />
+            </View>
 
-          {
-            user
-            &&
-            <View style={styles.getStartedContainer}>
-              <CategoryByUserPicker set={setCategory} />
-            </View>
-          }
-          {
-            user
-            &&
-            category
-            &&
-            <View style={styles.getStartedContainer}>
-              <SensorByUserAndCategoryPicker category={category} set={setSensor} />
-            </View>
-          }
-          {
-            user
-            &&
-            category
-            &&
-            sensor
-            &&
-            <>
-              {category.name === "Motion"
-                &&
-                <MotionInfo user={user} category={category} sensor={sensor} />
-              }
-              {category.name === "Smoke detector"
-                &&
-                <SmokeInfo user={user} category={category} sensor={sensor} />
-              }
-              {
-                category.name === "Temperature" && (
-                  <TemperatureInfo
-                    user={user}
-                    category={category}
-                    sensor={sensor}
-                  />
+            {
+              user
+              &&
+              <View style={styles.getStartedContainer}>
+                <CategoryByUserPicker set={setCategory} />
+              </View>
+            }
+            {
+              user
+              &&
+              category
+              &&
+              <View style={styles.getStartedContainer}>
+                <SensorByUserAndCategoryPicker category={category} set={setSensor} />
+              </View>
+            }
+            {
+              user
+              &&
+              category
+              &&
+              sensor
+              &&
+              <>
+                {category.name === "Motion"
+                  &&
+                  <MotionInfo user={user} category={category} sensor={sensor} />
+                }
+                {category.name === "Smoke detector"
+                  &&
+                  <SmokeInfo user={user} category={category} sensor={sensor} />
+                }
+                {
+                  category.name === "Temperature" && (
+                    <TemperatureInfo
+                      user={user}
+                      category={category}
+                      sensor={sensor}
+                    />
+                  )}
+                {category.name === "Sound" && (
+                  <SoundInfo user={user} category={category} sensor={sensor} />
                 )}
-              {category.name === "Sound" && (
-                <SoundInfo user={user} category={category} sensor={sensor} />
-              )}
-              {
-                category.name === "Proximity"
-                &&
-                <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation} />
-              }
-              {
-                category.name === "Capacitive Pressure"
-                &&
-                <PressureInfo sensor={sensor} />
-              }
-
-              <ReportButton user={user} category={category} sensor={sensor} />
-            </>
-          }
+                {
+                  category.name === "Proximity"
+                  &&
+                  <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation} />
+                }
+                {
+                  category.name === "Capacitive Pressure"
+                  &&
+                  <PressureInfo sensor={sensor} />
+                }
+                <ReportButton navigation={navigation} user={user} category={category} sensor={sensor} />
+              </>
+            }
           </View>
         </ScrollView>
       </ImageBackground>

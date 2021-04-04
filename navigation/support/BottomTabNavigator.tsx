@@ -127,7 +127,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="UserPromReq"
         component={UserPromReq}
-        options={{ headerTitle: 'UserPromReq LIST' }}
+        options={{ headerTitle: 'Redeemed Requests' }}
       />
     </TabOneStack.Navigator>
   );

@@ -59,8 +59,14 @@ module.exports = StyleSheet.create({
         color: 'orange'
     },
     //PROMOTION STYLE:
+    processPromoStatus: {
+        marginLeft: 40,
+        color: 'red'
+    },
     processPromoButton: {
-
+        marginLeft: 20,
+        height: 30,
+        backgroundColor: 'green',
     },
     listRequest: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',

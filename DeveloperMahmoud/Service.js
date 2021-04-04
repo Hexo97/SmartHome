@@ -1,8 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  ImageBackground,
-  TouchableOpacity, Text, Image, ScrollView, TextInput
-} from "react-native";
+import { TouchableOpacity, Text, Image, ScrollView, TextInput } from "react-native";
 import { View } from "../components/Themed";
 import { Card } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -13,7 +10,6 @@ import styles from './SmartStyle'
 import UserContext from "../UserContext";
 import db from '../db'
 import { useFocusEffect } from "@react-navigation/native";
-import promDialog from "./UserPromReq";
 
 export default function Service({ promotion }) {
   const { user } = useContext(UserContext);
@@ -33,19 +29,20 @@ export default function Service({ promotion }) {
   useEffect(() => {
     db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
   }, [promotion]);
+  useEffect(() => {
+    db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+  }, [CustomerdialogVisible]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // do this when focused
-      console.log("focused");
-      // db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
-      return () => {
-        // Do something when the screen is unfocused
-        console.log("unfocused");
-        // db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     // do this when focused
+  //     // db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+  //     return async () => {
+  //       // Do something when the screen is unfocused
+  //       await db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+  //     };
+  //   }, [CustomerdialogVisible])
+  // );
 
   const Redeem = async () => {
     if (category && sensor) {
@@ -146,7 +143,7 @@ export default function Service({ promotion }) {
               </Text>
               </TouchableOpacity>
             }
-          
+
             {
               // this is Mahmoud, this is my second time to be proud of figuring this out. thanks for reading
               (

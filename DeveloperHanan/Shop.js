@@ -27,19 +27,6 @@ export default function Shop({ navigation }) {
   }, [navigation]);
 
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // do this when focused
-      console.log("shop is focused");
-      db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
-      return () => {
-        // Do something when the screen is unfocused
-        console.log("shop is unfocused");
-
-      };
-    }, [])
-  );
-
   return (
     <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
     <View style={styles.container}>
