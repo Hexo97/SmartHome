@@ -155,29 +155,50 @@ export default function AdminHomeScreen({ navigation }) {
           <Text style={[styles.text, styles.subText]}>{email}</Text>
           <Text style={[styles.text, styles.subText], { textAlign: "right", color: "white" }}>{dt}</Text>
         </View>
+
+        <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }}
+        >
+
         <Button
           title="Dashboard"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Dashboard')}
         />
-        <View style={styles.space} />
-        <Button
+
+        
+      <Button
           title="View Notifications"
+          buttonStyle={styles.myButton}
           type="outline"
         // onPress={() => navigation.navigate('Settings')}
         />
-        <View style={styles.space} />
+    
+        </View>
+
+        <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }}
+        >
         <Button
           title="Sensors Logs"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Logs')}
         />
-        <View style={styles.space} />
+
         <Button
           title="Monitor Login Activity"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('RealTimeMonitoring')}
         />
+         </View>
+         
       </ScrollView>
     </SafeAreaProvider>
   );

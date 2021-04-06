@@ -66,11 +66,12 @@ export default function Reports() {
               alert
               &&
               <>
-                <Text style={styles.normalTxt}>User: {reportingUser.name}</Text>
-                <Text style={styles.normalTxt}>Status: {report.status}</Text>
-                <Text style={styles.normalTxt}>Message: {report.message}</Text>
-                <Text style={styles.normalTxt}>Sensor Id: {report.sensorId}</Text>
-                <Text style={styles.normalTxt}>Location: {sensor.location}</Text>
+              <Card>
+                <Text style={styles.normalTxt}>User:- {reportingUser.name}</Text>
+                <Text style={styles.normalTxt}>Status:- {report.status}</Text>
+                <Text style={styles.normalTxt}>Message:- {report.message}</Text>
+                <Text style={styles.normalTxt}>Sensor Id:-{report.sensorId}</Text>
+                <Text style={styles.normalTxt}>Location:-  {sensor.location}</Text>
                 <Picker
                   selectedValue={status}
                   style={{ height: 50, width: 200 }}
@@ -86,6 +87,7 @@ export default function Reports() {
                   title="Save"
                   type="outline"
                 />
+                </Card>
               </>
             }
 
