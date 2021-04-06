@@ -191,16 +191,7 @@ function TabTwoNavigator() {
             marginLeft: 55
           },
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: 20 }}
-              onPress={() => navigation.navigate('Notifications')}
-            // disabled={!this.state.isFormValid}
-            >
-              {
-                // @ts-expect-error
-                <Icon name={"notifications-none"} color="grey" size={25} />
-              }
-            </TouchableOpacity>
+            <NotificationHeader nav={navigation} />
           )
         }
         )
@@ -227,16 +218,7 @@ function TabThreeNavigator() {
           headerTransparent: true,
           headerTitle: 'Shop', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: 20 }}
-              onPress={() => navigation.navigate('Notifications')}
-            // disabled={!this.state.isFormValid}
-            >
-              {
-                // @ts-expect-error
-                <Icon name="notifications-none" color="grey" size={25} />
-              }
-            </TouchableOpacity>
+            <NotificationHeader nav={navigation} />
           )
         }
         )
@@ -269,16 +251,7 @@ function TabFourNavigator() {
           headerTransparent: true,
           headerTitle: 'Settings', headerTitleStyle: { alignSelf: 'center', marginLeft: 55 },
           headerRight: () => (
-            <TouchableOpacity
-              style={{ marginRight: 20 }}
-              onPress={() => navigation.navigate('Notifications')}
-            // disabled={!this.state.isFormValid}
-            >
-              {
-                // @ts-expect-error
-                <Icon name="notifications-none" color="grey" size={25} />
-              }
-            </TouchableOpacity>
+            <NotificationHeader nav={navigation} />
           )
         }
         )
