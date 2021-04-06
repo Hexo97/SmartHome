@@ -1,5 +1,4 @@
 const firebase = require("firebase");
-const fb = require('firebase/storage')
 
 const firebaseConfig = {
   apiKey: "AIzaSyDA9XBf7mmSydm45U8LAC_8ZanHAdj5mkY",
@@ -110,7 +109,8 @@ const simulateReading = async (sensor) => {
       .collection("readings")
       .add({
         when: new Date(),
-        current: current + Math.floor(Math.random() * 15) - 10,
+        distance: Math.floor(Math.random() * 30)+ 20,
+        capacity : capacity + Math.floor(Math.random() * 20) - 10,
       });
   }
 
@@ -127,19 +127,9 @@ const simulateReading = async (sensor) => {
         capacity: capacity + Math.floor(Math.random() * 20) - 10,
       });
   }
-
-  if (isCategory(sensor, "Capacitive Pressure")) {
-    const force = readings.length > 0 ? readings[0].force : 10;
-    await db
-      .collection("sensors")
-      .doc(sensor.id)
-      .collection("readings")
-      .add({
-        when: new Date(),
-        force: force + Math.floor(Math.random() * 10) + 0,
-      });
+  else {
+    console.log("other type of sensor not simulated yet");
   }
-
 };
 
 const simulate = () => {
