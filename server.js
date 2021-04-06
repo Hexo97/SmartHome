@@ -1,14 +1,12 @@
 const firebase = require("firebase");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDA9XBf7mmSydm45U8LAC_8ZanHAdj5mkY",
-  authDomain: "cp3351-572e1.firebaseapp.com",
-  databaseURL: "https://cp3351-572e1-default-rtdb.firebaseio.com",
-  projectId: "cp3351-572e1",
-  storageBucket: "cp3351-572e1.appspot.com",
-  messagingSenderId: "2568886566",
-  appId: "1:2568886566:web:0c2da3a5e37b0b0fdfc9e7",
-  measurementId: "G-QEN9H9ZN1Q",
+  apiKey: "AIzaSyA84jN5johFsBHCLDM_bB1vKiDAr4tTOKc",
+  authDomain: "cp3351-bf05f.firebaseapp.com",
+  projectId: "cp3351-bf05f",
+  storageBucket: "cp3351-bf05f.appspot.com",
+  messagingSenderId: "851316161428",
+  appId: "1:851316161428:web:afccdded7a606ce5ebad81"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -56,8 +54,7 @@ db.collection("categories").onSnapshot(
   (snap) => (categories = snap.docs.map(reformat))
 );
 const isCategory = (sensor, name) =>
-  categories.find((category) => category.id === sensor.categoryid).name ===
-  name;
+  categories.find((category) => category.id === sensor.categoryid).name === name;
 
 // start listening to all sensors
 let sensors = [];
@@ -109,8 +106,8 @@ const simulateReading = async (sensor) => {
       .collection("readings")
       .add({
         when: new Date(),
-        distance: Math.floor(Math.random() * 30)+ 20,
-        capacity : capacity + Math.floor(Math.random() * 20) - 10,
+        distance: Math.floor(Math.random() * 30) + 20,
+        capacity: capacity + Math.floor(Math.random() * 20) - 10,
       });
   }
 
@@ -130,6 +127,18 @@ const simulateReading = async (sensor) => {
   else {
     console.log("other type of sensor not simulated yet");
   }
+  const notification = (sensor.userid,
+  {
+    userId: sensor.userid,
+    message: `Sensor at ${sensor.location} has new reading!`,
+    date: new Date(),
+    isRead: false
+  })
+  await db
+    .collection("users")
+    .doc(sensor.userid)
+    .collection("notifications")
+    .add(notification)
 };
 
 const simulate = () => {

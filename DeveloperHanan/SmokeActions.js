@@ -18,17 +18,34 @@ export default function SmokeActions({ sensor }) {
     sensor,
   ]);
 
-  const uploadReading = async () =>
+  const uploadReading = async () => {
     await db.Sensors.Readings.createReading(sensor.id, {
       when: new Date(),
       current: (reading?.current || 35) + Math.floor(Math.random() * 15) - 10,
-    });
+    })
 
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
   const handleToggleAlert = async () => await db.Sensors.toggleAlert(sensor);
 
-  const updateMinMax = async (minmax, amount) =>
+  const updateMinMax = async (minmax, amount) => {
     await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount });
-
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `New humidty level has been set for sensor at ${sensor.location}!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
   const [delay, setDelay] = useState(5);
   const [intervalId, setIntervalId] = useState(0);
 

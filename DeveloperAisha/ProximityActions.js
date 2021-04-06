@@ -31,9 +31,31 @@ export default function ProximityActions({ sensor }) {
   // const fillTrash = async(capacity, amount) =>
   //    await db.Sensors.update({...sensor , [capacity]: sensor[capacity] + amount }, sensor.id)
 
-  const handleToggleAlert = async () => await db.Sensors.togglePresence(sensor)
+  const handleToggleAlert = async () => {
+    await db.Sensors.togglePresence(sensor)
 
-  const setPosition = async (latitudelongitude, amount) => await db.Sensors.update({ ...sensor, [latitudelongitude]: sensor[latitudelongitude] + amount })
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has been toggled!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
+
+  const setPosition = async (latitudelongitude, amount) => {
+    await db.Sensors.update({ ...sensor, [latitudelongitude]: sensor[latitudelongitude] + amount })
+
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new position!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
 
   const [delay, setDelay] = useState(5)
   const [intervalId, setIntervalId] = useState(0)

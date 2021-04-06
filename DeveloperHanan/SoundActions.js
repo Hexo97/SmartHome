@@ -52,6 +52,14 @@ export default function SoundActions({ sensor }) {
     } else {
       await db.Sensors.update({ ...sensor, minDB: value });
     }
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
   };
 
   const [valuemax, setValuemax] = useState(sensor.maxDB);
@@ -65,6 +73,14 @@ export default function SoundActions({ sensor }) {
     } else {
       await db.Sensors.update({ ...sensor, maxDB: value });
     }
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
   };
 
   return (

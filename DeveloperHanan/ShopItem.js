@@ -44,7 +44,7 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
     alert("Payment successfully done, Sensor will be avaibale in some time");
   };
 
-
+console.log("discount",discount);
 
   return (
     <SafeAreaProvider style={styles.container}>

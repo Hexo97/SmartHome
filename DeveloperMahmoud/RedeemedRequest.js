@@ -5,6 +5,7 @@ import styles from './SmartStyle'
 import db from '../db'
 import ListPromoRequest from "./ListPromoRequest";
 
+
 export default function RedeemedRequest({ request }) {
 
     const [checkPromotion, setPromotion] = useState([]);

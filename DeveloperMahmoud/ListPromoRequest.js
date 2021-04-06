@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ListItem, Button } from "react-native-elements";
+import { Text, View } from "../components/Themed";
 import styles from './SmartStyle'
 import db from '../db'
 

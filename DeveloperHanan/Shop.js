@@ -27,6 +27,15 @@ export default function Shop({ navigation }) {
     db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
   }, [navigation]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+      return () => {
+        db.Promotions.ActivePromotions.listenToAllAPByUser(setPromotion, setService, user.id)
+      };
+    }, [])
+  );
+
 
   return (
     <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>

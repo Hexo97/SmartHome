@@ -66,6 +66,14 @@ export default function MotionActions({ sensor }) {
 
       // create reading using when (ISO format) also as image name in storage
       await db.Sensors.Readings.createReading(sensor.id, { when, url })
+      await db.Users.Notifications.createNotification(sensor.userid,
+        {
+          userId: sensor.userid,
+          message: `Sensor at ${sensor.location} has new image!`,
+          date: new Date(),
+          isRead: false
+        }
+      )
     }
   }
   const { user } = useContext(UserContext)
