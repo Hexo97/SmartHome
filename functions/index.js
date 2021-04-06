@@ -166,6 +166,25 @@ exports.createSampleData = functions.https.onCall(
         await removeOne("users", user.id);
       })
     );
+    await Promise.all(
+      users.map(async (user) => {
+        const notifications = await findOneSubAll(
+          "users",
+          user.id,
+          "notifications"
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+        await Promise.all(
+          notifications.map(
+            async (notification) =>
+              await removeOneSubOne("users", user.id, "notifications", notification.id)
+          )
+        ).catch(function (err) {
+          console.log(err.message);
+        });
+      })
+    );
 
     const authUsers = (await admin.auth().listUsers()).users;
     await Promise.all(
@@ -277,13 +296,13 @@ exports.createSampleData = functions.https.onCall(
     const { id: adId6 } = await db.collection('ads').add({ desc: "This is Smoke detector sensor ", categoryid: categoryId5, image: "https://5.imimg.com/data5/SD/PM/MY-31926460/fire-alarm-smoke-detector-500x500.jpg", date: "21st march 2021" })
     functions.logger.info("adId6", { adId6 })
 
-    const { id: popular1 } = await db.collection('popularsensor').add({ name: "Garage", dateSearched: new Date(), sensorid: sensorId1, rating: 5 })
+    const { id: popular1 } = await db.collection('popularsensor').add({ name: "Garage", dateSearched: new Date(), sensorid: sensorId3, rating: 5 })
     functions.logger.info("popular1", { popular1 })
 
     const { id: popular2 } = await db.collection('popularsensor').add({ name: "Back Door", dateSearched: new Date(), sensorid: sensorId2, rating: 4 })
     functions.logger.info("popular2", { popular2 })
 
-    const { id: popular3 } = await db.collection('popularsensor').add({ name: "Bedroom", dateSearched: new Date(), sensorid: sensorId7, rating: 3 })
+    const { id: popular3 } = await db.collection('popularsensor').add({ name: "Bedroom", dateSearched: new Date(), sensorid: sensorId5, rating: 3 })
     functions.logger.info("popular3", { popular3 })
 
     const { id: logId1 } = await db.collection('logs').add({ sensorId: sensorId1, categoryId: categoryId1, date: new Date(), logMessage: ` Sensor Created` })
@@ -292,7 +311,7 @@ exports.createSampleData = functions.https.onCall(
     const { id: logId2 } = await db.collection('logs').add({ sensorId: sensorId2, categoryId: categoryId2, date: new Date(), logMessage: ` Sensor Created` })
     functions.logger.info("logId2", { logId2 })
 
-    const { id: promotionId1 } = await db.collection('promotions').add({ name: `Free Maintenance`, description: `Have a free maintenance for one of your sensors for a whole 3 months!`, image: "http://www.pngall.com/wp-content/uploads/5/Construction-Maintenance-PNG-Picture.png" })
+    const { id: promotionId1 } = await db.collection('promotions').add({ name: `Maintenance`, description: `Have a free maintenance for one of your sensors for a whole 3 months!`, image: "http://www.pngall.com/wp-content/uploads/5/Construction-Maintenance-PNG-Picture.png" })
     functions.logger.info("promotionId1", { promotionId1 })
 
 
@@ -385,7 +404,7 @@ exports.onNewReading = functions.firestore
       functions.logger.info("sound alert update", { alert: reading.current > sensor.maxDB || reading.current < sensor.minDB });
     }
     else if (category.name === "Proximity") {
-      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance < sensor.latitude && reading.distance > sensor.longitude }, { merge: true })
+      await db.collection('sensors').doc(sensor.id).set({ presenceDetected: reading.distance > sensor.latitude && reading.distance < sensor.longitude }, { merge: true })
 
       if(reading.capacity > 50)
       {

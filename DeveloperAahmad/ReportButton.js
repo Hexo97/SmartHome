@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, LogBox  } from "react-native";
 import { View, Text } from "../components/Themed";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -8,6 +8,7 @@ import db from '../db'
 import DialogInput from 'react-native-dialog-input';
 
 export default function ReportButton({ user, category, sensor }) {
+    LogBox.ignoreAllLogs();
 
     const [reviewVisible, setReviewVisible] = useState(false)
     const [maintenanceVisible, setMaintenanceVisible] = useState(false)
@@ -18,7 +19,6 @@ export default function ReportButton({ user, category, sensor }) {
     const [message, setMessage] = useState("")
     const [reviewMessage, setReviewMessage] = useState("")
     const [maintenanceMessage, setMaintenanceMessage] = useState("")
-    console.log(reviewMessage)
     const [rating, setRating] = useState(0)
     const [maintenanceDate, setMaintenanceDate] = useState(new Date())
     const [show, setShow] = useState(false);
@@ -52,7 +52,6 @@ export default function ReportButton({ user, category, sensor }) {
             setReviewAlert(true)
         }
         else {
-            // console.log("else:", sensor.id);
             const review = { rating, categoryId: category.id, reviewMsg, date: new Date(), userId: user.id };
             await db.Categories.Reviews.createReview(category.id, review);
             await db.Logs.create(
@@ -84,31 +83,27 @@ export default function ReportButton({ user, category, sensor }) {
         setShow(false)
         const currentDate = selectedDate || maintenanceDate;
         setMaintenanceDate(currentDate);
-        console.log(maintenanceDate);
     };
 
     return (
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={true}>
 
-                <View style={{ backgroundColor: "#12232E", flexDirection: "row", alignSelf: "center", marginRight: 50 }}>
-                    <View style={{ backgroundColor: "#12232E" }} >
+                <View style={{ backgroundColor: "transparent", flexDirection: "row", alignSelf: "center" }}>
+
+                    <View style={{ backgroundColor: "transparent", marginRight: 20 }} >
                         <Icon
                             name="report"
                             type="material-icons"
                             size={20}
                             reverse
-                            containerStyle={{
-                                left: "42.5%"
-                            }}
-                            color="#f50"
-
+                            color="#99ceea"
                             onPress={() => {
                                 setVisible(true)
                             }}
                         />
                         <DialogInput
-                            style={{ width: "80%" }}
+                            // dialogStyle={{backgroundColor:'green'}}
                             isDialogVisible={visible}
                             title={"Report This Sensor"}
                             message={
@@ -118,7 +113,6 @@ export default function ReportButton({ user, category, sensor }) {
                             }
                             value={message}
                             submitInput={(inputText) => {
-                                // setMessage(inputText) , 
                                 createRequest({ sensor }, inputText)
                             }
                             }
@@ -135,24 +129,18 @@ export default function ReportButton({ user, category, sensor }) {
                         </DialogInput>
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
+                    <View style={{ backgroundColor: "transparent", }}>
                         <Icon
                             name="star"
                             type="ant-design"
                             size={20}
                             reverse
-                            containerStyle={{
-                                left: "42.5%"
-                            }}
-                            color="#f50"
+                            color="#99ceea"
 
                             onPress={() => {
                                 setReviewVisible(true)
                             }}
                         />
-                    </View>
-
-                    <View style={{ backgroundColor: "#12232E", marginHorizontal: 20 }}>
                         <DialogInput
                             style={{ width: "80%" }}
                             isDialogVisible={reviewVisible}
@@ -210,17 +198,13 @@ export default function ReportButton({ user, category, sensor }) {
                         </DialogInput>
                     </View>
 
-                    <View style={{ backgroundColor: "#12232E", alignItems: "center" }} >
+                    <View style={{ backgroundColor: "transparent", marginLeft: 20 }} >
                         <Icon
                             name="tools"
                             type="entypo"
                             size={20}
                             reverse
-                            containerStyle={{
-                                left: "42.5%"
-                            }}
-                            color="#f50"
-
+                            color="#99ceea"
                             onPress={() => {
                                 setMaintenanceVisible(true)
                             }}
@@ -244,7 +228,7 @@ export default function ReportButton({ user, category, sensor }) {
                                     {
                                         show
                                         &&
-                                        <>
+                                        
                                             <DateTimePicker
                                                 testID="dateTimePicker"
                                                 value={maintenanceDate}
@@ -253,9 +237,10 @@ export default function ReportButton({ user, category, sensor }) {
                                                 display="default"
                                                 onChange={onChange}
                                             />
-                                        </>
+
                                     }
-                                    {maintenanceAlert
+                                    {
+                                        maintenanceAlert
                                         &&
                                         <Text style={[styles.alert, { fontSize: 14 }]}>{'\n\n'}Please enter a comment explaining the issue</Text>
                                     }
@@ -266,18 +251,16 @@ export default function ReportButton({ user, category, sensor }) {
                                 setMaintenanceMessage(inputText)
                                 createMaintenance(inputText)
                                 setShow(false)
-                            }
-                            }
+                            }}
                             closeDialog={() => {
-                                setMaintenanceVisible(false),
-                                    setMaintenanceMessage(""),
-                                    setMaintenanceAlert(false)
+                                setMaintenanceVisible(false)
+                                setMaintenanceMessage("")
+                                setMaintenanceAlert(false)
                                 setShow(false)
                                 setMaintenanceDate(new Date())
-                            }
-                            }
+                            }}
                             onTouchOutside={() => {
-                                setMaintenanceVisible(false);
+                                setMaintenanceVisible(false)
                                 setShow(false)
                                 setMaintenanceDate(new Date())
                             }}
@@ -304,17 +287,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#12232E"
-    },
-    getStartedContainer: {
-        alignItems: "center",
-        marginHorizontal: 30,
-        marginTop: 5,
-        marginBottom: 5,
-        backgroundColor: "#EEFBFB",
-        borderRadius: 10,
-        borderBottomColor: "black",
-        borderWidth: 2
+        backgroundColor: "transparent"
     },
     developmentModeText: {
         marginBottom: 20,

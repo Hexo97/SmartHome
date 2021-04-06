@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   loginText: {
     color: "#ffffff",
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   helpLink: {
     paddingVertical: 15,
@@ -231,10 +231,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // marginTop: 25,
     marginBottom: 20,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "80%",
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   navBar: {
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
     height: 60,
     paddingRight: 10,
     width: "100%",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, ImageBackground } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import { StyleSheet } from "react-native";
@@ -10,7 +10,7 @@ import Review from "./Review";
 export default function Reviews({ route }) {
 
     const { reviewCategory } = route.params;
-
+    console.log("revsssss");
     const [reviews, setReviews] = useState([]);
     useEffect(() => db.Categories.Reviews.listenToAll(setReviews, reviewCategory.id), [reviewCategory]);
 
@@ -19,35 +19,45 @@ export default function Reviews({ route }) {
 
     return (
         <SafeAreaProvider style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {reviews.length !== 0 ? (
-                    <>
-                        {reviews.map((c) => (
-                            <Review key={c.id} review={c} />
-                        ))}
-                    </>
-                ) : (
-                    <Text
-                        style={{
-                            fontSize: 15,
-                            color: "white",
-                            marginTop: "60%",
-                        }}
-                    >
-                        NO REVIEWS FOR THIS SENSOR YET
-                    </Text>
-                )}
-            </ScrollView>
+
+            <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
+
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {reviews.length !== 0 ? (
+                        <>
+                            {reviews.map((c) => (
+                                <Review key={c.id} review={c} />
+                            ))}
+                        </>
+                    ) : (
+                        <Text
+                            style={{
+                                fontSize: 15,
+                                color: "white",
+                                marginTop: "60%",
+                                textAlign: 'center'
+                            }}
+                        >
+                            0 Reviews
+                        </Text>
+                    )}
+                </ScrollView>
+
+            </ImageBackground>
+
         </SafeAreaProvider>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+    },
     container: {
         flex: 1,
-        alignItems: "center",
+        // alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#203647",
+        // backgroundColor: "transparent",
     },
     container1: {
         height: 300,
@@ -74,7 +84,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,
@@ -112,7 +122,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         // justifyContent: "center",
         // alignItems: "center",
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,

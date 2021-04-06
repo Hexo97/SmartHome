@@ -38,6 +38,17 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid
+          ,
+          message: 'Temperature sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Sound") {
@@ -57,10 +68,21 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid
+          ,
+          message: 'Sound sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Proximity") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         location: "Kitchen",
@@ -69,6 +91,25 @@ export default function SensorRequestProcessed({ payment }) {
         longitude: 25.4,
         motiondetected: false,
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid
+          ,
+          message: 'Proximity sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     if (category && category.name === "Motion") {
@@ -78,7 +119,6 @@ export default function SensorRequestProcessed({ payment }) {
         motiondetected: false,
         location: "Default",
       });
-      setAddd(true)
       await db.Logs.create(
         {
           sensorId: sensorid,
@@ -87,9 +127,21 @@ export default function SensorRequestProcessed({ payment }) {
           logMessage: ` Sensor Created`
         }
       )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid
+          ,
+          message: 'Motion sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
+      setAddd(true)
     }
     if (category && category.name === "Smoke detector") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         alert: false,
@@ -97,11 +149,29 @@ export default function SensorRequestProcessed({ payment }) {
         min: 25,
         max: 70
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid
+          ,
+          message: 'Smoke Detector sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
-
     if (category && category.name === "Capacitive Pressure") {
-      db.Sensors.create({
+      const { id: sensorid } = await db.Sensors.create({
         categoryid: categoryid,
         userid: userid,
         alert: false,
@@ -111,6 +181,24 @@ export default function SensorRequestProcessed({ payment }) {
         status: "Sleeping",
         alarm: "off"
       });
+      await db.Logs.create(
+        {
+          sensorId: sensorid,
+          categoryId: categoryid,
+          date: new Date(),
+          logMessage: ` Sensor Created`
+        }
+      )
+      await db.Users.Notifications.createNotification(
+        userid
+        ,
+        {
+          userId: userid,
+          message: 'Capacitive Pressure sensor request has been processed',
+          date: new Date(),
+          isRead: false
+        }
+      )
       setAddd(true)
     }
     alert("Sensor created");
@@ -126,7 +214,7 @@ export default function SensorRequestProcessed({ payment }) {
             <Card>
               <Card.Title
                 style={{
-                  backgroundColor: "#4DA8DA",
+                  backgroundColor: "#99ceea",
                   color: "black",
                   fontWeight: "bold",
                 }}
@@ -232,7 +320,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -249,7 +337,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   title3: {
     height: 20,
@@ -268,7 +356,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   myButton: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     alignSelf: "center",
     width: 100,
     marginLeft: 10,

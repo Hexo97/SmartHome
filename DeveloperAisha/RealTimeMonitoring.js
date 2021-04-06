@@ -39,7 +39,7 @@ export default function RealTimeMonitoring() {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 50, margin: 5, marginBottom: 10 }}>
                     <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 18 }}> REAL TIME MONITORING</Text>
                 </View>
 
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign: 'center',
         color: "white",
-        backgroundColor: "#4DA8DA"
+        backgroundColor: "#99ceea"
     },
     getStartedContainer: {
         alignItems: "center",

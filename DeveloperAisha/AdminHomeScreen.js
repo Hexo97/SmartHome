@@ -87,10 +87,6 @@ export default function AdminHomeScreen({ navigation }) {
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.titleBar}>
-                    <Ionicons name="menu-outline" size={24} color="white"></Ionicons>
-                    <Ionicons name="notifications-outline" size={30} color="white"></Ionicons>
-        </View> */}
         <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
           <View style={styles.profileImage}>
             <Image source={{ uri: currentProfile }} style={styles.image} resizeMode="center"></Image>
@@ -159,29 +155,50 @@ export default function AdminHomeScreen({ navigation }) {
           <Text style={[styles.text, styles.subText]}>{email}</Text>
           <Text style={[styles.text, styles.subText], { textAlign: "right", color: "white" }}>{dt}</Text>
         </View>
+
+        <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }}
+        >
+
         <Button
           title="Dashboard"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Dashboard')}
         />
-        <View style={styles.space} />
-        <Button
+
+        
+      <Button
           title="View Notifications"
+          buttonStyle={styles.myButton}
           type="outline"
         // onPress={() => navigation.navigate('Settings')}
         />
-        <View style={styles.space} />
+    
+        </View>
+
+        <View style={{
+          backgroundColor: "#12232E",
+          flexDirection: "row",
+        }}
+        >
         <Button
           title="Sensors Logs"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('Logs')}
         />
-        <View style={styles.space} />
+
         <Button
           title="Monitor Login Activity"
           type="outline"
+          buttonStyle={styles.myButton}
           onPress={() => navigation.navigate('RealTimeMonitoring')}
         />
+         </View>
+         
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -203,12 +220,6 @@ const styles = StyleSheet.create({
     width: undefined,
     backgroundColor: "#12232E"
   },
-  titleBar: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 5,
-    backgroundColor: "#12232E",
-  },
   subText: {
     fontSize: 12,
     color: "#EEFBFB",
@@ -223,18 +234,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     backgroundColor: "#FFFFFF"
   },
-  active: {
-    backgroundColor: "#34FFB9",
-    position: "absolute",
-    bottom: 28,
-    left: 10,
-    padding: 4,
-    height: 20,
-    width: 20,
-    borderRadius: 10
-  },
   space: {
-    width: 0, // or whatever size you need
+    width: 0,
     height: 7,
   },
   add: {
@@ -250,7 +251,6 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     alignSelf: "center",
-    // backgroundColor:"#12232E",
     marginTop: 16
   },
   dm: {
@@ -272,40 +272,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
     backgroundColor: "#12232E"
-  },
-  mediaImageContainer: {
-    width: 180,
-    height: 200,
-    borderRadius: 12,
-    overflow: "hidden",
-    marginHorizontal: 10,
-    backgroundColor: "#12232E"
-  },
-  mediaCount: {
-    backgroundColor: "#41444B",
-    position: "absolute",
-    top: "50%",
-    marginTop: -50,
-    marginLeft: 30,
-    width: 100,
-    height: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 12,
-    shadowColor: "rgba(0, 0, 0, 0.38)",
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 20,
-    shadowOpacity: 1
-  },
-  recent: {
-    marginLeft: 78,
-    marginTop: 32,
-    marginBottom: 6,
-    fontSize: 10
-  },
-  recentItem: {
-    flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 16
   },
 });

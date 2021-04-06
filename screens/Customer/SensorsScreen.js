@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet, TouchableOpacity, ScrollView, TextInput
+} from "react-native";
 import { View, Text } from "../../components/Themed";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import UserContext from "../../UserContext";
@@ -28,85 +31,95 @@ export default function SensorsScreen({ navigation }) {
   useEffect(() => setSensor(null), [category])
 
   return (
-    <SafeAreaProvider style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={true}>
+    <SafeAreaProvider>
+      <ImageBackground source={require("../../assets/images/background.png")} style={styles.background}>
+        <ScrollView>
+          <View style={styles.container}>
 
-        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 5, marginBottom: 10 }}>
-          <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Control Sensors</Text>
-        </View>
+            <View style={{ alignSelf: "center", backgroundColor: "transparent" }}>
+              <Icon
+                raised
+                name='warning'
+                type='font-awesome'
+                color='red'
+                onPress={() => navigation.navigate('Precautions')} />
+            </View>
 
-        <View style={{ alignSelf: "center", backgroundColor: "#12232E" }}>
-          <Icon
-            raised
-            name='warning'
-            type='font-awesome'
-            color='red'
-            onPress={() => navigation.navigate('Precautions')} />
-        </View>
-
-        {
-          user
-          &&
-          <View style={styles.getStartedContainer}>
-            <CategoryByUserPicker set={setCategory} />
-          </View>
-        }
-        {
-          user
-          &&
-          category
-          &&
-          <View style={styles.getStartedContainer}>
-            <SensorByUserAndCategoryPicker category={category} set={setSensor} />
-          </View>
-        }
-        {
-          user
-          &&
-          category
-          &&
-          sensor
-          &&
-          <>
-            {category.name === "Motion"
+            {
+              user
               &&
-              <MotionInfo user={user} category={category} sensor={sensor} />
-            }
-              {category.name === "Smoke detector"
-              &&
-              <SmokeInfo user={user} category={category} sensor={sensor} />
+              <View style={styles.getStartedContainer}>
+                <CategoryByUserPicker set={setCategory} />
+              </View>
             }
             {
-              category.name === "Temperature" && (
-                <TemperatureInfo
-                  user={user}
-                  category={category}
-                  sensor={sensor}
-                />
-              )}
-            {category.name === "Sound" && (
-              <SoundInfo user={user} category={category} sensor={sensor} />
-            )}
+              user
+              &&
+              category
+              &&
+              <View style={styles.getStartedContainer}>
+                <SensorByUserAndCategoryPicker category={category} set={setSensor} />
+              </View>
+            }
             {
-              category.name === "Proximity"
+              user
               &&
-              <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation}/>
-            }
-             {
-              category.name === "Capacitive Pressure"
+              category
               &&
-              <PressureInfo sensor={sensor}/>
+              sensor
+              &&
+              <>
+                {category.name === "Motion"
+                  &&
+                  <MotionInfo user={user} category={category} sensor={sensor} />
+                }
+                {category.name === "Smoke detector"
+                  &&
+                  <SmokeInfo user={user} category={category} sensor={sensor} />
+                }
+                {
+                  category.name === "Temperature" && (
+                    <TemperatureInfo
+                      user={user}
+                      category={category}
+                      sensor={sensor}
+                    />
+                  )}
+                {category.name === "Sound" && (
+                  <SoundInfo user={user} category={category} sensor={sensor} />
+                )}
+                {
+                  category.name === "Proximity"
+                  &&
+                  <ProximityInfo user={user} category={category} sensor={sensor} navigation={navigation} />
+                }
+                {
+                  category.name === "Capacitive Pressure"
+                  &&
+                  <PressureInfo sensor={sensor} />
+                }
+                <ReportButton navigation={navigation} user={user} category={category} sensor={sensor} />
+              </>
             }
-            
-            <ReportButton user={user} category={category} sensor={sensor} />
-          </>
-        }
-      </ScrollView>
+          </View>
+        </ScrollView>
+      </ImageBackground>
+
     </SafeAreaProvider >
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "transparent",
+    marginTop: 70,
+  },
+  background: {
+    flex: 1,
+
+  },
   tinyLogo: {
     width: 150,
     height: 150,
@@ -114,11 +127,6 @@ const styles = StyleSheet.create({
   space: {
     width: 0, // or whatever size you need
     height: 5,
-  },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#12232E"
   },
   getStartedContainer: {
     alignItems: "center",

@@ -12,12 +12,15 @@ export default function Review({ review }) {
     return (
         <>
             <View style={styles.container} key={review.id}>
-                <Card>
+                <Card containerStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    width:400
+}}>
                     <Card.Title
                         style={{
-                            backgroundColor: "#4DA8DA",
                             color: "black",
                             fontWeight: "bold",
+                            fontSize:18
                         }}
                     >
                         <Text key={review.id}> Customer: {user.name}</Text>
@@ -34,13 +37,13 @@ export default function Review({ review }) {
                     </Text>
                     <AirbnbRating
                         count={5}
-                        reviews={["Bad", "OK", "Good", "Perfect", "Done"]}
+                        reviews={["Horrible", "Bad", "Average", "Good", "Perfect"]}
                         defaultRating={review.rating}
                         size={20}
                         isDisabled={true}
                     />
                 </Card>
-            </View>
+                </View>
         </>
     );
 }
@@ -50,10 +53,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#203647",
+        backgroundColor: "transparent",
     },
     navBar: {
-        backgroundColor: "#007CC7",
+        backgroundColor: "#99ceea",
         height: 60,
         paddingRight: 10,
         width: "100%",

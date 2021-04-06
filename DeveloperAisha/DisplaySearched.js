@@ -35,7 +35,7 @@ export default function DisplaySearched({ sensor }) {
 
                 <View style={{ width: 300, marginLeft: 40, marginHorizontal: 40, marginBottom: 80 }}>
                     <Card>
-                        <Card.Title style={{ fontSize: 20, backgroundColor: "#4DA8DA" }}>{sensor.location}</Card.Title>
+                        <Card.Title style={{ fontSize: 20, backgroundColor: "#99ceea" }}>{sensor.location}</Card.Title>
                         <Card.Divider />
                         <Card.Image source={{ uri: catPicture }}>
                         </Card.Image>

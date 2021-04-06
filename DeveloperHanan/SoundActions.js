@@ -52,6 +52,14 @@ export default function SoundActions({ sensor }) {
     } else {
       await db.Sensors.update({ ...sensor, minDB: value });
     }
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
   };
 
   const [valuemax, setValuemax] = useState(sensor.maxDB);
@@ -65,6 +73,14 @@ export default function SoundActions({ sensor }) {
     } else {
       await db.Sensors.update({ ...sensor, maxDB: value });
     }
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
   };
 
   return (
@@ -86,7 +102,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={15}
             onPress={() => updateMinMax("maxDB", 10)}
           />
@@ -95,7 +111,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={15}
             onPress={() => updateMinMax("maxDB", -10)}
           />
@@ -117,7 +133,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={15}
             onPress={() => updateMinMax("minDB", 10)}
           />
@@ -126,7 +142,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={15}
             onPress={() => updateMinMax("minDB", -10)}
           />
@@ -175,7 +191,7 @@ export default function SoundActions({ sensor }) {
                   size={15}
                   reverse
                   containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
+                  color="#99ceea"
                 />
               ),
             }}
@@ -202,7 +218,7 @@ export default function SoundActions({ sensor }) {
                   size={15}
                   reverse
                   containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
+                  color="#99ceea"
                 />
               ),
             }}
@@ -223,7 +239,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="upload"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={uploadReading}
           />
@@ -231,7 +247,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="exclamation-triangle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleToggleAlert}
           />
@@ -239,7 +255,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="play-circle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStartSimulator}
           />
@@ -247,7 +263,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="stop"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStopSimulator}
           />
@@ -297,7 +313,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay - 1)}
           />
@@ -305,7 +321,7 @@ export default function SoundActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay + 1)}
           />

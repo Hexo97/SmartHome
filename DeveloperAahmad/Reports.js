@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet, TouchableOpacity, ScrollView
+} from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from "../UserContext";
@@ -53,10 +56,9 @@ export default function Reports() {
   // console.log(sensor);
   return (
     <>
-      <View style={styles.navBar}>
-        <Text style={styles.headingText}>Reports</Text>
-      </View>
       <SafeAreaProvider style={styles.container}>
+        {/* <ImageBackground source={require("../assets/images/background.png")} style={styles.background}> */}
+
         <ScrollView showsVerticalScrollIndicator={false}>
 
           <View style={styles.container}>
@@ -64,11 +66,12 @@ export default function Reports() {
               alert
               &&
               <>
-                <Text style={styles.normalTxt}>User: {reportingUser.name}</Text>
-                <Text style={styles.normalTxt}>Status: {report.status}</Text>
-                <Text style={styles.normalTxt}>Message: {report.message}</Text>
-                <Text style={styles.normalTxt}>Sensor Id: {report.sensorId}</Text>
-                <Text style={styles.normalTxt}>Location: {sensor.location}</Text>
+              <Card>
+                <Text style={styles.normalTxt}>User:- {reportingUser.name}</Text>
+                <Text style={styles.normalTxt}>Status:- {report.status}</Text>
+                <Text style={styles.normalTxt}>Message:- {report.message}</Text>
+                <Text style={styles.normalTxt}>Sensor Id:-{report.sensorId}</Text>
+                <Text style={styles.normalTxt}>Location:-  {sensor.location}</Text>
                 <Picker
                   selectedValue={status}
                   style={{ height: 50, width: 200 }}
@@ -84,6 +87,7 @@ export default function Reports() {
                   title="Save"
                   type="outline"
                 />
+                </Card>
               </>
             }
 
@@ -157,52 +161,35 @@ export default function Reports() {
 
 
 
-            {/* <View style={styles.container}>
-        {faq.map((faq) =>
-          faq.answer !== "" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : user ? user.role === "Support" ? (
-            <FaqScreen
-              key={faq.id}
-              userid={faq.userid}
-              edit={edit}
-              remove={remove}
-              faq={faq}
-              {...faq}
-            />
-          ) : null 
-          : null
-        )}
-      </View> */}
+
           </View>
         </ScrollView>
+        {/* </ImageBackground> */}
+
       </SafeAreaProvider>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  // background: {
+  //   flex: 1,
+  // },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#EEFBFB",
+    // backgroundColor: "transparent",
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   normalTxt: {
     fontSize: 20,
-    color: "#4DA8DA",
+    color: "#99ceea",
 
   },
   helpLink: {
@@ -228,7 +215,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   navBar: {
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
     height: 60,
     paddingRight: 10,
     width: "100%",

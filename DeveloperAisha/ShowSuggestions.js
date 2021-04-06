@@ -32,8 +32,25 @@ export default function showSuggestions({ suggestionType }) {
                     &&
                     suggestionType === "Products"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Color</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Price</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Action</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                         {
                             productsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>
@@ -67,8 +84,22 @@ export default function showSuggestions({ suggestionType }) {
                     &&
                     suggestionType === "Application"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Improvement</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Action</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                         {
                             appsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>
@@ -99,8 +130,22 @@ export default function showSuggestions({ suggestionType }) {
                     &&
                     suggestionType === "Staff"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Staff</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Action</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                         {
                             staffsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>

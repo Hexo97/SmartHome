@@ -28,7 +28,6 @@ export default function Maintenance({ route }) {
     };
 
     const save = async () => {
-        console.log("status hhhhhhhhhhhhhhhhhhhhhhhhh", status)
         await db.Sensors.Maintenance.updateMaintenance(sensor.id, { ...maintenanceReport, status: status, comments: comment }, maintenanceReport.id);
         setAlert(false)
     };
@@ -225,11 +224,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "bold",
-        color: "#4DA8DA",
+        color: "#99ceea",
     },
     normalTxt: {
         fontSize: 20,
-        color: "#4DA8DA",
+        color: "#99ceea",
 
     },
     helpLink: {
@@ -255,7 +254,7 @@ const styles = StyleSheet.create({
         width: "80%",
     },
     navBar: {
-        backgroundColor: "#007CC7",
+        backgroundColor: "#99ceea",
         height: 60,
         paddingRight: 10,
         width: "100%",
@@ -270,7 +269,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     inputView: {
-        borderColor: "#4DA8DA",
+        borderColor: "#99ceea",
         borderWidth: 2,
         borderRadius: 5,
         width: "80%",

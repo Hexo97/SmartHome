@@ -26,9 +26,27 @@ export default function ProximityActions({ sensor }) {
 
   const determineArea = async () => {
     await db.Sensors.update({ ...sensor, area: Math.floor(Math.random() * 10) + 0 })
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
   }
 
-  const handleToggleAlert = async () => await db.Sensors.togglePresence(sensor)
+  const handleToggleAlert = async () => {
+    await db.Sensors.togglePresence(sensor)
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} was toggled!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
 
   const [delay, setDelay] = useState(5)
   const [intervalId, setIntervalId] = useState(0)

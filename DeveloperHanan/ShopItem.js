@@ -12,6 +12,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
 import UserContext from "../UserContext";
 import db from "../db";
+import { CardItem } from "native-base";
 
 export default function ShopItem({ navigation, category, edit, remove, discount }) {
   const { user } = useContext(UserContext);
@@ -43,22 +44,22 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
     alert("Payment successfully done, Sensor will be avaibale in some time");
   };
 
-
+console.log("discount",discount);
 
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <Card>
-            <Card.Title
+          <Card containerStyle={styles.card} >
+            <Card.Title 
               style={{
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                color: "white",
                 fontWeight: "bold",
+                fontSize: 18
               }}
             >
               {category.name}
-            </Card.Title>
+              </Card.Title>
             <Image
               style={styles.tinyLogo}
               source={{
@@ -68,9 +69,7 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
             <Text
               style={{
                 fontSize: 15,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                color: "white",
               }}
             >
               {category.description}
@@ -78,9 +77,8 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
             <Text
               style={{
                 fontSize: 20,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                fontWeight: "bold",
+                color: "white",
               }}
             >
               QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)" : category.price}
@@ -95,15 +93,6 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
               </Text>
             </TouchableOpacity>
 
-            {/* <TouchableOpacity
-              onPress={() => reviews(category.id)}
-              style={styles.title}
-            >
-              <Text style={styles.helpLinkText} lightColor={Colors.light.tint}>
-                Reviews
-              </Text>
-            </TouchableOpacity> */}
-
             <TouchableOpacity
               onPress={() => navigation.navigate('Reviews', { reviewCategory: category })}
               style={styles.title}
@@ -112,7 +101,6 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
                 Reviews
               </Text>
             </TouchableOpacity>
-
           </Card>
         </View>
       </ScrollView>
@@ -121,6 +109,11 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
 }
 
 const styles = StyleSheet.create({
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'transparent',
+    borderRadius: 30
+  },
   tinyLogo: {
     width: 150,
     height: 150,
@@ -128,68 +121,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#203647",
-  },
-  cardBg: {
-    backgroundColor: "rgba(96,100,109, 0.8)",
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center",
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)",
-  },
-  codeHighlightContainer: {
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: "center",
-  },
-  helpContainer: {
-    marginTop: 15,
-    marginHorizontal: 20,
-    alignItems: "center",
-  },
-  helpLink: {
-    paddingVertical: 15,
+    backgroundColor: "transparent",
   },
   helpLinkText: {
     textAlign: "center",
-    // display: "flex",
     height: 30,
     width: 100,
     borderRadius: 4,
-    // justifyContent: "center",
-    // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -200,27 +139,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-  },
-  title1: {
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    color: "#4DA8DA",
-  },
-  title3: {
-    height: 20,
-    width: 20,
-  },
-  cardtext: {
-    fontSize: 20,
-    textAlign: "left",
-  },
-  cardbg: {
-    backgroundColor: "lightblue",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

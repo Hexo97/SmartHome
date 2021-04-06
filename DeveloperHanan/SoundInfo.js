@@ -46,8 +46,8 @@ export default function SoundInfo({ sensor }) {
       alert: sensor.alert,
       categoryid: sensor.categoryid,
       location: location,
-      max: sensor.max,
-      min: sensor.min,
+      maxDB: sensor.maxDB,
+      minDB: sensor.minDB,
       userid: sensor.userid,
     });
     setLocation("");
@@ -84,7 +84,7 @@ export default function SoundInfo({ sensor }) {
             reverse
             name="save"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={updateLoc}
           />
@@ -93,7 +93,7 @@ export default function SoundInfo({ sensor }) {
             reverse
             name="edit"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => EditUserRole(sensor.location)}
           />
@@ -101,7 +101,7 @@ export default function SoundInfo({ sensor }) {
       </View>
       <View
         style={{
-          backgroundColor: "#4DA8DA",
+          backgroundColor: "#99ceea",
           width: "90%",
           marginLeft: "5%",
           marginTop: "5%",
@@ -182,7 +182,7 @@ export default function SoundInfo({ sensor }) {
                   size={15}
                   reverse
                   containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
+                  color="#99ceea"
                 />
               ),
             }}
@@ -209,7 +209,7 @@ export default function SoundInfo({ sensor }) {
                   size={15}
                   reverse
                   containerStyle={{ bottom: 20, right: 20 }}
-                  color="#4DA8DA"
+                  color="#99ceea"
                 />
               ),
             }}
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#12232E",
   },
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "75%",

@@ -84,7 +84,7 @@ export default function AdsScreen() {
             style={{
               width: "80%",
               height: 50,
-              borderColor: "#4DA8DA",
+              borderColor: "#99ceea",
               borderWidth: 2,
               marginBottom: 20,
               borderRadius: 15,
@@ -192,7 +192,7 @@ export default function AdsScreen() {
                       justifyContent: "center",
                       paddingTop: 2,
                       marginTop: 15,
-                      backgroundColor: "#007CC7",
+                      backgroundColor: "#99ceea",
                       color: "#fff",
                       fontWeight: "bold",
                     }}
@@ -223,7 +223,7 @@ export default function AdsScreen() {
                       justifyContent: "center",
                       marginTop: 10,
                       paddingTop: 2,
-                      backgroundColor: "#007CC7",
+                      backgroundColor: "#99ceea",
                       color: "#fff",
                       fontWeight: "bold",
                     }}
@@ -261,11 +261,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "white",
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderRadius: 2,
   },
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     height: 60,
     marginBottom: 20,
     alignItems: "center",
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   },
 
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "80%",
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 0,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
   footerView: {
     flex: 1,
@@ -352,10 +352,10 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   footerLink: {
-    color: "#4DA8DA",
+    color: "#99ceea",
     fontWeight: "bold",
     fontSize: 16,
   },

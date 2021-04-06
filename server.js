@@ -1,15 +1,12 @@
 const firebase = require("firebase");
-const fb = require('firebase/storage')
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDA9XBf7mmSydm45U8LAC_8ZanHAdj5mkY",
-  authDomain: "cp3351-572e1.firebaseapp.com",
-  databaseURL: "https://cp3351-572e1-default-rtdb.firebaseio.com",
-  projectId: "cp3351-572e1",
-  storageBucket: "cp3351-572e1.appspot.com",
-  messagingSenderId: "2568886566",
-  appId: "1:2568886566:web:0c2da3a5e37b0b0fdfc9e7",
-  measurementId: "G-QEN9H9ZN1Q",
+  apiKey: "AIzaSyA84jN5johFsBHCLDM_bB1vKiDAr4tTOKc",
+  authDomain: "cp3351-bf05f.firebaseapp.com",
+  projectId: "cp3351-bf05f",
+  storageBucket: "cp3351-bf05f.appspot.com",
+  messagingSenderId: "851316161428",
+  appId: "1:851316161428:web:afccdded7a606ce5ebad81"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -57,8 +54,7 @@ db.collection("categories").onSnapshot(
   (snap) => (categories = snap.docs.map(reformat))
 );
 const isCategory = (sensor, name) =>
-  categories.find((category) => category.id === sensor.categoryid).name ===
-  name;
+  categories.find((category) => category.id === sensor.categoryid).name === name;
 
 // start listening to all sensors
 let sensors = [];
@@ -101,17 +97,20 @@ const simulateReading = async (sensor) => {
       });
 
   }
+
   if (isCategory(sensor, "Smoke detector")) {
     const current = readings.length > 0 ? readings[0].current : 35;
     await db
-    .collection("sensors")
-    .doc(sensor.id)
-    .collection("readings")
-    .add({
-      when: new Date(),
-      current: current + Math.floor(Math.random() * 15) - 10,
-    });
-  } 
+      .collection("sensors")
+      .doc(sensor.id)
+      .collection("readings")
+      .add({
+        when: new Date(),
+        distance: Math.floor(Math.random() * 30) + 20,
+        capacity: capacity + Math.floor(Math.random() * 20) - 10,
+      });
+  }
+
   if (isCategory(sensor, "Proximity")) {
     const distance = readings.length > 0 ? readings[0].distance : 45;
     const capacity = readings.length > 0 ? readings[0].capacity : 45;
@@ -122,45 +121,24 @@ const simulateReading = async (sensor) => {
       .add({
         when: new Date(),
         distance: distance + Math.floor(Math.random() * 20) - 10,
-        capacity : capacity + Math.floor(Math.random() * 20) - 10,
-      });
-  }
-  if (isCategory(sensor, "Capacitive Pressure")) {
-    const force = readings.length > 0 ? readings[0].force : 10;
-    await db
-      .collection("sensors")
-      .doc(sensor.id)
-      .collection("readings")
-      .add({
-        when: new Date(),
-        force: force + Math.floor(Math.random() * 10) + 0,
-      });
-  }
-  if (isCategory(sensor, "Motion")) {
-        
-    let images = []
-    let index = 0
-    images[0] = "https://static01.nyt.com/images/2020/01/19/fashion/18RING-PREVIEW-IMAGE/18RING-PREVIEW-IMAGE-superJumbo-v4.png";
-    images[1] = "https://townsquare.media/site/10/files/2019/07/Porch-Pirate.png?w=980&q=75";
-    images[2] = "https://ewscripps.brightspotcdn.com/dims4/default/53f770f/2147483647/strip/true/crop/1280x672+0+24/resize/1200x630!/quality/90/?url=https%3A%2F%2Fx-default-stgec.uplynk.com%2Fausw%2Fslices%2F5c2%2Fbe88c4e651db4a7dbe102614d7272948%2F5c2579ee9c3b48479551eb29750baa19%2Fposter_92ae91e3b2da431fab2e0897ebf62d0e.jpg";
-    index = Math.floor(Math.random() * images.length);
-    const when = new Date()
-    const imageName = when.toISOString()
-    const imageRef = fb.storage().ref(`sensors/${sensor.id}/images/${imageName}.jpg`)
-    const url = images[index]
-
-    await db
-      .collection("sensors")
-      .doc(sensor.id)
-      .collection("readings")
-      .add({
-        when: new Date(),
-        url
+        capacity: capacity + Math.floor(Math.random() * 20) - 10,
       });
   }
   else {
     console.log("other type of sensor not simulated yet");
   }
+  const notification = (sensor.userid,
+  {
+    userId: sensor.userid,
+    message: `Sensor at ${sensor.location} has new reading!`,
+    date: new Date(),
+    isRead: false
+  })
+  await db
+    .collection("users")
+    .doc(sensor.userid)
+    .collection("notifications")
+    .add(notification)
 };
 
 const simulate = () => {

@@ -18,17 +18,34 @@ export default function SmokeActions({ sensor }) {
     sensor,
   ]);
 
-  const uploadReading = async () =>
+  const uploadReading = async () => {
     await db.Sensors.Readings.createReading(sensor.id, {
       when: new Date(),
       current: (reading?.current || 35) + Math.floor(Math.random() * 15) - 10,
-    });
+    })
 
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
   const handleToggleAlert = async () => await db.Sensors.toggleAlert(sensor);
 
-  const updateMinMax = async (minmax, amount) =>
+  const updateMinMax = async (minmax, amount) => {
     await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount });
-
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `New humidty level has been set for sensor at ${sensor.location}!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
   const [delay, setDelay] = useState(5);
   const [intervalId, setIntervalId] = useState(0);
 
@@ -74,7 +91,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="minus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("max", -5)}
               />
@@ -82,7 +99,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="plus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("max", 5)}
               />
@@ -120,7 +137,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="minus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("min", -5)}
               />
@@ -128,7 +145,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="plus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("min", 5)}
               />
@@ -160,7 +177,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", -10)}
           />
@@ -168,7 +185,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", 10)}
           />
@@ -176,7 +193,7 @@ export default function SmokeActions({ sensor }) {
 
         <View
           style={{
-            backgroundColor: "#4DA8DA",
+            backgroundColor: "#99ceea",
             width: "70%",
             height: "8%",
             marginLeft: "20%",
@@ -208,7 +225,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="upload"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={uploadReading}
           />
@@ -216,7 +233,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="exclamation-triangle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleToggleAlert}
           />
@@ -224,7 +241,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="play-circle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStartSimulator}
           />
@@ -232,7 +249,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="stop"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStopSimulator}
           />
@@ -262,7 +279,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay - 1)}
           />
@@ -270,7 +287,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay + 1)}
           />
@@ -292,7 +309,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="hourglass-half"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={40}
             style={{ marginTop: 5 }}
           />

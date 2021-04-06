@@ -14,6 +14,7 @@ export default {
               SuggestionForSupport: 'four',
               Promotions:'five',
               Maintenance:'six',
+              UserPromReq:'seven',
             },
           },
           TabTwo: {

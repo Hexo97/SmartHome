@@ -13,7 +13,6 @@ export default function AdminSensorsLogs({ ...sentlog }) {
             <Text style={styles.LogsTextLogs}>
                 [{PrintTime(sentlog.date.toDate())}]
                 [{sentlog.sensorId.substring(0, 5)}]{' '}
-                {/* [{sentlog.categoryId.substring(0, 5)}] */}
                 [{category.name}]
                 {
                     sentlog.logMessage.includes("Creat")

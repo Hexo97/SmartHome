@@ -18,14 +18,22 @@ export default function suggestionforSupport() {
 
     const [userid, setUserId] = useState("")
 
+    // const [productsuggestions, setProductSuggestions] = useState([])
+    // useEffect(() => userid ? db.Users.SuggestionList.listenToProductSuggestion(setProductSuggestions, userid) : undefined, [userid])
+
     const [productsuggestions, setProductSuggestions] = useState([])
-    useEffect(() => userid ? db.Users.SuggestionList.listenToProductSuggestion(setProductSuggestions, userid) : undefined, [userid])
+    useEffect(() => db.Users.SuggestionList.listenToProductSuggestions(setProductSuggestions), [])
+
+    // const [appsuggestions, setAppSuggestions] = useState([])
+    // useEffect(() => userid ? db.Users.SuggestionList.listenToAppSuggestion(setAppSuggestions, userid) : undefined, [userid])
 
     const [appsuggestions, setAppSuggestions] = useState([])
-    useEffect(() => userid ? db.Users.SuggestionList.listenToAppSuggestion(setAppSuggestions, userid) : undefined, [userid])
+    useEffect(() => db.Users.SuggestionList.listenToApplicationSuggestions(setAppSuggestions), [])
 
+    // const [staffsuggestions, setStaffSuggestion] = useState([])
+    // useEffect(() => userid ? db.Users.SuggestionList.listenToStaffSuggestion(setStaffSuggestion, userid) : undefined, [userid])
     const [staffsuggestions, setStaffSuggestion] = useState([])
-    useEffect(() => userid ? db.Users.SuggestionList.listenToStaffSuggestion(setStaffSuggestion, userid) : undefined, [userid])
+    useEffect(() => db.Users.SuggestionList.listenToStaffSuggestions(setStaffSuggestion), [])
 
     return (
         <SafeAreaProvider style={styles.container}>
@@ -40,7 +48,7 @@ export default function suggestionforSupport() {
                 </View>
                 <Text style={{ alignSelf: 'center', marginBottom: 30, backgroundColor: "#EEFBFB", fontSize: 20, fontWeight: "bold" }}>User Suggestions</Text>
 
-                <View style={styles.getStartedContainer}>
+                {/* <View style={styles.getStartedContainer}>
                     <Picker
                         style={{ height: 50, width: 200 }}
                         selectedValue={userid}
@@ -52,12 +60,12 @@ export default function suggestionforSupport() {
                                 .map(user => <Picker.Item key={user.id} label={user.name} value={user.id} />)
                         }
                     </Picker>
-                </View>
+                </View> */}
 
                 <Text style={{ marginLeft: 100 }}>
                     {
-                        userid
-                        &&
+                        // userid
+                        // &&
                         <View style={styles.getStartedContainer}>
                             <Picker
                                 selectedValue={suggestionType}
@@ -73,14 +81,29 @@ export default function suggestionforSupport() {
                         </View>
                     }
                 </Text>
-
                 {
                     productsuggestions.length > 0
                     &&
                     suggestionType === "Products"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                       
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Color</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Price</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
+          
                         {
                             productsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>
@@ -106,8 +129,19 @@ export default function suggestionforSupport() {
                     &&
                     suggestionType === "Application"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Improvement</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                         {
                             appsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>
@@ -130,8 +164,19 @@ export default function suggestionforSupport() {
                     &&
                     suggestionType === "Staff"
                     &&
-                    <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                    <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                         <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>YOUR SUGGESTIONS</Text>
+                        <ListItem bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Suggestion</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Date</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Content>
+                            <ListItem.Title style={{color:"red", fontSize:12, fontWeight:"bold"}}>Staff</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
                         {
                             staffsuggestions.map((s, i) => (
                                 <ListItem key={i} bottomDivider>

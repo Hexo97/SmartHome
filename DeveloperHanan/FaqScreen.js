@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   title3: {
     height: 20,

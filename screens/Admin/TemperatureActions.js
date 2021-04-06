@@ -19,17 +19,38 @@ export default function TemperatureActions({ sensor }) {
     sensor,
   ]);
 
-  const uploadReading = async () =>
+  const uploadReading = async () => {
     await db.Sensors.Readings.createReading(sensor.id, {
       when: new Date(),
       current: (reading?.current || 50) + Math.floor(Math.random() * 20) - 10,
-    });
+    })
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+  }
+  
 
   const handleToggleAlert = async () => await db.Sensors.toggleAlert(sensor);
 
   const updateMinMax = async (minmax, amount) =>
-    await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount });
+  {
+    await db.Sensors.update({ ...sensor, [minmax]: sensor[minmax] + amount })
 
+    await db.Users.Notifications.createNotification(sensor.userid,
+      {
+        userId: sensor.userid,
+        message: `Sensor at ${sensor.location} has new reading!`,
+        date: new Date(),
+        isRead: false
+      }
+    )
+
+}
   const [delay, setDelay] = useState(5);
   const [intervalId, setIntervalId] = useState(0);
 
@@ -69,7 +90,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("max", -10)}
           />
@@ -77,7 +98,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("max", 10)}
           />
@@ -107,7 +128,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", -10)}
           />
@@ -115,7 +136,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", 10)}
           />
@@ -123,9 +144,9 @@ export default function TemperatureActions({ sensor }) {
 
         <View
           style={{
-            backgroundColor: "#4DA8DA",
+            backgroundColor: "#99ceea",
             width: "70%",
-            height:"8%",
+            height: "8%",
             marginLeft: "20%",
             marginTop: "2%",
           }}
@@ -138,7 +159,7 @@ export default function TemperatureActions({ sensor }) {
               fontSize: 18,
             }}
           >
-         Sensor's Dashboard
+            Sensor's Dashboard
           </Text>
         </View>
 
@@ -156,7 +177,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="upload"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={uploadReading}
           />
@@ -164,23 +185,23 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="exclamation-triangle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleToggleAlert}
           />
-            <Icon
+          <Icon
             raised
             name="play-circle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStartSimulator}
           />
-            <Icon
+          <Icon
             raised
             name="stop"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStopSimulator}
           />
@@ -210,7 +231,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay - 1)}
           />
@@ -218,15 +239,15 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay + 1)}
           />
         </View>
-      
-        <View style={{ margin: 10, width:"45%", marginLeft:"31%" }}>
+
+        <View style={{ margin: 10, width: "45%", marginLeft: "31%" }}>
           <Card>
-            <Text style={{ color: "black", fontSize: 20, marginLeft:"15%" }}>Delay {delay}</Text>
+            <Text style={{ color: "black", fontSize: 20, marginLeft: "15%" }}>Delay {delay}</Text>
           </Card>
         </View>
       </ScrollView>
@@ -239,8 +260,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft:"0%",
-    marginRight:"10%"
+    marginLeft: "0%",
+    marginRight: "10%"
   },
   title: {
     fontSize: 20,

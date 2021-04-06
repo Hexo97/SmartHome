@@ -13,7 +13,7 @@ export default function ActionsScreen() {
 
   const create = async () => {
     setMyText("TRUE");
-    
+
     await db.Ads.create({
       desc: desc,
       categoryid: category.id,
@@ -23,7 +23,7 @@ export default function ActionsScreen() {
     alert("Ad successfully created");
     setDesc(""), setCategory(null), setUrl("");
     setMyText("FALSE");
-    
+
   };
 
   const valid = () => desc !== "" && category !== null && url != "";
@@ -72,7 +72,7 @@ export default function ActionsScreen() {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     height: 60,
     alignItems: "center",
     width: "100%",
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
 
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "80%",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 17,
     fontWeight: "bold",
-    textAlign:"center"
+    textAlign: "center"
   },
 
   createBtn: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 25,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
   footerView: {
     flex: 1,
@@ -142,10 +142,10 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: 16,
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   footerLink: {
-    color: "#4DA8DA",
+    color: "#99ceea",
     fontWeight: "bold",
     fontSize: 16,
   },

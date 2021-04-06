@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { useState, useEffect } from "react";
-import { Image} from "react-native";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import RegisterLogin from "./RegisterLogin";
@@ -76,7 +76,7 @@ export function Home({ navigation }) {
           <Text
             style={{
               fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
+              backgroundColor: "#99ceea",
               marginTop: 5,
               textAlign: "center",
               width: "94%",
@@ -89,7 +89,7 @@ export function Home({ navigation }) {
           <Text
             style={{
               fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
+              backgroundColor: "#99ceea",
               textAlign: "center",
               paddingBottom: 5,
               width: "94%"
@@ -146,18 +146,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     height: 60,
     paddingRight: 10,
     width: "100%",
   },
-
   imagebg: {
     flex: 1,
     alignItems: "center",
     backgroundColor: "#EEFBFB",
   },
-
   container: {
     height: 350,
     width: "70%",
@@ -171,7 +169,6 @@ const styles = StyleSheet.create({
     bottom: 350,
     borderRadius: 15,
   },
-
   imgContainer: {
     marginRight: "30%",
     marginLeft: "30%",
@@ -181,7 +178,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   image: {
     marginRight: "30%",
     marginLeft: "30%",

@@ -59,7 +59,7 @@ export default function CategoryAction({ category, edit, remove }) {
         <View>
           <Card>
             <Card.Title
-              style={{ backgroundColor: "#4DA8DA", fontWeight: "bold" }}
+              style={{ backgroundColor: "#99ceea", fontWeight: "bold" }}
             >
               {category.name}
             </Card.Title>
@@ -73,7 +73,7 @@ export default function CategoryAction({ category, edit, remove }) {
               style={{
                 fontSize: 15,
                 fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
+                backgroundColor: "#99ceea",
                 paddingLeft: "5%",
                 paddingTop: "2%"
               }}
@@ -84,7 +84,7 @@ export default function CategoryAction({ category, edit, remove }) {
               style={{
                 fontSize: 15,
                 fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
+                backgroundColor: "#99ceea",
                 paddingLeft: "36%"
               }}
             >
@@ -93,7 +93,7 @@ export default function CategoryAction({ category, edit, remove }) {
             <Card.Divider />
             <View
               style={{
-                backgroundColor: "#4DA8DA",
+                backgroundColor: "#99ceea",
                 marginLeft: "8%",
                 marginRight: "10%",
                 marginTop: "5%",
@@ -105,7 +105,7 @@ export default function CategoryAction({ category, edit, remove }) {
                 raised
                 name="edit"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => edit(category)}
               />
@@ -113,7 +113,7 @@ export default function CategoryAction({ category, edit, remove }) {
                 raised
                 name="upload"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => uploadImage()}
               />
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 100,
     borderRadius: 4,
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   title3: {
     height: 20,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   myButton: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     alignSelf: "center",
     width: 100,
     marginLeft: 15,
