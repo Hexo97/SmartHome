@@ -86,11 +86,11 @@ export default function ActionsScreen() {
 
   const saveUser = async () => {
     await db.Users.update({
-      id: cid,
+      id: user.id,
       role: userRole,
-      name: userRoleName,
-      phone: userPhone,
-      age: userAge,
+      name: user.name,
+      phone: user.phone,
+      age: user.age,
     });
     setName("");
     setId("");
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
 
   rolesContainer: {
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   },
 
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "80%",
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   },
 
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     height: 60,
     alignItems: "center",
     width: "100%",
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -374,7 +374,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -390,7 +390,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,

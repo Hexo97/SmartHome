@@ -11,14 +11,9 @@ import Advertisments from "./Advertisments";
 import { StyleSheet, TouchableOpacity, TextInput } from "react-native";
 import { StatusBar } from "react-native";
 import "react-native-gesture-handler";
-import { View } from "react-native";
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from "@react-navigation/drawer";
-
-
+import { View, Text } from "react-native";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
+import { Icon } from "react-native-elements";
 
 export function Home({ navigation }) {
   const { user } = useContext(UserContext);
@@ -29,28 +24,38 @@ export function Home({ navigation }) {
       <View style={styles.navBar}>
 
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Image
-            source={require("../assets/images/icon2.png")}
-            style={{ width: 60, height: 60 }}
+          <Icon
+            name="menu"
+            type="MaterialIcons"
+            size={40}
+            reverse
+            iconStyle={{ color: "#99ceea", marginLeft: -30, marginTop: -30 }}
+            color="transparent"
           />
         </TouchableOpacity>
       </View>
+
+
       <View style={styles.imgContainer}>
+
         <Image
-          style={styles.image}
-          source={require("../assets/images/welcome.png")}
-        ></Image>
+          source={require("../assets/images/AAHM-logos.png")}
+          style={{ width: 400, height: 200, alignSelf: "center" }}
+        />
       </View>
 
-      {/* <Image
-          source={require("../assets/images/home.gif")}
-          style={{ width: 280, height: 250, alignSelf:"center" }}
-      /> */}
-      <View style={styles.space} />
       <Image
-        source={require("../assets/images/AAHM-logos.jpeg")}
-        style={{ width: 280, height: 200, alignSelf: "center" }}
+        style={styles.image}
+        source={require("../assets/images/welcome.png")}
       />
+
+      <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
+        <Text>Login</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate('Register')}>
+        <Text>Register</Text>
+      </TouchableOpacity>
     </View>
 
   );
@@ -100,8 +105,28 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  loginButton: {
+    width: "35%",
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    backgroundColor: "#99ceea",
+    marginTop: 30
+  },
+  registerButton: {
+    width: "35%",
+    borderRadius: 10,
+    height: 35,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+    backgroundColor: "#99ceea",
+    // marginTop: 30
+  },
   navBar: {
-    backgroundColor: "#007CC7",
+    backgroundColor: "transparent",
     height: 60,
     paddingRight: 10,
     width: "100%",

@@ -55,17 +55,16 @@ export default function SmokeInfo({ user, category, sensor }) {
 
           <View
             style={{
-              width: "60%",
-              marginLeft: "22%",
               marginTop: "3%",
               flexDirection: "row",
+              backgroundColor:'transparent'
             }}
           >
             <Icon
               reverse
               name="save"
               type="font-awesome"
-              color="#4DA8DA"
+              color="#99ceea"
               size={20}
               onPress={updateLoc}
             />
@@ -74,7 +73,7 @@ export default function SmokeInfo({ user, category, sensor }) {
               reverse
               name="edit"
               type="font-awesome"
-              color="#4DA8DA"
+              color="#99ceea"
               size={20}
               onPress={() => EditUserRole(sensor.location)}
             />
@@ -84,7 +83,7 @@ export default function SmokeInfo({ user, category, sensor }) {
 
         <View
           style={{
-            backgroundColor: "#12232E",
+            backgroundColor: "transparent",
             width: "90%",
             marginLeft: "5%",
             marginTop: "5%",
@@ -124,14 +123,13 @@ export default function SmokeInfo({ user, category, sensor }) {
 
         <View
           style={{
-            backgroundColor: "#12232E",
+            backgroundColor: "transparent",
             width: "105%",
-            marginLeft: "3%",
+            // marginLeft: "3%",
             marginBottom: "80%",
             marginTop: "4%",
-            marginRight: "10%",
+            // marginRight: "10%",
             height: "50%",
-
             padddingBotton: "20%"
           }}
         >
@@ -157,8 +155,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "#12232E",
-
+    backgroundColor: "transparent",
   },
   developmentModeText: {
     marginBottom: 20,
@@ -167,15 +164,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   rolesContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 20,
     height: 200,
-    width: 330,
-    marginLeft: "7%",
-    // margin: 20,
-    // flex: 1,
+    width: 360,
     alignItems: "center",
     justifyContent: "center",
-    // backgroundColor: "#12232E",
   },
   contentContainer: {
     paddingTop: 30,
@@ -192,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
   welcomeImage: {
     width: 100,
@@ -258,7 +252,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "75%",

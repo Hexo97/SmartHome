@@ -33,7 +33,7 @@ export default function MotionInfo({ user, category, sensor }) {
         <SafeAreaProvider style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 30 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 50, margin: 30 }}>
                     <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Previous Motion</Text>
                 </View>
 
@@ -46,7 +46,7 @@ export default function MotionInfo({ user, category, sensor }) {
                     />
                 </View>
 
-                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 30 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 50, margin: 30 }}>
                     <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Current Motion</Text>
                 </View>
 
@@ -59,7 +59,7 @@ export default function MotionInfo({ user, category, sensor }) {
                     />
                 </View>
 
-                <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 10, marginRight: 30, marginLeft: 30 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 50, margin: 10, marginRight: 30, marginLeft: 30 }}>
                     <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 20, fontWeight: "bold", fontStyle: "italic" }}>Motion Detected</Text>
                 </View>
 

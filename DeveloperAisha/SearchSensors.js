@@ -49,7 +49,7 @@ export default function SearchSensors() {
   return (
     <SafeAreaProvider style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ backgroundColor: "#4DA8DA", height: 50, margin: 20, marginBottom: 10 }}>
+        <View style={{ backgroundColor: "#99ceea", height: 50, margin: 20, marginBottom: 10 }}>
           <Text style={{ color: 'black', textAlign: "center", marginTop: 10, fontSize: 18, fontWeight: "bold" }}> Search Sensors</Text>
         </View>
 

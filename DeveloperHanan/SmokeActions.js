@@ -74,7 +74,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="minus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("max", -5)}
               />
@@ -82,7 +82,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="plus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("max", 5)}
               />
@@ -120,7 +120,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="minus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("min", -5)}
               />
@@ -128,7 +128,7 @@ export default function SmokeActions({ sensor }) {
                 reverse
                 name="plus"
                 type="font-awesome"
-                color="#4DA8DA"
+                color="#99ceea"
                 size={20}
                 onPress={() => updateMinMax("min", 5)}
               />
@@ -160,7 +160,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", -10)}
           />
@@ -168,7 +168,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", 10)}
           />
@@ -176,7 +176,7 @@ export default function SmokeActions({ sensor }) {
 
         <View
           style={{
-            backgroundColor: "#4DA8DA",
+            backgroundColor: "#99ceea",
             width: "70%",
             height: "8%",
             marginLeft: "20%",
@@ -208,7 +208,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="upload"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={uploadReading}
           />
@@ -216,7 +216,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="exclamation-triangle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleToggleAlert}
           />
@@ -224,7 +224,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="play-circle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStartSimulator}
           />
@@ -232,7 +232,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="stop"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStopSimulator}
           />
@@ -262,7 +262,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay - 1)}
           />
@@ -270,7 +270,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay + 1)}
           />
@@ -292,7 +292,7 @@ export default function SmokeActions({ sensor }) {
             raised
             name="hourglass-half"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={40}
             style={{ marginTop: 5 }}
           />

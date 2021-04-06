@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext, } from "react";
 import {
   ImageBackground,
-StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+  StyleSheet, ScrollView, TouchableOpacity
+} from "react-native";
 import { Text, View } from "../components/Themed";
 import UserContext from "../UserContext";
 import db from "../db";
@@ -29,33 +30,37 @@ export default function Shop({ navigation }) {
 
   return (
     <ImageBackground source={require("../assets/images/background.png")} style={styles.background}>
-    <View style={styles.container}>
-      <SafeAreaProvider style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {
-            userSensors.length >= 2
-            &&
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Promotion')}
-              style={styles.TouchPromotion}
-            >
-              <Text style={styles.TextPromotion}>Promos</Text>
-            </TouchableOpacity>
-          }
-          <View style={styles.container}>
+      <View style={styles.container}>
+        <SafeAreaProvider style={styles.container}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {
+              (
+                userSensors.length >= 2
+                &&
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Promotion')}
+                  style={styles.TouchPromotion}
+                >
+                  <Text style={styles.TextPromotion}>Promos</Text>
+                </TouchableOpacity>
+              )
+              ||
+              <View style={styles.shopSpace}></View>
 
-            {category.map((category) => (
-              <ShopItem
-                key={category.id}
-                category={category}
-                navigation={navigation}
-                {...category}
-                discount={promotion.name == ("Discount")}
-              />
-            ))}
-          </View>
-        </ScrollView>
-      </SafeAreaProvider>
+            }
+            <View style={styles.container}>
+              {category.map((category) => (
+                <ShopItem
+                  key={category.id}
+                  category={category}
+                  navigation={navigation}
+                  {...category}
+                  discount={promotion.name == ("Discount")}
+                />
+              ))}
+            </View>
+          </ScrollView>
+        </SafeAreaProvider>
       </View>
     </ImageBackground>
 
@@ -92,5 +97,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  shopSpace: {
+    width: 0, // or whatever size you need
+    height: 35,
   },
 });

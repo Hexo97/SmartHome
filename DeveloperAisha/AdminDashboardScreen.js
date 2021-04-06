@@ -36,7 +36,7 @@ export default function AdminDashboardScreen() {
                     <Text style={styles.headingText}>Admin Dashboard</Text>
                 </View>
 
-                <View style={{ backgroundColor: "#007CC7", height: 30, marginRight: 20, marginLeft: 20 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 30, marginRight: 20, marginLeft: 20 }}>
                     <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>User Information</Text>
                 </View>
                 <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -58,7 +58,7 @@ export default function AdminDashboardScreen() {
                     }
                 </View>
 
-                <View style={{ backgroundColor: "#007CC7", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
                     <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>Data Statistics</Text>
                 </View>
                 <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -145,7 +145,7 @@ export default function AdminDashboardScreen() {
                     </ListItem>
                 </View>
 
-                <View style={{ backgroundColor: "#007CC7", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
                     <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>Services List</Text>
                 </View>
                 <View style={{ marginLeft: 20, marginRight: 20 }}>
@@ -161,7 +161,7 @@ export default function AdminDashboardScreen() {
                     }
                 </View>
 
-                <View style={{ backgroundColor: "#007CC7", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
+                <View style={{ backgroundColor: "#99ceea", height: 30, marginRight: 20, marginLeft: 20, marginTop: 10 }}>
                     <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>Company's Sensors</Text>
                 </View>
                 <View style={{ marginLeft: 20, marginRight: 20 }}>

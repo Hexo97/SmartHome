@@ -76,7 +76,7 @@ export function Home({ navigation }) {
           <Text
             style={{
               fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
+              backgroundColor: "#99ceea",
               marginTop: 5,
               textAlign: "center",
               width: "94%",
@@ -89,7 +89,7 @@ export function Home({ navigation }) {
           <Text
             style={{
               fontWeight: "bold",
-              backgroundColor: "#4DA8DA",
+              backgroundColor: "#99ceea",
               textAlign: "center",
               paddingBottom: 5,
               width: "94%"
@@ -146,7 +146,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     height: 60,
     paddingRight: 10,
     width: "100%",

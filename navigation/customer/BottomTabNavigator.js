@@ -160,11 +160,7 @@ function TabOneNavigator() {
         component={PaymentHistory}
         options={{ headerTitle: 'Payment History' }}
       />
-      <TabOneStack.Screen
-        name="Reviews"
-        component={Reviews}
-        options={{ headerTitle: 'Reviews' }}
-      />
+     
       <TabOneStack.Screen
         name="AllUserTrashCans"
         component={AllUserTrashCans}
@@ -245,6 +241,11 @@ function TabThreeNavigator() {
         }
         )
         }
+      />
+      <TabThreeStack.Screen
+        name="Reviews"
+        component={Reviews}
+        options={{ headerTitle: 'Reviews' }}
       />
       <TabThreeStack.Screen
         name="Promotion"

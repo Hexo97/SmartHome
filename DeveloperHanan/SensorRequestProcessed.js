@@ -214,7 +214,7 @@ export default function SensorRequestProcessed({ payment }) {
             <Card>
               <Card.Title
                 style={{
-                  backgroundColor: "#4DA8DA",
+                  backgroundColor: "#99ceea",
                   color: "black",
                   fontWeight: "bold",
                 }}
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   title3: {
     height: 20,
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   myButton: {
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     alignSelf: "center",
     width: 100,
     marginLeft: 10,

@@ -1,10 +1,41 @@
 'use strict';
 import { StyleSheet } from 'react-native';
-// backgroundColor: 'rgba(255, 255, 255, 0.3)',
 
 module.exports = StyleSheet.create({
     background: {
         flex: 1,
+    },
+    //NOTIFICATIONS
+    notificationContainer: {
+        flex: 1,
+        justifyContent: "center",
+        backgroundColor: "transparent",
+    },
+    oneNotificationContainer: {
+        width: 400,
+        height: 75,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
+    },
+    notificationContainerRead: {
+        width: 400,
+        height: 75,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+        backgroundColor: 'lightgrey',
+        opacity: 0.7
+    },
+    notificationMsg: {
+        color: 'black',
+        textAlign: 'left',
+        fontSize: 15,
+        marginTop: 18,
+        marginLeft: 10,
+    },
+    notificationTime: {
+        color: 'grey',
+        marginLeft: 10,
     },
     //LOGS STYLE:
     Logscontainer: {
@@ -13,7 +44,7 @@ module.exports = StyleSheet.create({
         backgroundColor: "#12232E"
     },
     LogsViewTitle: {
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         height: 50,
         margin: 5,
         marginBottom: 10
@@ -103,7 +134,7 @@ module.exports = StyleSheet.create({
         height: 30,
         width: 130,
         borderRadius: 4,
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,
@@ -111,7 +142,7 @@ module.exports = StyleSheet.create({
         marginLeft: 70,
     },
     redeemTitle: {
-        // backgroundColor: "#4DA8DA",
+        // backgroundColor: "#99ceea",
         color: "white",
         fontWeight: "bold",
     },
@@ -120,13 +151,13 @@ module.exports = StyleSheet.create({
     },
     redeemDesc: {
         fontSize: 17,
-        // backgroundColor: "#4DA8DA",
+        // backgroundColor: "#99ceea",
         color: "white",
         fontWeight: "bold",
     },
     redeemServDesc: {
         fontSize: 14,
-        // backgroundColor: "#4DA8DA",
+        // backgroundColor: "#99ceea",
         color: "white",
     },
     AddPromoButton: {
@@ -134,7 +165,7 @@ module.exports = StyleSheet.create({
         height: 30,
         // width: 100,
         borderRadius: 4,
-        backgroundColor: "#4DA8DA",
+        backgroundColor: "#99ceea",
         shadowColor: "white",
         shadowOpacity: 0.4,
         padding: 5,
@@ -159,7 +190,7 @@ module.exports = StyleSheet.create({
         fontWeight: "bold",
     },
     AdminDashScrnnavBar: {
-        backgroundColor: "#007CC7",
+        backgroundColor: "#99ceea",
         height: 50,
         alignItems: "center",
         marginBottom: 20

@@ -4,6 +4,7 @@ import { StyleSheet, Image, TouchableOpacity, TextInput } from "react-native";
 import { Text, View } from "../components/Themed";
 import LoginPicker from "../screens/pickers/LoginPicker";
 import db from '../db'
+import { Icon } from "react-native-elements";
 
 
 export default function Login({ navigation }) {
@@ -24,12 +25,15 @@ export default function Login({ navigation }) {
           style={{ width: 50, height: 50 }}
           onPress={() => navigation.openDrawer()}
         >
-          <Image
-            source={require("../assets/images/icon2.png")}
-            style={{ width: 60, height: 60 }}
+          <Icon
+            name="menu"
+            type="MaterialIcons"
+            size={40}
+            reverse
+            iconStyle={{ color: "#99ceea", marginLeft: -30, marginTop: -30 }}
+            color="transparent"
           />
         </TouchableOpacity>
-        <Text style={styles.headingText}>LOGIN</Text>
       </View>
 
       <View style={styles.container}>
@@ -61,7 +65,7 @@ export default function Login({ navigation }) {
           onPress={login}
           style={styles.loginBtn}
         >
-          <Text style={styles.loginText}>LOGIN</Text>
+          <Text>Login</Text>
         </TouchableOpacity>
 
         <View style={styles.footerView}>
@@ -84,7 +88,7 @@ export default function Login({ navigation }) {
 
 const styles = StyleSheet.create({
   navBar: {
-    backgroundColor: "#007CC7",
+    backgroundColor: "transparent",
     height: 60,
     paddingRight: 10,
     width: "100%",
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     height: 400,
     width: "90%",
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     paddingTop: 50,
     alignItems: "center",
     position: "absolute",
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
   },
 
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "80%",
@@ -146,19 +150,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 25,
-    backgroundColor: "#007CC7",
+    backgroundColor: "#99ceea",
   },
   footerView: {
     flex: 1,
     alignItems: "center",
     marginTop: 20,
+    backgroundColor:'transparent'
   },
   footerText: {
     fontSize: 16,
-    color: "#4DA8DA",
+    color: "#99ceea",
   },
   footerLink: {
-    color: "#4DA8DA",
+    color: "#99ceea",
     fontWeight: "bold",
     fontSize: 16,
   },

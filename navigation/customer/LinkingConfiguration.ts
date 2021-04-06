@@ -9,25 +9,26 @@ export default {
           TabOne: {
             screens: {
               Home: 'one',
-              Faq:'two',
-              Reviews:'three',
-              Search:'four',
-              List:'five',
-              PaymentHistory:'six',
-              AllUserTrashCans:'seven',
-              Notifications:'eight'
+              Faq: 'two',
+              Search: 'four',
+              List: 'five',
+              PaymentHistory: 'six',
+              AllUserTrashCans: 'seven',
+              Notifications: 'eight'
             },
           },
           TabTwo: {
             screens: {
               Sensors: 'one',
-              Precautions:'two'
+              Precautions: 'two'
             },
           },
           TabThree: {
             screens: {
+              Reviews: 'one',
               Shop: 'two',
               Promotion: 'three',
+
             },
           },
           TabFour: {

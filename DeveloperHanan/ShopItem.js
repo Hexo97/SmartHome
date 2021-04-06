@@ -53,9 +53,9 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
           <Card containerStyle={styles.card} >
             <Card.Title 
               style={{
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                color: "white",
                 fontWeight: "bold",
+                fontSize: 18
               }}
             >
               {category.name}
@@ -69,9 +69,7 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
             <Text
               style={{
                 fontSize: 15,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                color: "white",
               }}
             >
               {category.description}
@@ -79,9 +77,8 @@ export default function ShopItem({ navigation, category, edit, remove, discount 
             <Text
               style={{
                 fontSize: 20,
-                // fontWeight: "bold",
-                backgroundColor: "#4DA8DA",
-                color: "black",
+                fontWeight: "bold",
+                color: "white",
               }}
             >
               QR: {discount ? category.price - (category.price * 20 / 100) + " (Discount Applied)" : category.price}
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 100,
     borderRadius: 4,
-    backgroundColor: "#4DA8DA",
+    backgroundColor: "#99ceea",
     shadowColor: "white",
     shadowOpacity: 0.4,
     padding: 5,

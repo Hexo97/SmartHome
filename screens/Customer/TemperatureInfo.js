@@ -61,7 +61,7 @@ export default function TemperatureInfo({ user, category, sensor }) {
             reverse
             name="save"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={updateLoc}
           />
@@ -70,7 +70,7 @@ export default function TemperatureInfo({ user, category, sensor }) {
             reverse
             name="edit"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => EditUserRole(sensor.location)}
           />
@@ -79,7 +79,7 @@ export default function TemperatureInfo({ user, category, sensor }) {
 
       <View
         style={{
-          backgroundColor: "#4DA8DA",
+          backgroundColor: "#99ceea",
           width: "90%",
           marginLeft: "5%",
           marginTop: "5%",
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#12232E",
   },
   inputView: {
-    borderColor: "#4DA8DA",
+    borderColor: "#99ceea",
     borderWidth: 2,
     borderRadius: 15,
     width: "75%",

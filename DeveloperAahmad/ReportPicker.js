@@ -10,7 +10,7 @@ export default function ReportPicker({ set }) {
       style={{
         width: "80%",
         height: 50,
-        borderColor: "#4DA8DA",
+        borderColor: "#99ceea",
         borderWidth: 2,
         marginBottom: 20,
         borderRadius: 15,

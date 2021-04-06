@@ -69,7 +69,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("max", -10)}
           />
@@ -77,7 +77,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("max", 10)}
           />
@@ -107,7 +107,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", -10)}
           />
@@ -115,7 +115,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => updateMinMax("min", 10)}
           />
@@ -123,7 +123,7 @@ export default function TemperatureActions({ sensor }) {
 
         <View
           style={{
-            backgroundColor: "#4DA8DA",
+            backgroundColor: "#99ceea",
             width: "70%",
             height: "8%",
             marginLeft: "20%",
@@ -156,7 +156,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="upload"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={uploadReading}
           />
@@ -164,7 +164,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="exclamation-triangle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleToggleAlert}
           />
@@ -172,7 +172,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="play-circle"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStartSimulator}
           />
@@ -180,7 +180,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="stop"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={handleStopSimulator}
           />
@@ -210,7 +210,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="minus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay - 1)}
           />
@@ -218,7 +218,7 @@ export default function TemperatureActions({ sensor }) {
             raised
             name="plus"
             type="font-awesome"
-            color="#4DA8DA"
+            color="#99ceea"
             size={20}
             onPress={() => setDelay(delay + 1)}
           />

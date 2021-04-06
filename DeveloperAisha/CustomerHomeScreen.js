@@ -13,7 +13,7 @@ import { Icon } from "react-native-elements";
 import { color } from 'react-native-reanimated';
 
 export default function CustomerHomeScreen({ navigation }) {
-  
+
   const { user } = useContext(UserContext)
   // const [sound, setSound] = React.useState();
 
@@ -186,13 +186,14 @@ export default function CustomerHomeScreen({ navigation }) {
           <View style={{
             backgroundColor: 'transparent',
             flexDirection: "row",
+            marginTop: 30
           }}
           >
             <Button
-              title="View Notifications"
+              title="Find Sensors"
               type="outline"
               buttonStyle={styles.myButton}
-              onPress={() => navigation.navigate('Notifications')}
+              onPress={() => navigation.navigate('Search')}
             />
             <View style={styles.space} />
             <Button
@@ -203,24 +204,12 @@ export default function CustomerHomeScreen({ navigation }) {
             />
           </View>
           {/* ///////////////////////////////////////////////////////////////////////////////////// */}
-          <View style={{
-            backgroundColor: 'transparent',
-            flexDirection: "row",
-          }}
-          >
-            <View style={styles.space} />
-            <Button
-              title="Find Sensors"
-              type="outline"
-              buttonStyle={styles.myButton}
-              onPress={() => navigation.navigate('Search')}
-            />
-          </View>
-          {/* ///////////////////////////////////////////////////////////////////////////////////// */}
 
           <View style={{
             backgroundColor: 'transparent',
             flexDirection: "row",
+            marginTop: 30
+
           }}
           >
             <Button
@@ -249,7 +238,7 @@ export default function CustomerHomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   scroll: {
-    marginTop:70
+    marginTop: 70
   },
   background: {
     // width: '100%',
@@ -257,7 +246,7 @@ const styles = StyleSheet.create({
     // width: null,
     // height: null,
     flex: 1,
-    
+
     // resizeMode: 'cover', // or 'stretch'
   },
   CHSButtonText: {
@@ -388,6 +377,6 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     width: 155,
     marginBottom: "3%",
-    borderColor: 'green',
+    borderColor: 'grey',
   },
 });

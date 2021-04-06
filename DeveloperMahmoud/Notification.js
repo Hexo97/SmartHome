@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import db from "../db";
 import UserContext from '../UserContext'
 import { useFocusEffect } from "@react-navigation/native";
+import styles from './SmartStyle'
 
 export default function Notifications({ notification }) {
     const { user } = useContext(UserContext);
@@ -17,7 +17,7 @@ export default function Notifications({ notification }) {
     );
 
     return (
-        <View style={notification.isRead ? styles.notificationContainerRead : styles.notificationContainer}>
+        <View style={notification.isRead ? styles.notificationContainerRead : styles.oneNotificationContainer}>
             <Text style={styles.notificationMsg}>
                 {notification.message}
             </Text>
@@ -28,34 +28,3 @@ export default function Notifications({ notification }) {
     )
 
 }
-const styles = StyleSheet.create({
-    notificationContainer: {
-        width: 400,
-        height: 75,
-        borderBottomColor: 'grey',
-        borderBottomWidth: 1,
-        backgroundColor: 'rgba(255, 255, 255, 0.75)',
-    },
-    notificationContainerRead: {
-        width: 400,
-        height: 75,
-        borderBottomColor: 'grey',
-        borderBottomWidth: 1,
-        backgroundColor: 'lightgrey',
-        opacity: 0.7
-    },
-    notificationTxtContainer: {
-        backgroundColor: 'red'
-    },
-    notificationMsg: {
-        color: 'black',
-        textAlign: 'left',
-        fontSize: 15,
-        marginTop: 18,
-        marginLeft: 10,
-    },
-    notificationTime: {
-        color: 'grey',
-        marginLeft: 10,
-    }
-});

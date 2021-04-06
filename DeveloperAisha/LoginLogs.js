@@ -12,11 +12,11 @@ export default function LoginLogs({ setLogins }) {
                     setLogins.length > 0
                         ?
                         <View>
-                            <View style={{ backgroundColor: "#007CC7", height: 30, marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignContent: "center", width: 350 }}>
+                            <View style={{ backgroundColor: "#99ceea", height: 30, marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignContent: "center", width: 350 }}>
                                 <Text style={{ fontWeight: "bold", fontStyle: "italic", color: 'black', textAlign: "center", marginTop: 10, fontSize: 15 }}>User Information</Text>
                             </View>
 
-                            <View style={{ backgroundColor: "#007CC7", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
+                            <View style={{ backgroundColor: "#99ceea", marginHorizontal: 50, marginLeft: 30, marginRight: 20, alignSelf: "center", width: 350 }}>
                                 {
                                     setLogins.map((l, i) => (
                                         <ListItem key={i} bottomDivider>

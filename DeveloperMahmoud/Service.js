@@ -9,7 +9,7 @@ import Dialog from "react-native-dialog";
 import styles from './SmartStyle'
 import UserContext from "../UserContext";
 import db from '../db'
-import { useFocusEffect } from "@react-navigation/native";
+// import { useFocusEffect } from "@react-navigation/native";
 
 export default function Service({ promotion }) {
   const { user } = useContext(UserContext);
