@@ -1,12 +1,7 @@
 const firebase = require("firebase");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA84jN5johFsBHCLDM_bB1vKiDAr4tTOKc",
-  authDomain: "cp3351-bf05f.firebaseapp.com",
-  projectId: "cp3351-bf05f",
-  storageBucket: "cp3351-bf05f.appspot.com",
-  messagingSenderId: "851316161428",
-  appId: "1:851316161428:web:afccdded7a606ce5ebad81"
+    // INSERT YOUR FIREBASE CONFIGE HERE
 };
 
 firebase.initializeApp(firebaseConfig);
