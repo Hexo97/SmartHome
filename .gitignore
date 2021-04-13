@@ -1,7 +1,6 @@
 node_modules/**/*
 */node_modules/**/*
 */node_modules/
-.expo/*
 *.log
 npm-debug.*
 *.jks
@@ -12,6 +11,5 @@ npm-debug.*
 *.orig.*
 web-build/
 fb.js
-.firebaserc
 # macOS
 .DS_Store
